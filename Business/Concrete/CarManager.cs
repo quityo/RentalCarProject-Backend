@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-
+using System.Text;
 
 namespace Business.Concrete
 {
@@ -15,61 +17,70 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         { 
             if (car.CarName.Length >=2 && car.DailyPrice>0)
             {
                 _carDal.Add(car);
-                Console.WriteLine("{0} Added", car.CarName);
+                return new SuccessResult(Messages.Added);
             }
             else
             {
-                Console.WriteLine("Car's name must be longer than 2 and daily price must be bigger than 0!!");
+                return new ErrorResult(Messages.CarCanNotAdded);
             }
                    
         }
-        public void Delete(Car car)
+        public IResult Update(Car car)
         {
-            _carDal.Delete(car);
-        }
-        public void Update(Car car)
-        {
-            _carDal.Update(car);
-        }
-        public List<Car> GetAll()
-        {
-            return _carDal.GetAll();
-        }
-        public List<Car> GetByBrandId(int brandId)
-        { 
-            return _carDal.GetAll(p => p.BrandId == brandId);
-        }
-        public List<Car> GetByColorId(int colorId)
+            if (car.CarName.Length >= 2 && car.DailyPrice > 0)
+            {
+                _carDal.Update(car);
+                return new SuccessResult(Messages.Updated);
 
-        {
-            return _carDal.GetAll(p => p.ColorId == colorId);
+            }
+            else
+            {
+                return new ErrorResult(Messages.CarCanNotUpdated);
+            }
         }
-
-        
-
-        public List<Car> GetById(int carId)
+        public IResult Delete(Car car)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _carDal.Delete(car);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch (Exception)
+            {
+                throw new Exception("A system error occurs on deletion!");
+            }
         }
 
-        public List<Car> GetCarsByBrandId(int brandId)
+        public IDataResult<List<Car>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.GetAll);
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public IDataResult<Car> GetById(int carId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId), Messages.GetCarByCarId);
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId), Messages.GetCarsByBrandId);
         }
+
+        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId), Messages.GetCarsByColorId);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.GetCarsWithDetails);
+        }
+
+
     }
 }

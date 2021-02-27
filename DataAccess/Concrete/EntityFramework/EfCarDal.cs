@@ -1,4 +1,5 @@
-﻿using Core.DataAccess.EntityFramework;
+﻿using Core.DataAccess;
+using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -22,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on a.BrandId equals b.BrandId
                              join abc in context.Color 
                              on a.ColorId equals abc.ColorId
-                             select new CarDetailDto 
+                             select new CarDetailDto ()
                              {
                                  
                                  CarName = a.CarName,
