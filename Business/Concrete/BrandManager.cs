@@ -38,7 +38,7 @@ namespace Business.Concrete
             return _brandDal.Get(p => p.BrandId == brandId);
         }
 
-        List<Brand> IBrandService.GetById(int brandId)
+        Brand IBrandService.GetById(int brandId)
         {
             throw new NotImplementedException();
         }

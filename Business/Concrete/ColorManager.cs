@@ -39,7 +39,7 @@ namespace Business.Concrete
             return _colorDal.Get(p => p.ColorId == colorId);
         }
 
-        List<Color> IColorService.GetById(int colorId)
+        Color IColorService.GetById(int colorId)
         {
             throw new NotImplementedException();
         }

@@ -9,9 +9,9 @@ namespace ConcoleUI
         static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine(car.CarName);
+                Console.WriteLine(car.CarName + "/" + car.CarName);
             }
         }
     }
