@@ -16,11 +16,11 @@ namespace DataAccess.Concrete
         {
             _cars = new List<Car>
             {
-                new Car() {CarId = 1, BrandId = 1, ColorId = 1, CarName = "AAA", Description = "Manuel", ModelYear = "2010", DailyPrice = 1111.11M},
-                new Car() {CarId = 2, BrandId = 1, ColorId = 2, CarName = "BBB", Description = "Manuel", ModelYear = "2011", DailyPrice = 2222.22M},
-                new Car() {CarId = 3, BrandId = 1, ColorId = 3, CarName = "CCC", Description = "Manuel", ModelYear = "2012", DailyPrice = 3333.33M},
-                new Car() {CarId = 4, BrandId = 2, ColorId = 1, CarName = "DDD", Description = "Otomatik", ModelYear = "2013", DailyPrice = 4444.44M},
-                new Car() {CarId = 5, BrandId = 2, ColorId = 2, CarName = "EEE", Description = "Otomatik ", ModelYear = "2014", DailyPrice = 5555.55M}
+                new Car() {CarId = 1, BrandId = 1, ColorId = 1, CarName = "Black Samurai", Description = "Higway Man", ModelYear = 1977, DailyPrice = 1111.11M},
+                new Car() {CarId = 2, BrandId = 2, ColorId = 1, CarName = "Black Sun", Description = "Black Hole Sun", ModelYear = 1979, DailyPrice = 2222.22M},
+                new Car() {CarId = 3, BrandId = 3, ColorId = 2, CarName = "Red Baron", Description = "Moulin Rouge", ModelYear = 1975, DailyPrice = 3333.33M},
+                new Car() {CarId = 4, BrandId = 4, ColorId = 3, CarName = "Daisey", Description = "Love Me 2 Times", ModelYear = 1978, DailyPrice = 4444.44M},
+                new Car() {CarId = 5, BrandId = 5, ColorId = 1, CarName = "Shadow", Description = "Shadow Rider", ModelYear = 1979, DailyPrice = 5555.55M}
             };
         }
         public void Add(Car car)
