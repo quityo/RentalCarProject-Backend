@@ -2,6 +2,7 @@
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -60,6 +61,8 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.GetAll);
         }
+
+        
 
         public IDataResult<Car> GetById(int carId)
         {

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -8,40 +10,58 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    class ColorManager:IColorService
+    class ColorManager : IColorService
     {
         IColorDal _colorDal;
-         public ColorManager(IColorDal colorDal)
-        {
+        public ColorManager(IColorDal colorDal)
+        { 
             _colorDal = colorDal;
         }
-
-        public void Add(Color color)
-
+        public IResult Add(Color color)
         {
+            if (color.ColorName.Length < 3)
+            {
+                return new ErrorResult(Messages.ColorCanNotAdded);
+            }
             _colorDal.Add(color);
+            return new SuccessResult(Messages.Added);
         }
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
+            if (color.ColorName.Length < 3)
+            {
+                return new ErrorResult(Messages.ColorCanNotUpdated);
+            }
             _colorDal.Update(color);
+            return new SuccessResult(Messages.Updated);
         }
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
-            _colorDal.Delete(color);
+            try
+            {
+                _colorDal.Delete(color);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Sistem Hatası! Silinme İşlemi Gerçekleşmedi.");
+            }
+        }
 
-        }
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll().ToList();
-        }
-        public Color GetById(int colorId)
-        {
-            return _colorDal.Get(p => p.ColorId == colorId);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.GetAll);
         }
 
-        Color IColorService.GetById(int colorId)
+        public IDataResult<Color> GetById(int colorId)
+        {
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId), Messages.GetColorByColorId);
+        }
+
+        IDataResult<List<Color>> IColorService.GetById(int colorId)
         {
             throw new NotImplementedException();
         }
     }
 }
+
