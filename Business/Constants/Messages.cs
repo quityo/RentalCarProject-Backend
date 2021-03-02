@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -33,5 +34,6 @@ namespace Business.Constants
         internal static string CarCanNotUpdated = "Araç Güncellenemedi.";
         internal static string CustomerCanNotUpdated = "Müşteri Bilgileri Güncellenemedi.";
         internal static string ColorCanNotUpdated = "Araç Rengi Güncellenemedi.";
+        internal static string MaintenanceTime = "Araç Kullanımda.";
     }
 }

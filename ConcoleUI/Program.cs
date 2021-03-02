@@ -37,22 +37,23 @@ namespace ConcoleUI
             //            Console.WriteLine(customer.CompanyName);
             //       }
             //}
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            rentalManager.Add(new Rental
-            {
-                RentalId = 3,
-                CarId = 3,
-                CustomerId = 3,
-                RentDate = new DateTime(2021, 3, 02),
-                ReturnDate = new DateTime(2021, 3, 15)
-            });
 
-            foreach (var rental in rentalManager.GetAll().Data)
-            {
-                Console.WriteLine("RentalId: {0} CarId: {1} CustomerId: {2} RentDate: {3} ReturnDate: {4}", rental.RentalId, rental.CarId, rental.CustomerId, rental.RentDate, rental.ReturnDate);
-            }
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //rentalManager.Add(new Rental
+            //{
+            //    RentalId = 3,
+            //    CarId = 3,
+            //    CustomerId = 3,
+            //    RentDate = new DateTime(2021, 3, 02),
+            //    ReturnDate = new DateTime(2021, 3, 15)
+            //});
 
-            //CarManager carManager = new CarManager(new EfCarDal());
+            //foreach (var rental in rentalManager.GetAll().Data)
+            //{
+            //    Console.WriteLine("RentalId: {0} CarId: {1} CustomerId: {2} RentDate: {3} ReturnDate: {4}", rental.RentalId, rental.CarId, rental.CustomerId, rental.RentDate, rental.ReturnDate);
+            //}
+
+            CarManager carManager = new CarManager(new EfCarDal());
             //carManager.Add(new Car
             //{
             //    CarId = 6,
@@ -64,20 +65,20 @@ namespace ConcoleUI
 
             //    Description = "Kolleksiyon Parçası"
             //}) ;
-            //var result = carManager.GetCarDetails();
-            //if (result.Success==true)
-            //{
-            //    foreach (var car in carManager.GetCarDetails().Data)
-            //    {
-            //        Console.WriteLine("Marka: " + car.BrandName + "\n" + "Yıl: " + car.ModelYear + "\n" + "Renk: "
-            //            + car.ColorName + "\n" + "İsim: " + car.CarName + "\n" + "Ücret: " + car.DailyPrice + "\n" + "Açıklama: " + car.Description);
-            //        Console.WriteLine("------------");
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine( result.Message );
-            //}
+            var result = carManager.GetCarDetails();
+            if (result.Success)
+            {
+                foreach (var car in carManager.GetCarDetails().Data)
+                {
+                    Console.WriteLine("Marka: " + car.BrandName + "\n" + "Yıl: " + car.ModelYear + "\n" + "Renk: "
+                        + car.ColorName + "\n" + "İsim: " + car.CarName + "\n" + "Ücret: " + car.DailyPrice + "\n" + "Açıklama: " + car.Description);
+                    Console.WriteLine("------------");
+               }
+            }
+            else
+            {
+                Console.WriteLine( result.Message );
+            }
 
         }
     }

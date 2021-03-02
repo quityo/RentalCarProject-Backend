@@ -18,6 +18,11 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+       //[LogAspect]
+       //[Validate]
+       //[RemoveCache]
+       //[Transaction]
+       //[Performance]
         public IResult Add(Car car)
         { 
             if (car.CarName.Length >=2 && car.DailyPrice>0)
@@ -53,16 +58,20 @@ namespace Business.Concrete
             }
             catch (Exception)
             {
-                throw new Exception("A system error occurs on deletion!");
+                throw new Exception("Sistem Hatası.");
             }
         }
 
         public IDataResult<List<Car>> GetAll()
         {
+            
+        
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.GetAll);
         }
-
-        
 
         public IDataResult<Car> GetById(int carId)
         {
@@ -84,6 +93,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.GetCarsWithDetails);
         }
 
-
+        public object GetCarDetailsById(int carId)
+        {
+            return new SuccessDataResult<CarDetailDto>(_carDal.GetCarDetailsById(c => c.CarId == carId), Messages.GetCarDetailsById);
+        }
     }
 }

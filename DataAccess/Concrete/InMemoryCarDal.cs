@@ -9,12 +9,12 @@ using System.Text;
 
 namespace DataAccess.Concrete
 {
-    class InMemoryCarDal : ICarDal
+    public class InMemoryCarDal : ICarDal
     {
         List<Car> _cars;
         public InMemoryCarDal()
         {
-            _cars = new List<Car>
+            _cars = new List<Car>()
             {
                 new Car() {CarId = 1, BrandId = 1, ColorId = 1, CarName = "Black Samurai", Description = "Higway Man", ModelYear = 1977, DailyPrice = 1111.11M},
                 new Car() {CarId = 2, BrandId = 2, ColorId = 1, CarName = "Black Sun", Description = "Black Hole Sun", ModelYear = 1979, DailyPrice = 2222.22M},
