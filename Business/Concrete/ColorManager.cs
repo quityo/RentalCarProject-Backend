@@ -10,13 +10,14 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    class ColorManager : IColorService
+    public class ColorManager : IColorService
     {
         IColorDal _colorDal;
         public ColorManager(IColorDal colorDal)
         { 
             _colorDal = colorDal;
         }
+
         public IResult Add(Color color)
         {
             if (color.ColorName.Length < 3)
@@ -26,6 +27,7 @@ namespace Business.Concrete
             _colorDal.Add(color);
             return new SuccessResult(Messages.Added);
         }
+
         public IResult Update(Color color)
         {
             if (color.ColorName.Length < 3)
@@ -35,6 +37,7 @@ namespace Business.Concrete
             _colorDal.Update(color);
             return new SuccessResult(Messages.Updated);
         }
+
         public IResult Delete(Color color)
         {
             try
@@ -44,7 +47,7 @@ namespace Business.Concrete
             }
             catch (Exception)
             {
-                throw new Exception("Sistem Hatası! Silinme İşlemi Gerçekleşmedi.");
+                throw new Exception("Silinme İşleminde Hata Oluştu.");
             }
         }
 
@@ -58,10 +61,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId), Messages.GetColorByColorId);
         }
 
-        IDataResult<List<Color>> IColorService.GetById(int colorId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
 
