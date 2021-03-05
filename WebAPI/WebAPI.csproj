@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\uploads\0452d362-4cfa-4d3c-9ce3-6b080daf0f26.jpg" />
+    <Content Remove="wwwroot\uploads\2d58fc45-3a97-4368-94d6-d40130249990.jpg" />
+    <Content Remove="wwwroot\uploads\d08c753a-c3d0-4bd1-bf2f-a401f3b8ef5d.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Controllers\BrandsController.cs" />
+    <Content Include="Controllers\CarImagesController.cs" />
+    <Content Include="Controllers\CarsController.cs" />
+    <Content Include="Controllers\ColorsController.cs" />
+    <Content Include="Controllers\CustomersController.cs" />
+    <Content Include="Controllers\RentalsController.cs" />
+    <Content Include="Controllers\UsersController.cs" />
+    <Content Include="Controllers\WeatherForecastController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
   </ItemGroup>
 
@@ -13,6 +30,10 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 

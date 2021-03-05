@@ -6,11 +6,12 @@ using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class UserValidator : AbstractValidator<User>
+    public class CarImageValidator:AbstractValidator<CarImage>
     {
-       public UserValidator ()
+        public CarImageValidator()
         {
-            RuleFor(p => p.Email).EmailAddress();
+            RuleFor(p=> p.CarId).NotNull();
+            RuleFor(p => p.ImageId).NotNull();
             
         }
     }

@@ -1,7 +1,5 @@
-﻿using Business.Abstract;
-using Business.Concrete;
+﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
 using System;
 
 namespace ConcoleUI
@@ -54,6 +52,11 @@ namespace ConcoleUI
             //}
 
             CarManager carManager = new CarManager(new EfCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            UserManager userManager = new UserManager(new EfUserDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
             //carManager.Add(new Car
             //{
             //    CarId = 6,
@@ -66,19 +69,15 @@ namespace ConcoleUI
             //    Description = "Kolleksiyon Parçası"
             //}) ;
             var result = carManager.GetCarDetails();
-            if (result.Success)
-            {
+            
                 foreach (var car in carManager.GetCarDetails().Data)
                 {
                     Console.WriteLine("Marka: " + car.BrandName + "\n" + "Yıl: " + car.ModelYear + "\n" + "Renk: "
                         + car.ColorName + "\n" + "İsim: " + car.CarName + "\n" + "Ücret: " + car.DailyPrice + "\n" + "Açıklama: " + car.Description);
                     Console.WriteLine("------------");
-               }
-            }
-            else
-            {
-                Console.WriteLine( result.Message );
-            }
+                }
+            
+           
 
         }
     }

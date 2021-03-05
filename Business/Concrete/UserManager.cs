@@ -25,8 +25,6 @@ namespace Business.Concrete
         {
           ValidationTool.Validate(new UserValidator(),user);
 
-
-
                 _userDal.Add(user);
                 {
                     return new SuccessResult(Messages.Added);

@@ -35,5 +35,13 @@ namespace Business.Constants
         internal static string CustomerCanNotUpdated = "Müşteri Bilgileri Güncellenemedi.";
         internal static string ColorCanNotUpdated = "Araç Rengi Güncellenemedi.";
         internal static string MaintenanceTime = "Araç Kullanımda.";
+        internal static string CarNameAlredyExists = "Bu isimde Ürün Var.";
+        internal static string ImageAdded = "Resim Yüklendi";
+        internal static string CarImageNotFound = "Resim bulundamadı.";
+        internal static string ImageDeleted = "Resim Silindi.";
+        internal static string AllImageDeleted = "Tüm Resimler Silindi";
+        internal static string ImageUpdated = "Resim Güncellendi";
+        internal static string FileUploadAmountExceeded = "Bişiler Bişiler";
+        internal static string CarImageLimitExceeded = "Hede Hudu";
     }
 }
