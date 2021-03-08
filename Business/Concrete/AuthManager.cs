@@ -21,7 +21,6 @@ namespace Business.Concrete
             _userService = userService;
             _tokenHelper = tokenHelper;
         }
-
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -37,28 +36,30 @@ namespace Business.Concrete
             };
             _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
+            
         }
-
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>(Messages.UserNotFound);
+                return new ErrorDataResult<User>("Kullanıcı bulunamadı");
             }
 
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>(Messages.PasswordError);
+                return new ErrorDataResult<User>("Parola hatası");
             }
 
-            return new SuccessDataResult<User>(userToCheck.Data, Messages.SuccessfullLogin);
+            return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
+            
         }
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email).Data != null)
+            if (_userService.GetByMail(email) != null)
             {
+                
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
             return new SuccessResult();
@@ -67,8 +68,9 @@ namespace Business.Concrete
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
             var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims.Data);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            
         }
     }
 }

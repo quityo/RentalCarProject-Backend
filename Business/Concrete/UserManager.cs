@@ -37,17 +37,24 @@ namespace Business.Concrete
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
-
+        [ValidationAspect(typeof(UserValidator))]
+        [SecuredOperation("user.delete, admin")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
+        [ValidationAspect(typeof(UserValidator))]
+        [SecuredOperation("user.update, admin")]
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
+        }
 
-        
         public IDataResult<List<User>> GetAll()
         {
-            if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 10)
             {
                 return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
 
@@ -72,12 +79,7 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Update(User user)
-        {
-            _userDal.Update(user);
-            return new SuccessResult(Messages.UserUpdated);
-        }
+       
 
     }
 }
