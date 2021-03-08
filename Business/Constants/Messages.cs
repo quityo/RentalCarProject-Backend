@@ -53,5 +53,9 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Access token oluşturuldu";
         public static string CarDailyPriceInvalid = "Araç Günlük fiyat hoff";
         internal static string RentalUpdated = " Kiralama bilgileri güncellenmiştir";
+        internal static string UserAdded = "Kullanıcı eklendi.";
+        internal static string UserDeleted = "Kullanıcı Silindi";
+        internal static string UsersListed = "Kullanıcı Listesi";
+        internal static string UserUpdated = "Kullanıcı Güncellendi";
     }
 }

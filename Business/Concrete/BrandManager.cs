@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,11 @@ namespace Business.Concrete
         public IDataResult<Brand> GetById(int brandId)
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(p => p.BrandId == brandId), Messages.GetBrandByBrandId);
+        }
+
+        public IDataResult<List<BrandDetailDto>> GetBrandDetails()
+        {
+            throw new NotImplementedException();
         }
     }
 }
