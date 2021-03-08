@@ -36,7 +36,7 @@ namespace Business.DependencyResolvers.AutoFac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JWTHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
+            
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
