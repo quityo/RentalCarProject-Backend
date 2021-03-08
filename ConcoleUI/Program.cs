@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System;
 
 namespace ConcoleUI
@@ -57,28 +58,51 @@ namespace ConcoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             UserManager userManager = new UserManager(new EfUserDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            //carManager.Add(new Car
-            //{
-            //    CarId = 6,
-            //    BrandId = 2,
-            //    ColorId = 2,
-            //    CarName = "T-Model",
-            //    ModelYear = 1944,
-            //    DailyPrice = 6666,
-
-            //    Description = "Kolleksiyon Parçası"
-            //}) ;
-            var result = carManager.GetCarDetails();
             
-                foreach (var car in carManager.GetCarDetails().Data)
+            var result = rentalManager.GetAll();
+            if (result.Success == true)
+            {
+                rentalManager.Add(new Rental
                 {
-                    Console.WriteLine("Marka: " + car.BrandName + "\n" + "Yıl: " + car.ModelYear + "\n" + "Renk: "
-                        + car.ColorName + "\n" + "İsim: " + car.CarName + "\n" + "Ücret: " + car.DailyPrice + "\n" + "Açıklama: " + car.Description);
-                    Console.WriteLine("------------");
-                }
+                    CustomerId = 5,
+                    CarId = 1011,
+                    RentDate = new DateTime(2021, 06, 04),
+                    ReturnDate = new DateTime(2021, 06, 09),
+                    BrandId = 1008,
+                    ColorId = 7
+                });
+            }
+            carManager.Add(new Car
+            {
+                CarId = 6,
+                BrandId = 2,
+                ColorId = 2,
+                CarName = "T-Model",
+                ModelYear = 1944,
+                DailyPrice = 6666,
+
+                Description = "Kolleksiyon Parçası"
+            });
+
+            carManager.GetCarDetails();
+
+            foreach (var car in carManager.GetCarDetails().Data)
+            {
+                Console.WriteLine("Marka: " + car.BrandName + "\n" + "Yıl: " + car.ModelYear + "\n" + "Renk: "
+                    + car.ColorName + "\n" + "İsim: " + car.CarName + "\n" + "Ücret: " + car.DailyPrice + "\n" + "Açıklama: " + car.Description);
+                Console.WriteLine("------------");
+            }
+            customerManager.GetAll();
+            if (result.Success == true)
+            {
+                customerManager.Add(new Customer
+                {
+                    CompanyName = "Funky Sun"
+                });
+            }
             
-           
 
         }
     }
 }
+

@@ -1,8 +1,5 @@
 ﻿using Entities.Concrete;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
@@ -11,7 +8,7 @@ namespace Business.ValidationRules.FluentValidation
         public CarImageValidator()
         {
             RuleFor(p=> p.CarId).NotNull();
-            RuleFor(p => p.ImageId).NotNull();
+            
             
         }
     }

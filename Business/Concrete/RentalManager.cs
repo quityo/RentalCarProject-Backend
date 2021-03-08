@@ -15,37 +15,35 @@ namespace Business.Concrete
         IRentalDal _rentalDal;
 
         public RentalManager(IRentalDal rentalDal)
-        { // Oluşturulma anında bir veri erişimi yöntemi alıyor
+        { 
             _rentalDal = rentalDal;
         }
 
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate != null)
-            {
+            
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.Added);
-            }
-            return new ErrorResult("The car has not been returned, it can not be rented yet!");
+            
         }
         public IResult Update(Rental rental)
         {
-            if (rental.ReturnDate != null)
+            var updatedRental = _rentalDal.Get(p => p.CarId == rental.CarId);
+            if (updatedRental.ReturnDate != null)
             {
-                _rentalDal.Update(rental);
-                return new SuccessResult(Messages.Updated);
+                return new ErrorResult("The car has not been returned, it can not be updated yet!");
             }
-            return new ErrorResult("The car has not been returned, it can not be updated yet!");
+            updatedRental.ReturnDate = DateTime.Now;
+            _rentalDal.Update(updatedRental);
+            return new SuccessResult(Messages.RentalUpdated);
         }
 
         public IResult Delete(Rental rental)
         {
-            if (rental.ReturnDate != null)
-            {
+            
                 _rentalDal.Delete(rental);
                 return new SuccessResult(Messages.Deleted);
-            }
-            return new ErrorResult("The car has not been returned, it can not be deleted yet!");
+            
         }
 
         public IDataResult<List<Rental>> GetAll()
@@ -63,9 +61,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.GetRentalDetails);
         }
 
-        public IDataResult<RentalDetailDto> GetRentalDetailsById(int rentalId)
-        {
-            return new SuccessDataResult<RentalDetailDto>(_rentalDal.GetRentalDetailsById(r => r.RentalId == rentalId), Messages.GetRentalDetailsById);
-        }
+        
     }
 }

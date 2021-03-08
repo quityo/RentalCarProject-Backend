@@ -19,10 +19,7 @@ namespace Business.Concrete
         }
         public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Length < 2)
-            {
-                return new ErrorResult(Messages.BrandCanNotAdded);
-            }
+            
             _brandDal.Add(brand);
             return new SuccessResult(Messages.Added);
         }
@@ -37,15 +34,12 @@ namespace Business.Concrete
         }
         public IResult Delete(Brand brand)
         {
-            try
+            
             {
                 _brandDal.Delete(brand);
                 return new SuccessResult(Messages.Deleted);
             }
-            catch (Exception)
-            {
-                throw new Exception("Sistem Hatası! Silinme İşlemi Gerçekleşmedi.");
-            }
+           
 
         }
         public IDataResult<List<Brand>> GetAll()
@@ -55,7 +49,7 @@ namespace Business.Concrete
 
         public IDataResult<Brand> GetById(int brandId)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId), Messages.GetBrandByBrandId);
+            return new SuccessDataResult<Brand>(_brandDal.Get(p => p.BrandId == brandId), Messages.GetBrandByBrandId);
         }
     }
 }

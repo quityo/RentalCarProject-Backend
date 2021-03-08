@@ -18,35 +18,24 @@ namespace Business.Concrete
         }
         public IResult Add(Customer customer)
         {
-            if (customer.CompanyName.Length<2)
-            {
-                return new ErrorResult(Messages.CustomerCanNotAdded);
-            }
+            
             _customerDal.Add(customer);
             return new SuccessResult(Messages.Added);
         }
 
         public IResult Update(Customer customer)
         {
-            if(customer.CompanyName.Length <2)
-            {
-                return new ErrorResult(Messages.CustomerCanNotUpdated);
-            }
+            
             _customerDal.Update(customer);
             return new SuccessResult(Messages.Updated);
                         
         }
         public IResult Delete(Customer customer)
         {
-            try
-            {
+            
                 _customerDal.Delete(customer);
                 return new SuccessResult(Messages.Deleted);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Sistem Hatası! Silinme İşlemi Gerçekleşmedi.");
-            }
+           
         }
 
         public IDataResult<List<Customer>> GetAll()
@@ -58,7 +47,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(p => p.CustomerId == customerId), Messages.GetCustomerByUserId);
         }
+       
 
-        
     }
 }
