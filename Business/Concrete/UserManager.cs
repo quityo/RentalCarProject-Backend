@@ -27,7 +27,7 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(UserValidator))] 
-        [SecuredOperation("user.add, admin")] 
+        
         public IResult Add(User user)
         {
             if (user.FirstName.Length < 2)
@@ -38,14 +38,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserAdded);
         }
         [ValidationAspect(typeof(UserValidator))]
-        [SecuredOperation("user.delete, admin")]
+        //[SecuredOperation("user.delete, admin")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
         [ValidationAspect(typeof(UserValidator))]
-        [SecuredOperation("user.update, admin")]
+        //[SecuredOperation("user.update, admin")]
         public IResult Update(User user)
         {
             _userDal.Update(user);

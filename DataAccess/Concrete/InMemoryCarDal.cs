@@ -30,12 +30,11 @@ namespace DataAccess.Concrete
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(p => p.CarId == car.CarId);
-            carToUpdate.BrandId = car.BrandId;
+            
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.CarName = car.CarName;
             carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
-            carToUpdate.ModelYear = car.ModelYear;
+            
         }
         public void Delete(Car car)
         {
@@ -46,24 +45,28 @@ namespace DataAccess.Concrete
         {
             return _cars;
         }
-        public Car GetCarById(int carId)
+        public List<Car> GetAllByBrand(int brandId)
         {
-            return _cars.SingleOrDefault(p => p.CarId == carId);
+            //car list-marka
+            return _cars.Where(c => c.BrandId == brandId).ToList();
         }
-        public Car Get(Expression<Func<Car, bool>> filter)
+
+        public List<Car> GetById(int carId)
         {
-            throw new NotImplementedException();
+            return _cars.Where(c => c.CarId == carId).ToList();
         }
+
         public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
-                
-        public List<CarDetailDto> GetCarDetails()
+
+        public Car Get(Expression<Func<Car, bool>> filter)
         {
             throw new NotImplementedException();
         }
-        public CarDetailDto GetCarDetailsById(Expression<Func<CarDetailDto, bool>> filter)
+
+        public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }

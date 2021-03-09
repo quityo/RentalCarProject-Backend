@@ -25,22 +25,22 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(RentalValidator))] 
-        [SecuredOperation("rental.add, admin")] 
+        //[SecuredOperation("rental.add, admin")] 
         public IResult Add(Rental rental)
         {
-            //ReturnDate Control
+            
             var result = _rentalDal.Get(c => c.CarId == rental.CarId &&
                         (c.ReturnDate == null || c.ReturnDate > DateTime.Now));
             if (result != null)
             {
-                //magic strings
+                
                 return new ErrorResult(Messages.GetRentalDetails);
             }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.GetRentalDetails);
         }
         [ValidationAspect(typeof(RentalValidator))]
-        [SecuredOperation("rental.update, admin")]
+        //[SecuredOperation("rental.update, admin")]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
