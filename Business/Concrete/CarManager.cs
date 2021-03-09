@@ -1,17 +1,15 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.AutoFac;
-using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.AutoFac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace Business.Concrete
 {
@@ -77,10 +75,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
-        
+
     }
-
-
-
 }
-

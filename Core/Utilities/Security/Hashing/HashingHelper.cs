@@ -32,5 +32,5 @@ namespace Core.Utilities.Security.Hashing
             }
 
         }
-    }
+    }   
 }

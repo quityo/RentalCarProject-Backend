@@ -24,7 +24,7 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(UserValidator))]
+        //[ValidationAspect(typeof(UserValidator))]
         //[SecuredOperation("user.add, admin")]
         public IResult Add(User user)
         {
