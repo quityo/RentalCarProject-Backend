@@ -3,15 +3,13 @@ using Business.BusinessAspects.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.AutoFac.Validation;
-using Core.CrossCuttingConcerns.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using FluentValidation;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -26,8 +24,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(UserValidator))] 
-        
+        [ValidationAspect(typeof(UserValidator))]
+        //[SecuredOperation("user.add, admin")]
         public IResult Add(User user)
         {
             if (user.FirstName.Length < 2)
@@ -62,7 +60,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
-        
+
         public IDataResult<User> GetById(int userId)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
@@ -79,7 +77,8 @@ namespace Business.Concrete
         }
 
 
-       
+
 
     }
+
 }
