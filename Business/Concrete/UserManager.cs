@@ -35,6 +35,7 @@ namespace Business.Concrete
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
+
         [ValidationAspect(typeof(UserValidator))]
         //[SecuredOperation("user.delete, admin")]
         public IResult Delete(User user)
