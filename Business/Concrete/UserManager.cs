@@ -59,8 +59,6 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
-
-
         public IDataResult<User> GetById(int userId)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
