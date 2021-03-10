@@ -88,7 +88,8 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
-            //23.10 dersteyiz
+            //FOREIGN KEY ([OperationClaimId]) REFERENCES [dbo].[OperationClaim] ([Id]),
+            //FOREIGN KEY([UserId]) REFERENCES[dbo].[User]([UserId])
         }
     }
 }

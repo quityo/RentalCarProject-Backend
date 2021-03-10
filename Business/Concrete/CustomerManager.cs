@@ -23,8 +23,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(CustomerValidator))]
-        [SecuredOperation("admin")]
+        [ValidationAspect(typeof(CustomerValidator))]//s1
+        [SecuredOperation("customer.add, admin")] //s2
         public IResult Add(Customer customer)
         {
             if (customer.CompanyName.Length < 2)
@@ -35,15 +35,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerAdded);
         }
 
-        [ValidationAspect(typeof(CustomerValidator))]
-        [SecuredOperation("admin")]
-        public IResult Update(Customer customer)
-        {
-            _customerDal.Update(customer);
-            return new SuccessResult(Messages.CustomerUpdated);
-        }
-        [ValidationAspect(typeof(CustomerValidator))]
-        [SecuredOperation("admin")]
+
+
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
@@ -68,6 +61,12 @@ namespace Business.Concrete
         }
 
         
-        
+
+        [ValidationAspect(typeof(CustomerValidator))]
+        public IResult Update(Customer customer)
+        {
+            _customerDal.Update(customer);
+            return new SuccessResult(Messages.CustomerUpdated);
+        }
     }
 }

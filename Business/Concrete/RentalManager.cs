@@ -24,8 +24,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(RentalValidator))] 
-        [SecuredOperation("admin")] 
+        [ValidationAspect(typeof(RentalValidator))] //s1
+        [SecuredOperation("rental.add, admin")] //s2
         public IResult Add(Rental rental)
         {
             
@@ -33,22 +33,14 @@ namespace Business.Concrete
                         (c.ReturnDate == null || c.ReturnDate > DateTime.Now));
             if (result != null)
             {
-                
-                return new ErrorResult(Messages.GetRentalDetails);
+                //magic strings
+                return new ErrorResult(Messages.RentedCar);
             }
             _rentalDal.Add(rental);
-            return new SuccessResult(Messages.GetRentalDetails);
+            return new SuccessResult(Messages.RentalCar);
         }
-        [ValidationAspect(typeof(RentalValidator))]
-        [SecuredOperation("admin")]
-        public IResult Update(Rental rental)
-        {
-            _rentalDal.Update(rental);
-            return new SuccessResult(Messages.RentalUpdated);
 
-        }
-        [ValidationAspect(typeof(RentalValidator))]
-        [SecuredOperation("admin")]
+
 
         public IResult Delete(Rental rental)
         {
@@ -83,6 +75,12 @@ namespace Business.Concrete
         }
 
 
-        
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Update(Rental rental)
+        {
+            _rentalDal.Update(rental);
+            return new SuccessResult(Messages.RentalUpdated);
+
+        }
     }
 }

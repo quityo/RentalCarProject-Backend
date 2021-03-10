@@ -16,6 +16,8 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
+
+        
         IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandDal)
@@ -23,8 +25,8 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        [ValidationAspect(typeof(BrandValidator))]
-        [SecuredOperation("admin")] 
+        [ValidationAspect(typeof(BrandValidator))]//s1
+        [SecuredOperation("brand.add, admin")] //s2
         public IResult Add(Brand brand)
         {
             if (brand.BrandName.Length < 2)
@@ -34,15 +36,7 @@ namespace Business.Concrete
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);
         }
-        [ValidationAspect(typeof(BrandValidator))]
-        [SecuredOperation("admin")]
-        public IResult Update(Brand brand)
-        {
-            _brandDal.Update(brand);
-            return new SuccessResult(Messages.BrandUpdated);
-        }
-        [ValidationAspect(typeof(BrandValidator))]
-        [SecuredOperation("admin")]
+
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
@@ -69,6 +63,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(_brandDal.Get(br => br.BrandId == brandId));
         }
 
-       
+        [ValidationAspect(typeof(BrandValidator))]
+        public IResult Update(Brand brand)
+        {
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandUpdated);
+        }
     }
 }

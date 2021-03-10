@@ -15,7 +15,7 @@ namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
-        
+        //veritabanın soyut sınıfına erişeceğiz.
         IColorDal _colorDal;
 
         public ColorManager(IColorDal colorDal)
@@ -23,8 +23,8 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        [ValidationAspect(typeof(ColorValidator))]
-        [SecuredOperation("admin")] 
+        [ValidationAspect(typeof(ColorValidator))]//s1
+        [SecuredOperation("color.add, admin")] //s2
         public IResult Add(Color color)
         {
             if (color.ColorName.Length < 2)
@@ -48,7 +48,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
 
             }
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.GetAll);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
         }
 
 

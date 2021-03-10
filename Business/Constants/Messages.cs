@@ -69,5 +69,10 @@ namespace Business.Constants
         internal static string CustomersListed = "Müşteri Listesi";
         internal static string RentalDeleted = "Kiralama kaydı silindi.";
         internal static string RentalsListed = "Kiralık araç listesi";
+        internal static string ColorsListed = "Araç Renkleri Listesi";
+        internal static string RentedCar = "Araç Kullanımda";
+        internal static string RentalCar = "Kiralanabilen araçlar";
+        internal static string UserNameInvalid = " Kullanıcı İsmini tekrar giriniz";
+
     }
 }
