@@ -24,7 +24,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(BrandValidator))]
-        //[SecuredOperation("brand.add, admin")] 
+        [SecuredOperation("admin")] 
         public IResult Add(Brand brand)
         {
             if (brand.BrandName.Length < 2)
@@ -35,14 +35,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
         [ValidationAspect(typeof(BrandValidator))]
-        //[SecuredOperation("brand.update, admin")]
+        [SecuredOperation("admin")]
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
         [ValidationAspect(typeof(BrandValidator))]
-        //[SecuredOperation("brand.delete, admin")]
+        [SecuredOperation("admin")]
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);

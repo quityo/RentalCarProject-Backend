@@ -44,7 +44,7 @@ namespace Business.Constants
         internal static string ImageUpdated = "Resim Güncellendi";
         internal static string FileUploadAmountExceeded = "Bişiler Bişiler";
         internal static string CarImageLimitExceeded = "Hede Hudu";
-        internal static String AuthorizationDenied = " Yetkiniz Yok";
+        internal static string AuthorizationDenied = " Yetkiniz Yok";
         public static string UserNotFound = "Kullanıcı Bulunamadı";
         public static string PasswordError = "Şifre Hatalı";
         public static string SuccessfulLogin = "Başarılı giriş";

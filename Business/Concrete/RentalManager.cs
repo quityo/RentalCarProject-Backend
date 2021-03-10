@@ -25,7 +25,7 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(RentalValidator))] 
-        //[SecuredOperation("rental.add, admin")] 
+        [SecuredOperation("admin")] 
         public IResult Add(Rental rental)
         {
             
@@ -40,7 +40,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.GetRentalDetails);
         }
         [ValidationAspect(typeof(RentalValidator))]
-        //[SecuredOperation("rental.update, admin")]
+        [SecuredOperation("admin")]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
@@ -48,7 +48,7 @@ namespace Business.Concrete
 
         }
         [ValidationAspect(typeof(RentalValidator))]
-        [SecuredOperation("rental.delete, admin")]
+        [SecuredOperation("admin")]
 
         public IResult Delete(Rental rental)
         {

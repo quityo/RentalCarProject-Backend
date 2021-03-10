@@ -52,14 +52,14 @@ namespace Business.Concrete
             }
 
             return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
-            //return new SuccessDataResult<User>(userToCheck, "Başarılı Giriş");
+            
         }
 
         public IResult UserExists(string email)
         {
             if (_userService.GetByMail(email) != null)
             {
-                //return new ErrorResult("Kullanıcı Mevcut");
+                
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
             return new SuccessResult();
@@ -70,7 +70,7 @@ namespace Business.Concrete
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
-            //return new SuccessDataResult<AccessToken>(accessToken, "Token Oluşturuldu");
+            
         }
     }
 }

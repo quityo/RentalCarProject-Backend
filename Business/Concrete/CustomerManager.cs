@@ -24,7 +24,7 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(CustomerValidator))]
-        //[SecuredOperation("customer.add, admin")]
+        [SecuredOperation("admin")]
         public IResult Add(Customer customer)
         {
             if (customer.CompanyName.Length < 2)
@@ -36,14 +36,14 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
-        //[SecuredOperation("customer.update, admin")]
+        [SecuredOperation("admin")]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
             return new SuccessResult(Messages.CustomerUpdated);
         }
         [ValidationAspect(typeof(CustomerValidator))]
-        //[SecuredOperation("customer.delete, admin")]
+        [SecuredOperation("admin")]
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);

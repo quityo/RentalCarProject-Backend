@@ -38,20 +38,12 @@ namespace WebAPI
         
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllers();
-            //services.AddSingleton<ICarService,CarManager>();
-            //services.AddSingleton<ICarDal,EfCarDal>();
-            //services.AddSingleton<IColorService, ColorManager>();
-            //services.AddSingleton<IColorDal, EfColorDal>();
-            //services.AddSingleton<IBrandService, BrandManager>();
-            //services.AddSingleton<IBrandDal, EfBrandDal>();
-            //services.AddSingleton<ICustomerService, CustomerManager>();
-            //services.AddSingleton<ICustomerDal, EfCustomerDal>();
-            //services.AddSingleton<IRentalService, RentalManager>();
-            //services.AddSingleton<IRentalDal, EfRentalDal>();
-            //services.AddSingleton<IUserService, UserManager>();
-            //services.AddSingleton<IUserDal, EfUserDal>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddSingleton<IProductService,ProductManager>();
+            //services.AddSingleton<IProductDal, EfProductDal>();
+
+
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -69,8 +61,9 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            services.AddDependencyResolvers(new ICoreModule[]{
-                new CoreModule()
+
+            services.AddDependencyResolvers(new ICoreModule[] {
+               new CoreModule()
             });
 
         }
@@ -84,9 +77,9 @@ namespace WebAPI
             }
 
             app.UseHttpsRedirection();
-            
 
             app.UseRouting();
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -95,6 +88,7 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+            //23.10 dersteyiz
         }
     }
 }
