@@ -15,51 +15,55 @@ namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
+        
         IColorDal _colorDal;
+
         public ColorManager(IColorDal colorDal)
-        { 
+        {
             _colorDal = colorDal;
         }
 
         [ValidationAspect(typeof(ColorValidator))]
-        [SecuredOperation("admin")]
+        [SecuredOperation("admin")] 
         public IResult Add(Color color)
         {
-            
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorCanNotAdded);
+            }
             _colorDal.Add(color);
             return new SuccessResult(Messages.Added);
         }
-        [ValidationAspect(typeof(ColorValidator))]
-        [SecuredOperation("admin")]
-        public IResult Update(Color color)
-        {
-            
-            _colorDal.Update(color);
-            return new SuccessResult(Messages.Updated);
-        }
-        [ValidationAspect(typeof(ColorValidator))]
-        [SecuredOperation("admin")]
+
         public IResult Delete(Color color)
         {
-            
-                _colorDal.Delete(color);
-                return new SuccessResult(Messages.Deleted);
-           
+            _colorDal.Delete(color);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<Color>> GetAll()
         {
+            if (DateTime.Now.Hour == 15)
+            {
+                return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
+
+            }
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.GetAll);
         }
 
+
         public IDataResult<Color> GetById(int colorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId), Messages.GetColorByColorId);
+            return new SuccessDataResult<Color>(_colorDal.Get(co => co.ColorId == colorId));
         }
 
-        public IDataResult<List<Color>> GetCarsByColorId(int colorId)
+        
+
+        [ValidationAspect(typeof(ColorValidator))]
+        public IResult Update(Color color)
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(p => p.ColorId == colorId));
+            _colorDal.Update(color);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
