@@ -27,7 +27,6 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-
         [SecuredOperation("carimage.add")]
         [ValidationAspect(typeof(CarImageValidator))]
         [CancellationTokenAspect]
@@ -61,7 +60,7 @@ namespace Business.Concrete
         [SecuredOperation("carimage.delete")]
         public IResult Delete(CarImagesDto carImagesDto)
         {
-            var result = _carImageDal.Get(ci => ci.CarId == carImagesDto.CarId);
+            var result = _carImageDal.Get(ci => ci.ImageId == carImagesDto.ImageId);
             if (result == null) return new ErrorResult(Messages.CarImageNotFound);
             FileHelper.DeleteImageFile(result.ImagePath);
             _carImageDal.Delete(result);
@@ -77,7 +76,7 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetById(int carImageId)
         {
-            CarImage result = _carImageDal.Get(ci => ci.CarId == carImageId);
+            CarImage result = _carImageDal.Get(ci => ci.ImageId == carImageId);
             if (result == null) return new ErrorDataResult<CarImage>(Messages.CarImageNotFound);
             return new SuccessDataResult<CarImage>(result);
         }
@@ -108,6 +107,5 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImagesDeleted);
         }
 
-        
     }
 }

@@ -34,7 +34,7 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
             _carDal.Add(car);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         [CacheRemoveAspect("car")]
@@ -51,7 +51,7 @@ namespace Business.Concrete
             entity.CarId = 0;
             entity.Description = "TransactionTest" + entity.Description;
             _carDal.Add(entity);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         [SecuredOperation("car.update")]
@@ -61,7 +61,7 @@ namespace Business.Concrete
             if (car.CarName.Length < 3) return new ErrorResult(Messages.CarNameInvalid);
             if (car.DailyPrice <= 0) return new ErrorResult(Messages.CarDailyPriceInvalid);
             _carDal.Update(car);
-            return new SuccessResult(Messages.Updated);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         [SecuredOperation("car.delete")]
@@ -69,7 +69,7 @@ namespace Business.Concrete
         {
             _carImageService.DeleteByCarId(car.CarId);
             _carDal.Delete(car);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         [CacheAspect]
