@@ -13,86 +13,68 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class CarImagesController : ControllerBase
     {
         ICarImageService _carImageService;
-
         public CarImagesController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm] CarImagesDto carImagesDto)
         {
-            var result = _carImageService.Add(file, carImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Add(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
-        [HttpDelete("delete")]
-        public IActionResult Delete([FromForm(Name = ("ImageId"))] int ImageId)
+        [HttpPost("update")]
+        public IActionResult Update([FromForm] CarImagesDto carImagesDto)
         {
-
-            var carImage = _carImageService.Get(ImageId).Data;
-
-            var result = _carImageService.Delete(carImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Update(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
-        [HttpPut("update")]
-        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm(Name = ("ImageId"))] int ImageId)
+        [HttpPost("delete")]
+        public IActionResult Delete(CarImagesDto carImagesDto)
         {
-            var carImage = _carImageService.Get(ImageId).Data;
-            var result = _carImageService.Update(file, carImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Delete(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
+        }
+
+        [HttpPost("deletebycarid")]
+        public IActionResult DeleteByCarId(int carId)
+        {
+            var result = _carImageService.DeleteByCarId(carId);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById([FromForm(Name = ("ImageId"))] int ImageId)
+        public IActionResult GetById(int id)
         {
-            var result = _carImageService.Get(ImageId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.GetById(id);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int carId)
+        {
+            var result = _carImageService.GetByCarId(carId);
+            if (!result.Success) return BadRequest();
+            return Ok(result);
+        }
+
+        [HttpGet("getlist")]
+        public IActionResult GetList()
         {
             var result = _carImageService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
-
-        [HttpGet("getimagesbycarid")]
-        public IActionResult GetImagesById([FromForm(Name = ("CarId"))] int carId)
-        {
-            var result = _carImageService.GetImagesByCarId(carId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
     }
 }

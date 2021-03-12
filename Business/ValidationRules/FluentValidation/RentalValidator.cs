@@ -10,15 +10,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public RentalValidator()
         {
-            RuleFor(p => p.BrandId).NotEmpty();
-            RuleFor(p => p.ColorId).NotEmpty();
-            RuleFor(p => p.CustomerId).NotEmpty();
-            RuleFor(p => p.RentOfficeId).NotEmpty();
-            RuleFor(p => p.ReturnOfficeId).NotEmpty();
-            RuleFor(p => p.RentDate).NotEmpty();
-            RuleFor(p => p.ReturnDate).NotEmpty();
-            RuleFor(p => p.ReturnDate).GreaterThanOrEqualTo(p => p.RentDate);
-
+            RuleFor(r => r.RentDate).NotNull().WithMessage("Kiralama tarihi boş geçilemez.");
         }
     }
 }

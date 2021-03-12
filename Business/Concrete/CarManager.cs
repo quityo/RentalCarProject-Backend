@@ -4,7 +4,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.AutoFac.Caching;
 using Core.Aspects.AutoFac.Performance;
-using Core.Aspects.AutoFac.Transaction;
+
 using Core.Aspects.AutoFac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -13,107 +13,90 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-
-       
         ICarDal _carDal;
+        ICarImageService _carImageService;
 
-        
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
 
-        [ValidationAspect(typeof(CarValidator))] //s1
-        [SecuredOperation("car.add, admin")] //s2.
-        [CacheRemoveAspect("ICarService.Get")] //s3
+        //[CacheRemoveAspect("car")]
+        [SecuredOperation("car.add")]
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.CarName.Length < 2)
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
             _carDal.Add(car);
             return new SuccessResult(Messages.Added);
         }
+
+        [CacheRemoveAspect("car")]
+        //[TransactionAspect]
+        [PerformanceAspect(1)]
+        public IResult AddTransactionTest(Car entity)
+        {
+            Thread.Sleep(2000);
+            _carDal.Add(entity);
+            if (entity.BrandId == 0)
+            {
+                throw new Exception("");
+            }
+            entity.CarId = 0;
+            entity.Description = "TransactionTest" + entity.Description;
+            _carDal.Add(entity);
+            return new SuccessResult(Messages.Added);
+        }
+
+        [SecuredOperation("car.update")]
+        [ValidationAspect(typeof(CarValidator))]
+        public IResult Update(Car car)
+        {
+            if (car.CarName.Length < 3) return new ErrorResult(Messages.CarNameInvalid);
+            if (car.DailyPrice <= 0) return new ErrorResult(Messages.CarDailyPriceInvalid);
+            _carDal.Update(car);
+            return new SuccessResult(Messages.Updated);
+        }
+
+        [SecuredOperation("car.delete")]
         public IResult Delete(Car car)
         {
+            _carImageService.DeleteByCarId(car.CarId);
             _carDal.Delete(car);
             return new SuccessResult(Messages.Deleted);
         }
 
-
-        [PerformanceAspect(5)]
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour == 22)
-            {
-                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
-
-            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
-        public IDataResult<List<Car>> GetAllByBrandId(int brandId)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
-        }
-
-        public IDataResult<List<Car>> GetAllByColorId(int colorId)
-        {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
-        }
-
-        [CacheAspect]
         public IDataResult<Car> GetById(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
-        {
-            if (DateTime.Now.Hour == 22)
-            {
-                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
-        }
-
-        [ValidationAspect(typeof(CarValidator))]
-        [CacheRemoveAspect("ICarService.Get")]
-        public IResult Update(Car car)
-        {
-            _carDal.Update(car);
-            return new SuccessResult(Messages.Updated);
-        }
-
-
-        [TransactionScopeAspect]
-        public IResult AddTransactionalTest(Car car)
-        {
-            Add(car);
-            if (car.DailyPrice < 100)
-            {
-                 
-                throw new Exception("Transaction Error");
-            }
-            Add(car);
-            return null;
-        }
-
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_carDal.GetCarsByBrandId(brandId));
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Car>>(_carDal.GetCarsByColorId(colorId));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+           
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
     }
 }

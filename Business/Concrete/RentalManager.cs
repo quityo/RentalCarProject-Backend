@@ -5,17 +5,18 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.AutoFac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+
 
 namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-
         IRentalDal _rentalDal;
 
         public RentalManager(IRentalDal rentalDal)
@@ -23,64 +24,65 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-
-        [ValidationAspect(typeof(RentalValidator))] //s1
-        [SecuredOperation("rental.add, admin")] //s2
+        [SecuredOperation("rental.add")]
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            
-            var result = _rentalDal.Get(c => c.CarId == rental.CarId &&
-                        (c.ReturnDate == null || c.ReturnDate > DateTime.Now));
-            if (result != null)
-            {
-                //magic strings
-                return new ErrorResult(Messages.RentedCar);
-            }
+            if (!CarIsAvailable(rental.CarId)) return new ErrorResult(Messages.CarIsntAvailable);
             _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalCar);
+            return new SuccessResult(Messages.RentalAdded);
         }
 
+        [SecuredOperation("rental.update")]
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Update(Rental rental)
+        {
+            _rentalDal.Update(rental);
+            return new SuccessResult(Messages.RentalUpdated);
+        }
 
-
+        [SecuredOperation("rental.delete")]
         public IResult Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-
         public IDataResult<List<Rental>> GetAll()
         {
-            if (DateTime.Now.Hour == 15)
-            {
-                return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
-            }
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
 
-
+        public IDataResult<List<RentalDetailDto>> GetAllRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.RentalsListed);
+        }
 
         public IDataResult<Rental> GetById(int rentalId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        public bool CarIsAvailable(int carId)
         {
-            if (DateTime.Now.Hour == 15)
+            using (RentACarContext context = new RentACarContext())
             {
-                return new ErrorDataResult<List<RentalDetailDto>>(Messages.MaintenanceTime);
+                var result = from r in context.Rental
+                             where r.CarId == carId && r.ReturnDate == null
+                             select r;
+                return (result.Count() == 1) ? false : true;
             }
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
-
-        [ValidationAspect(typeof(RentalValidator))]
-        public IResult Update(Rental rental)
+        public IResult CarIsReturned(int carId)
         {
-            _rentalDal.Update(rental);
-            return new SuccessResult(Messages.RentalUpdated);
-
+            using (RentACarContext context = new RentACarContext())
+            {
+                Rental result = _rentalDal.Get(r => r.CarId == carId && r.ReturnDate == null);
+                result.ReturnDate = DateTime.Now;
+                _rentalDal.Update(result);
+            }
+            return new SuccessResult(Messages.RentalUpdated); ;
         }
     }
 }

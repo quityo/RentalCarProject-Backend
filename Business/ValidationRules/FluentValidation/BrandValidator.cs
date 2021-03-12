@@ -10,9 +10,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public BrandValidator()
         {
-            RuleFor(p => p.BrandId).NotEmpty();
-            RuleFor(p => p.BrandName).NotEmpty();
-            RuleFor(p => p.BrandName).MinimumLength(2);
+            RuleFor(b => b.BrandName).NotEmpty().WithMessage("Marka adı boş geçilemez.");
         }
     }
 }

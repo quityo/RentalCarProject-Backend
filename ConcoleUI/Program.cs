@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -9,54 +10,103 @@ namespace ConcoleUI
     {
         static void Main(string[] args)
         {
-            //technology
-            //CarDetailDto();
-            CarTest();
-            //RentalTest();
-            //switch-case yapısı ekle.-araba ekleme
+            Color color = CreateColor("Black");
+            Brand brand = CreateBrand("Fyah");
+            Car car = CreateCar(brand, color, 1977, 420, "Black Magic Woman");
+            User user = CreateUser("Name", "SurName", "mail@mail.com", "12345");
+            Customer customer = CreateCustomer(user, "Company Name");
+
+            ListCars();
+
+            RentACar(user, car, customer);
+            RentACar(user, car, customer); // aynı aracı ikinci kez kiralamaya çalışıyoruz... error dönüyor
+
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.CarIsReturned(car.CarId); 
+
+            RentACar(user, car, customer); // tekrar kiralandı.
 
         }
 
-
-        private static void RentalTest()
+        private static void RentACar(User user, Car car, Customer customer)
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-
-
-            var result = rentalManager.GetRentalDetails();
-
-            if (result.Success == true)
-            {
-
-                foreach (var rental in result.Data)
-                {
-                    Console.WriteLine(rental.CarName + "/" + rental.CompanyName + "/" +
-                        rental.RentDate + "/" + rental.ReturnDate);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
-
+            Rental rental = new Rental();
+            rental.CarId = car.CarId;
+            rental.CustomerId = customer.CustomerId;
+            rental.RentDate = DateTime.Now;
+            rental.ReturnDate = null;
+            var result = rentalManager.Add(rental);
+            Console.WriteLine(result.Message);
         }
 
-
-
-
-        private static void CarTest()
+        private static User CreateUser(string firstName, string lastName, string email, string password)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+            UserManager userManager = new UserManager(new EfUserDal());
+            User user = new User();
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Email = email;
+            var result = userManager.Add(user);
+            Console.WriteLine(result.Message);
+            return user;
+        }
 
+        private static Customer CreateCustomer(User user, string companyName)
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            Customer customer = new Customer();
+            customer.CompanyName = companyName;
+            customer.UserId = user.UserId;
+            var result = customerManager.Add(customer);
+            Console.WriteLine(result.Message);
+            return customer;
+        }
 
+        private static Color CreateColor(string color)
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            Color _color = new Color();
+            _color.ColorName = color;
+            var result = colorManager.Add(_color);
+            Console.WriteLine(result.Message);
+            return _color;
+        }
+
+        private static Brand CreateBrand(string brand)
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            Brand _brand = new Brand();
+            _brand.BrandName = brand;
+            var result = brandManager.Add(_brand);
+            Console.WriteLine(result.Message);
+            return _brand;
+        }
+
+        private static Car CreateCar(Brand brand, Color color, int modelYear, decimal dailyPrice, string description)
+        {
+            CarManager carManager = new CarManager(new EfCarDal(), new CarImageManager(new EfCarImageDal()));
+            Car car = new Car();
+            car.CarName = brand.BrandName;
+            car.BrandId = brand.BrandId;
+            car.ColorId = color.ColorId;
+            car.ModelYear = modelYear;
+            car.DailyPrice = dailyPrice;
+            car.Description = description;
+            var result = carManager.Add(car);
+            Console.WriteLine(result.Message);
+            return car;
+        }
+
+        private static void ListCars()
+        {
+            CarManager carManager = new CarManager(new EfCarDal(), new CarImageManager(new EfCarImageDal()));
             var result = carManager.GetCarDetails();
-
-            if (result.Success == true)
+            if (result.Success)
             {
-
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(car.CarName + "/" + car.ColorName + "/" + car.BrandName);
+                    Console.WriteLine("Araç: " + car.BrandName + " Renk: " + car.ColorName + " Fiyat: " + car.DailyPrice);
                 }
             }
             else
@@ -66,15 +116,7 @@ namespace ConcoleUI
 
         }
 
-
-        private static void CarDetailDto()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails().Data)
-            {
-                Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
-            }
-        }
+        
 
 
     }

@@ -11,12 +11,10 @@ namespace Business.ValidationRules.FluentValidation
     {
        public UserValidator ()
         {
-            RuleFor(p => p.FirstName).NotEmpty();
-            RuleFor(p => p.LastName).NotEmpty();
-            RuleFor(p => p.Email).NotNull().EmailAddress();
-            
-
-
+            RuleFor(u => u.FirstName).NotEmpty().WithMessage("İsim boş geçilemez.");
+            RuleFor(u => u.LastName).NotEmpty().WithMessage("Soyisim boş geçilemez.");
+            RuleFor(u => u.Email).NotEmpty().WithMessage("Email boş geçilemez.");
+            RuleFor(u => u.Email).EmailAddress().WithMessage("Email adresi hatalı.");
         }
     }
 }
