@@ -7,28 +7,57 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string ImagePath { get; set; }
-
-        public static string SaveImageFile(IFormFile imageFile)
+        public static string Add(IFormFile file)
         {
-            string newImageName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-            var fullPath = Path.Combine(ImagePath, newImageName);
-            using (var stream = new FileStream(fullPath, FileMode.Create))
+            var sourcepath = Path.GetTempFileName();
+            if (file.Length > 0)
             {
-                imageFile.CopyTo(stream);
+                using (var stream = new FileStream(sourcepath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
             }
-            return newImageName;
+            var result = newPath(file);
+            File.Move(sourcepath, result);
+            return result;
+        }
+        public static IResult Delete(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception exception)
+            {
+                return new ErrorResult(exception.Message);
+            }
+
+            return new SuccessResult();
+        }
+        public static string Update(string sourcePath, IFormFile file)
+        {
+            var result = newPath(file);
+            if (sourcePath.Length > 0)
+            {
+                using (var stream = new FileStream(result, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+            File.Delete(sourcePath);
+            return result;
+        }
+        public static string newPath(IFormFile file)
+        {
+            FileInfo ff = new FileInfo(file.FileName);
+            string fileExtension = ff.Extension;
+
+            string path = Environment.CurrentDirectory + @"\wwwroot\Images\CarImages";
+            var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + fileExtension;
+
+            string result = $@"{path}\{newPath}";
+            return result;
         }
 
-        public static bool DeleteImageFile(string fileName)
-        {
-            string fullPath = Path.Combine(ImagePath, fileName);
-            if (File.Exists(fullPath))
-            {
-                File.Delete(fullPath);
-                return true;
-            }
-            return false;
-        }
     }
 }

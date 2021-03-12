@@ -7,14 +7,9 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IBrandService
+    public interface IBrandService:IService<Brand>
     {
-        IResult Add(Brand brand);
-        IResult Delete(Brand brand);
-        IResult Update(Brand brand);
-        IDataResult<List<Brand>> GetAll();
-        IDataResult<Brand> GetById(int brandId);
-        
+               
 
     }
 }

@@ -10,7 +10,11 @@ namespace Business.ValidationRules.FluentValidation
     {
         public ColorValidator()
         {
-            RuleFor(c => c.ColorName).NotEmpty().WithMessage("Renk alanı boş geçilemez.");
+            RuleFor(p => p.ColorName).NotEmpty();
+            RuleFor(p => p.ColorName).NotNull();
+            RuleFor(p => p.ColorName).MinimumLength(3);
+
         }
     }
+
 }

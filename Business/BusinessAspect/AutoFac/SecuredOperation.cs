@@ -5,14 +5,13 @@ using Core.Extensions;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Microsoft.Extensions.DependencyInjection;
 using Core.Utilities.Interceptors;
 
 namespace Business.BusinessAspects.AutoFac
 {
-    public class SecuredOperation : MethotInterception
+    public class SecuredOperation : MethodInterception
     {
         private string[] _roles;
         private IHttpContextAccessor _httpContextAccessor;

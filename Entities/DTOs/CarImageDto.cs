@@ -6,11 +6,13 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public class CarImagesDto : IDto
+    public class CustomerDetailDto : IDto
     {
-
-        public int ImageId { get; set; } = 0;
-        public int CarId { get; set; }
-        public IFormFile ImageFile { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public Boolean Status { get; set; }
+        public string CompanyName { get; set; }
     }
 }

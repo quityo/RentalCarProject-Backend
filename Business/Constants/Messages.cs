@@ -8,56 +8,55 @@ namespace Business.Constants
 {
     public static class Messages
     {
-        public static string CarAdded = "Araç eklendi!";
-        public static string CarUpdated = "Araç güncellendi!";
-        public static string CarDeleted = "Araç silindi!";
-        public static string CarsListed = "Araçlar Listelendi!";
+        public static string CarAdded = "Car Added";
+        public static string CarDeleted = "Car Deleted";
+        public static string CarUpdated = "Car Updated";
+        public static string CarPriceInvalid = "Price must be greater than 0";
+        public static string CarsListed = "Cars Listed";
 
-        public static string ColorAdded = "Renk eklendi!";
-        public static string ColorUpdated = "Renk güncellendi!";
-        public static string ColorDeleted = "Renk silindi!";
-        public static string ColorsListed = "Renkler listelendi!";
+        public static string BrandAdded = "Brand Added";
+        public static string BrandDeleted = "Brand Deleted";
+        public static string BrandUpdated = "Brand Updated";
+        public static string BrandNameInvalid = "The Brand Name must consist of a minimum of 2 characters.";
+        public static string BrandsListed = "Brands Listed";
 
-        public static string BrandAdded = "Marka eklendi!";
-        public static string BrandUpdated = "Marka güncellendi!";
-        public static string BrandDeleted = "Marka silindi!";
-        public static string BrandsListed = "Markalar listelendi!";
+        public static string ColorAdded = "Color Added";
+        public static string ColorDeleted = "Color Deleted";
+        public static string ColorUpdated = "Color Updated";
+        public static string ColorsListed = "Colors Listed";
 
-        public static string UserAdded = "Kullanıcı eklendi!";
-        public static string UserUpdated = "Kullanıcı güncellendi!";
-        public static string UserDeleted = "Kullanıcı silindi!";
-        public static string UsersListed = "Kullanıcılar listelendi!";
+        public static string CustomerAdded = "Customer Added";
+        public static string CustomerDeleted = "Customer Deleted";
+        public static string CustomerUpdated = "Customer Updated";
+        public static string CustomersListed = "Customers Listed";
 
-        public static string CustomerAdded = "Müşteri eklendi!";
-        public static string CustomerUpdated = "Müşteri güncellendi!";
-        public static string CustomerDeleted = "Müşteri silindi!";
-        public static string CustomersListed = "Müşteriler listelendi!";
+        public static string UserAdded = "User Added";
+        public static string UserDeleted = "User Deleted";
+        public static string UserUpdated = "User Updated";
+        public static string UsersListed = "Users Listed";
 
-        public static string RentalAdded = "Kiralama eklendi!";
-        public static string RentalUpdated = "Kiralama güncellendi!";
-        public static string RentalDeleted = "Kiralama silindi!";
-        public static string RentalsListed = "Kiradaki Araçlar listelendi!";
+        public static string RentalAdded = "Rental Added";
+        public static string RentalDeleted = "Rental Deleted";
+        public static string RentalUpdated = "Rental Updated";
+        public static string RentalsListed = "Rentals Listed";
+        public static string RentalDeliverInvalid = "To Rent a car, it must first be delivered";
 
-        public static string CarImageAdded = "Araç resmi eklendi!";
-        public static string CarImageUpdated = "Araç resmi güncellendi!";
-        public static string CarImageDeleted = "Araç resmi silindi!";
-        public static string CarImagesDeleted = "Araç resimleri silindi!";
+        public static string NumberOfImagesError = "number of pictures exceeded";
 
-        public static string CarNameInvalid = "Araç ismi geçersiz!";
-        public static string CarIsntAvailable = "Araç müsait değil!";
-        public static string CarDailyPriceInvalid = "Aracın günlük fiyatı sıfırdan büyük olmalı!";
-        public static object InvalidImageFileFormat = "Resim dosya formatı hatalı!";
-        public static string CarImageNotFound = "Araç resmi bulunamadı!";
-        public static string CarImageCountExceeded = "Bir araca maksimum 5 resim eklenebilir!";
+        public static string CarImageAdded = "CarImage Added";
+        public static string CarImageDeleted = "CarImage Deleted";
+        public static string CarImageUpdated = "CarImage Updated";
+        public static string CarImageLimitExceeded = "CarImage Limit Exceeded";
 
-        public static string AuthorizationDenied = "Yetkiniz yok";
-        public static string ProductNameAlreadyExists = "Ürün ismi zaten mevcut";
 
-        public static string UserNotFound = "Kullanıcı bulunamadı";
-        public static string PasswordError = "Şifre hatalı";
-        public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
-        public static string SuccessfulLogin = "Sisteme giriş başarılı";
-        public static string UserAlreadyExists = "Bu kullanıcı zaten mevcut";
-        public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
+
+
+        public static string UserRegistered = "UserRegistered";
+        public static string UserNotFound = "UserNotFound";
+        public static string PasswordError = "PasswordError";
+        public static string SuccessfulLogin = "SuccessfulLogin";
+        public static string UserAlreadyExists = "UserAlreadyExists";
+        public static string AccessTokenCreated = "AccessTokenCreated";
+        public static string AuthorizationDenied = "AuthorizationDenied";
     }
 }

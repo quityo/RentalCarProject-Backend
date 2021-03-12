@@ -11,25 +11,27 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
     public class MemoryCacheManager : ICacheManager
     {
-        IMemoryCache _memoryCache;
+        //Adapter Pattern
+        private IMemoryCache _memoryCache;
+
         public MemoryCacheManager()
         {
             _memoryCache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();
-
         }
-        public void Add(string key, object value, int duration)
-        {
-            _memoryCache.Set(key, value, TimeSpan.FromMinutes(duration));
-        }
-
         public T Get<T>(string key)
         {
             return _memoryCache.Get<T>(key);
+
         }
 
         public object Get(string key)
         {
             return _memoryCache.Get(key);
+        }
+
+        public void Add(string key, object value, int duration)
+        {
+            _memoryCache.Set(key, value, TimeSpan.FromMinutes(duration));
         }
 
         public bool IsAdd(string key)

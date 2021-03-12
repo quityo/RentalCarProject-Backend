@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
-
-namespace Core.Aspects.AutoFac.Caching
+namespace Core.Aspects.Autofac.Caching
 {
-    public class CacheRemoveAspect : MethotInterception
+    public class CacheRemoveAspect : MethodInterception
     {
         private string _pattern;
         private ICacheManager _cacheManager;

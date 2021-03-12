@@ -4,11 +4,12 @@ using System.Text;
 
 namespace Business.CCS
 {
-    public class FileLogger : ILogger
+    public class DatabaseLogger : ILogger
     {
         public void Log()
         {
-            Console.WriteLine("Dosyaya Loglandı");
+            Console.WriteLine("Veritabanına loglandı");
         }
-    }    
+    }
+
 }

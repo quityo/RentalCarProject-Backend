@@ -1,9 +1,10 @@
-﻿using Core.DataAccess.EntityFramework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+
 using Entities.Concrete;
 using Entities.DTOs;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -11,20 +12,23 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<CustomerDetailDto> GetCustomerDetails()
         {
-            using (RentACarContext context = new RentACarContext())
+            using (var context = new RentACarContext())
             {
-                var result = from c in context.Customer
-                             join u in context.User
-                             on c.UserId equals u.UserId
-                             select new CustomerDetailDto()
+                var result = from c in context.Customers
+                             join u in context.Users on c.UserId equals u.UserId
+                             select new CustomerDetailDto
                              {
-                                 CustomerId = c.CustomerId,
-                                 CompanyName = c.CompanyName,
+                                 Id = c.UserId,
                                  FirstName = u.FirstName,
-                                 LastName = u.LastName
+                                 LastName = u.LastName,
+                                 Email = u.Email,
+                                 Status = u.Status,
+                                 CompanyName = c.CompanyName
                              };
+
                 return result.ToList();
             }
         }
+
     }
 }
