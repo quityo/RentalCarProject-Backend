@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Linq;
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
@@ -14,19 +15,22 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new RentACarContext())
             {
-                var result = from c in context.Customers
-                             join u in context.Users on c.UserId equals u.UserId
+                var result = from c in context.Customer
+                             join u in context.User on c.UserId equals u.UserId
+
                              select new CustomerDetailDto
                              {
-                                 Id = c.UserId,
+                                 CustomerId = c.CustomerId,
+
+
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  Email = u.Email,
-                                 Status = u.Status,
                                  CompanyName = c.CompanyName
                              };
-
                 return result.ToList();
+
+                
             }
         }
 

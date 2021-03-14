@@ -17,9 +17,9 @@ namespace Business.Concrete
     {
         IColorDal _colorDal;
 
-        public ColorManager(IColorDal brandDal)
+        public ColorManager(IColorDal colorDal)
         {
-            _colorDal = brandDal;
+            _colorDal = colorDal;
         }
 
         [ValidationAspect(typeof(ColorValidator))]
@@ -41,9 +41,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
         }
 
-        public IDataResult<Color> GetById(int id)
+        public IDataResult<Color> GetById(int colorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == id));
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId));
         }
 
         public IResult Update(Color entity)
