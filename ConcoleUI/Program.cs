@@ -38,7 +38,7 @@ namespace ConcoleUI
             {
                 CarId = 2304,
                 CustomerId = 8,
-                RentDate = "1923",
+                
             };
             var rentalResult = rentalManager.Add(rent);
 

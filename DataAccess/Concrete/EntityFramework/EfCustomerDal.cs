@@ -21,8 +21,6 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CustomerDetailDto
                              {
                                  CustomerId = c.CustomerId,
-
-
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  Email = u.Email,

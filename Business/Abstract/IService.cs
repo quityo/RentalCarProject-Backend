@@ -1,4 +1,5 @@
 ﻿using Core.Utilities.Results;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,7 @@ namespace Business.Abstract
         IDataResult<List<T>> GetAll();
 
         IDataResult<T> GetById(int id);
+
+        
     }
 }

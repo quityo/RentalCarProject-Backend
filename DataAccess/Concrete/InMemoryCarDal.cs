@@ -66,9 +66,9 @@ namespace DataAccess.Concrete
     //        throw new NotImplementedException();
     //    }
 
-    //    public List<CarDetailDto> GetCarDetails()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
+       public List<CarDetailDto> GetCarDetails()
+        {
+           throw new NotImplementedException();
+       }
     }
 }

@@ -58,5 +58,6 @@ namespace Business.Constants
         public static string UserAlreadyExists = "UserAlreadyExists";
         public static string AccessTokenCreated = "AccessTokenCreated";
         public static string AuthorizationDenied = "AuthorizationDenied";
+        internal static string FailAddedImageLimit;
     }
 }

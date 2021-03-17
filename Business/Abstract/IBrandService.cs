@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface IBrandService:IService<Brand>
     {
-               
+        
 
     }
 }

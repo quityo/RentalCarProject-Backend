@@ -6,5 +6,6 @@ namespace Entities.DTOs
 {
     public class BrandDetailDto
     {
+        
     }
 }
