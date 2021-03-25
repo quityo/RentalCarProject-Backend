@@ -4,6 +4,7 @@ using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Abstract
@@ -11,11 +12,11 @@ namespace Business.Abstract
     public interface ICarImageService
     {
         IDataResult<List<CarImage>> GetAll();
-        IDataResult<CarImage> Get(int imageId);
-        IDataResult<List<CarImage>> GetCarImagesByCarId(int carId);
-        IResult Add(CarImage carImage);
+        IDataResult<List<CarImage>> GetImagesByCarId(int carId);
+        IDataResult<CarImage> GetById(int imageId);
+        IResult Add(IFormFile file, CarImage carImage);
+        IResult AddCollective(IFormFile[] files, CarImage carImage);
+        IResult Update(IFormFile file, CarImage carImage);
         IResult Delete(CarImage carImage);
-        IResult Update(CarImage carImage);
-        
     }
 }

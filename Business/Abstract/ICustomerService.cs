@@ -7,8 +7,13 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface ICustomerService : IService<Customer>
+    public interface ICustomerService 
     {
-        IDataResult<List<CustomerDetailDto>> GetCustomerDetails();
+        IResult Add(Customer customer);
+        IResult Delete(Customer customer);
+        IResult Update(Customer customer);
+        IDataResult<List<Customer>> GetAll();
+        IDataResult<List<CustomerDetailDto>> GetCustomerDetail();
+
     }
 }

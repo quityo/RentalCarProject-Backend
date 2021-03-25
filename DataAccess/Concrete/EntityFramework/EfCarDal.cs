@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,30 +15,31 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
-            using (RentACarContext context = new RentACarContext())
+            using (var context = new RentACarContext())
             {
                 var result = from c in context.Car
-                             join b in context.Brand
-                             on c.BrandId equals b.BrandId
-                             join co in context.Color
-                             on c.ColorId equals co.ColorId
-                             join i in context.CarImage
-                             on c.CarId equals i.CarId
-
-                             select new CarDetailDto {
+                             join b in context.Brand on c.BrandId equals b.BrandId
+                             join co in context.Color on c.ColorId equals co.ColorId
+                             //join i in context.CarImages on c.CarId equals i.CarId
+                             select new CarDetailDto
+                             {
                                  CarId = c.CarId,
+                                 BrandId = b.BrandId,
+                                 ColorId = co.ColorId,
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
-                                 ColorId = co.ColorId,
-                                 DailyPrice = c.DailyPrice,
-                                 Description = c.Description,
+                                 ColorName = co.ColorName,
                                  ModelYear = c.ModelYear,
-                                 ImagePath = i.ImagePath
+                                 Description = c.Description,
+                                 DailyPrice = c.DailyPrice,
+                                 //ImagePath = i.ImagePath,
+                                 ImagePath = (from i in context.CarImage where i.CarId == c.CarId select i.ImagePath).ToList(),
+
                              };
                 return result.ToList();
             }
         }
 
-       
+
     }
 }

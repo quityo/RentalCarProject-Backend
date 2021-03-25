@@ -1,5 +1,6 @@
 ﻿using Entities.Concrete;
 using FluentValidation;
+using System;
 
 namespace Business.ValidationRules.FluentValidation
 {
@@ -7,9 +8,11 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            RuleFor(c => c.DailyPrice).GreaterThan(0);
-            RuleFor(c => c.DailyPrice).NotEmpty();
+            RuleFor(c => c.CarName).NotEmpty().WithMessage("Araba ismi bos birakilamaz!");
+            RuleFor(c => c.CarName).MinimumLength(2).WithMessage("Araba ismi minimum 2 karakter olmalıdır!");
 
+            RuleFor(r => r.DailyPrice).NotEmpty().WithMessage("Günlük fiyat bos birakilamaz");
+            RuleFor(r => r.DailyPrice).GreaterThan(0).WithMessage("Günlük fiyat 0 dan buyuk olmali");
         }
 
     }

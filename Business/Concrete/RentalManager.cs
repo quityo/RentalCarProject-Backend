@@ -2,7 +2,10 @@
 using Business.BusinessAspects.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
-
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -24,43 +27,43 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        public IResult Add(Rental rental)
+        public IResult CheckReturnDate(int carId)
         {
-            if (rental.ReturnDate != null)
+
+            var result = _rentalDal.GetRentalDetails(c => c.CarId == carId && c.ReturnDate == null);
+            if (result.Count > 0)
             {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
+                return new ErrorResult(Messages.CarNotAvailable);
             }
+            return new SuccessResult(Messages.CarAvailable);
 
-            return new ErrorResult(Messages.RentalDeliverInvalid);
-        }
-
-        public IResult Delete(Rental rental)
-        {
-            _rentalDal.Delete(rental);
-
-            return new SuccessResult(Messages.RentalDeleted);
         }
 
         public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        public IDataResult<Rental> GetById(int rentalId)
+        public IDataResult<List<RentalDetailDto>> GetRentalDetailsDto(int carId)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(c => c.RentalId == rentalId));
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(c => c.CarId == carId));
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        [SecuredOperation("admin, product.add")]
+        [CacheRemoveAspect("IRentalService.Get")]
+        public IResult Add(Rental rental)
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
-        }
+            _rentalDal.Add(rental);
+            return new SuccessResult();
 
+        }
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
-            return new SuccessResult(Messages.RentalUpdated);
+            return new SuccessResult();
         }
+
+
     }
 }
