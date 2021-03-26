@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<Car> GetCarsByBrandId(int brandId)
         {
-            using (var context = new RentACarContext())
+            using (RentACarContext context = new RentACarContext())
             {
                 var result = from c in context.Car
                              join b in context.Brand
@@ -54,7 +54,6 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  CarId = c.CarId,
                                  CarName = c.CarName,
-                                 ColorId = c.ColorId,
                                  ColorName = co.ColorName,
                                  BrandId = c.BrandId,
                                  BrandName = b.BrandName,
@@ -78,8 +77,6 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
-                                 BrandId = b.BrandId,
-                                 ColorId = co.ColorId,
                                  CarName = c.CarName,
                                  ColorId = c.ColorId,
                                  ColorName = co.ColorName,

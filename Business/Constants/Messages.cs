@@ -25,7 +25,7 @@ namespace Business.Constants
         public static string BrandNameInvalid = "The Brand Name must consist of a minimum of 2 characters.";
         public static string BrandsListed = "Brands Listed";
 
-        public static string CarUpdated = "Araba güncelleme islemi basarili";
+        
         public static string CarUpdatedError = "Araba güncelleme islemi basarisiz";
 
         public static string CarDetail = "Araba detayları listelendi";
@@ -36,13 +36,13 @@ namespace Business.Constants
 
 
 
-        public static string BrandAdded = "Marka eklendi";
+        
         public static string BrandAddedError = "Marka ekleme islemi basarisiz";
 
-        public static string BrandDeleted = "Marka silindi";
+        
         public static string BrandDeletedError = "Marka silme islemi basarisiz";
 
-        public static string BrandUpdated = "Marka güncellendi";
+        
         public static string BrandUpdatedError = "Marka güncelleme islemi basarisiz";
 
         public static string BrandListed = "Marka listelendi";

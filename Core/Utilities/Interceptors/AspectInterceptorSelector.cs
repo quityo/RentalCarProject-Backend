@@ -1,7 +1,6 @@
 ﻿using Castle.DynamicProxy;
+using Core.Aspects.AutoFac.Cancelation;
 
-using Core.Aspects.Exception;
-using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -13,13 +12,12 @@ namespace Core.Utilities.Interceptors
     {
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
-            var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>
-                (true).ToList();
-            var methodAttributes = type.GetMethod(method.Name)
-                .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
+            var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>(true).ToList();
+            var methodAttributes = type.GetMethod(method.Name).GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
             classAttributes.AddRange(methodAttributes);
-            classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
-            // sistem genelinde çalışacak özellikler eklenecek!
+            // classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
+            // sistem genelinde çalışacak özellikler buraya eklenecek
+            classAttributes.Add(new CancellationTokenAspect());
 
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
