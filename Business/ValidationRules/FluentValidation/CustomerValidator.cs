@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class RentalValidator : AbstractValidator<Rental>
+    public class CustomerValidator : AbstractValidator<Customer>
     {
-        public RentalValidator()
+        public CustomerValidator()
         {
-            RuleFor(r => r.RentDate).NotNull().WithMessage("Kiralama tarihi boş geçilemez.");
+            RuleFor(c => c.UserId).NotEmpty();
         }
     }
 }

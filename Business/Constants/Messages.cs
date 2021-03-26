@@ -25,20 +25,44 @@ namespace Business.Constants
         public static string BrandNameInvalid = "The Brand Name must consist of a minimum of 2 characters.";
         public static string BrandsListed = "Brands Listed";
 
-        public static string ColorAdded = "Color Added";
-        public static string ColorDeleted = "Color Deleted";
-        public static string ColorUpdated = "Color Updated";
-        public static string ColorsListed = "Colors Listed";
+        public static string CarUpdated = "Araba güncelleme islemi basarili";
+        public static string CarUpdatedError = "Araba güncelleme islemi basarisiz";
 
-        public static string CustomerAdded = "Customer Added";
-        public static string CustomerDeleted = "Customer Deleted";
-        public static string CustomerUpdated = "Customer Updated";
-        public static string CustomersListed = "Customers Listed";
+        public static string CarDetail = "Araba detayları listelendi";
+        public static string CarDetailError = "Araba detayları listeleme islemi basarisiz";
 
-        public static string UserAdded = "User Added";
-        public static string UserDeleted = "User Deleted";
-        public static string UserUpdated = "User Updated";
-        public static string UsersListed = "Users Listed";
+        public static string CarListed = "Araba listeleme başarili";
+        public static string CarListedError = "Araba listeleme basarisiz";
+
+
+
+        public static string BrandAdded = "Marka eklendi";
+        public static string BrandAddedError = "Marka ekleme islemi basarisiz";
+
+        public static string BrandDeleted = "Marka silindi";
+        public static string BrandDeletedError = "Marka silme islemi basarisiz";
+
+        public static string BrandUpdated = "Marka güncellendi";
+        public static string BrandUpdatedError = "Marka güncelleme islemi basarisiz";
+
+        public static string BrandListed = "Marka listelendi";
+        public static string BrandListedError = "Marka listelenme islemi basarisiz";
+
+
+
+        public static string ColorAdded = "Renk eklendi";
+        public static string ColorAddedError = "Renk ekleme islemi basarisiz";
+
+        public static string ColorDeleted = "Renk silindi";
+        public static string ColorDeletedError = "Renk silme islemi basarisiz";
+
+        public static string ColorUpdated = "Renk güncellendi";
+        public static string ColorUpdatedError = "Renk güncellene islemi basarisiz";
+
+        public static string ColorListed = "Renk listelendi";
+        public static string ColorListedError = "Renk silme islemi basarisiz";
+        public static string CarAvailable = "Araç Müsait";
+        public static string CarNotAvailable = "Araç Müşteride";
 
         public static string RentalAdded = "Rental Added";
         public static string RentalDeleted = "Rental Deleted";
@@ -56,14 +80,12 @@ namespace Business.Constants
         public static string CarImageNotFound = "CarImageNotFound";
         
 
+        public static string AuthorizationDenied = "Yetkiniz yok";
+        public static string UserNotFound = "Kullanici bulunamadi";
+        public static string PasswordError = "Sifre hatali";
+        public static string UserRegistered = "Kullanici kaydı başarili";
 
-        public static string UserRegistered = "UserRegistered";
-        public static string UserNotFound = "UserNotFound";
-        public static string PasswordError = "PasswordError";
-        public static string SuccessfulLogin = "SuccessfulLogin";
-        public static string UserAlreadyExists = "UserAlreadyExists";
-        public static string AccessTokenCreated = "AccessTokenCreated";
-        public static string AuthorizationDenied = "AuthorizationDenied";
-        internal static string FailAddedImageLimit;
+        public static string RentalDetailListed = "Kira detayi listelendi";
     }
+
 }

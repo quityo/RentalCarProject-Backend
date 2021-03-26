@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
-using Core.Entities.Concrete;
+using Business.Constants;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -104,7 +105,7 @@ namespace ConcoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal(), new CarImageManager(new EfCarImageDal()));
             var result = carManager.GetCarDetails();
-            if (result.Success)
+            if (result.Success == true)
             {
                 foreach (var car in result.Data)
                 {

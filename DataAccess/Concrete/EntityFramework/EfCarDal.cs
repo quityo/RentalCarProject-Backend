@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<Car> GetCarsByBrandId(int brandId)
         {
-            using (RentACarContext context = new RentACarContext())
+            using (var context = new RentACarContext())
             {
                 var result = from c in context.Car
                              join b in context.Brand
@@ -77,6 +78,8 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
+                                 BrandId = b.BrandId,
+                                 ColorId = co.ColorId,
                                  CarName = c.CarName,
                                  ColorId = c.ColorId,
                                  ColorName = co.ColorName,

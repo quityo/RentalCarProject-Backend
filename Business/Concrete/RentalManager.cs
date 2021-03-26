@@ -48,9 +48,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<List<Rental>> GetAll()
+        public IDataResult<List<RentalDetailDto>> GetRentalDetailsDto(int carId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(c => c.CarId == carId));
         }
 
         public IDataResult<List<RentalDetailDto>> GetAllRentalDetails()
@@ -84,5 +84,7 @@ namespace Business.Concrete
             }
             return new SuccessResult(Messages.RentalUpdated); ;
         }
+
+
     }
 }

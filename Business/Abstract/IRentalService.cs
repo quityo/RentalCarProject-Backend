@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IRentalService : IService<Rental>
+    public interface IRentalService 
     {
         IResult Add(Rental rental);
         IResult Update(Rental rental);

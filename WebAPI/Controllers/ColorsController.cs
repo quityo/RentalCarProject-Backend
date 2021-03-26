@@ -14,22 +14,22 @@ namespace WebAPI.Controllers
     public class ColorsController : ControllerBase
     {
         IColorService _colorService;
-
         public ColorsController(IColorService colorService)
         {
             _colorService = colorService;
         }
+
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public IActionResult Get()
         {
             var result = _colorService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
         }
+
         [HttpGet("getbyid")]
         public IActionResult GetById(int colorId)
         {
@@ -38,7 +38,6 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
         }
 
@@ -51,20 +50,10 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
         }
-        [HttpPost("update")]
-        public IActionResult Update(Color color)
-        {
-            var result = _colorService.Update(color);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
 
-            return BadRequest(result);
-        }
+
         [HttpPost("delete")]
         public IActionResult Delete(Color color)
         {
@@ -73,7 +62,17 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
+            return BadRequest(result);
+        }
 
+        [HttpPost("update")]
+        public IActionResult Update(Color color)
+        {
+            var result = _colorService.Update(color);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
             return BadRequest(result);
         }
     }

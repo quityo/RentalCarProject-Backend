@@ -10,11 +10,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public ColorValidator()
         {
-            RuleFor(p => p.ColorName).NotEmpty();
-            RuleFor(p => p.ColorName).NotNull();
-            RuleFor(p => p.ColorName).MinimumLength(3);
-
+            RuleFor(c => c.ColorName).NotEmpty().WithMessage("ColorName alani bos birakilamaz");
+            RuleFor(c => c.ColorName).MaximumLength(15).WithMessage("ColorName alani en fazla 15 karakter olabilir");
         }
     }
-
 }

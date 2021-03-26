@@ -1,5 +1,5 @@
 ﻿using Core.Entities;
-
+using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
@@ -7,5 +7,5 @@ namespace Entities.Concrete
     {
         public int ColorId { get; set; }
         public string ColorName { get; set; }
-    }
+        }
 }
