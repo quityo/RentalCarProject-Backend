@@ -23,13 +23,52 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        private ICarImageDal _imageDal;
+        ICarImageDal _carImageDal;
 
-        public CarImageManager(ICarImageDal imageDal)
+        public CarImageManager(ICarImageDal carImageDal)
         {
-            _imageDal = imageDal;
+            _carImageDal = carImageDal;
         }
 
+        [SecuredOperation("carimage.add")]
+        [ValidationAspect(typeof(CarImageValidator))]
+        [CancellationTokenAspect]
+        public IResult Add(CarImageDto carImagesDto)
+        {
+            var result = BusinessRules.Run(CheckCarImagesCount(carImagesDto.CarId));
+            if (result != null) return result;
+            CarImage carimage = new CarImage
+            {
+                CarId = carImagesDto.CarId,
+                ImagePath = FileHelper.SaveImageFile(carImagesDto.ImageFile),
+                Created = DateTime.Now
+            };
+            _carImageDal.Add(carimage);
+            return new SuccessResult(Messages.CarImageAdded);
+        }
+
+        [SecuredOperation("carimage.update")]
+        [ValidationAspect(typeof(CarImageValidator))]
+        public IResult Update(CarImageDto carImagesDto)
+        {
+            var result = _carImageDal.Get(ci => ci.ImageId == carImagesDto.ImageId);
+            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
+            FileHelper.DeleteImageFile(result.ImagePath);
+            result.ImagePath = FileHelper.SaveImageFile(carImagesDto.ImageFile);
+            result.Created = DateTime.Now;
+            _carImageDal.Update(result);
+            return new SuccessResult(Messages.CarImageUpdated);
+        }
+
+        [SecuredOperation("carimage.delete")]
+        public IResult Delete(CarImageDto carImagesDto)
+        {
+            var result = _carImageDal.Get(ci => ci.ImageId == carImagesDto.ImageId);
+            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
+            FileHelper.DeleteImageFile(result.ImagePath);
+            _carImageDal.Delete(result);
+            return new SuccessResult(Messages.CarImageDeleted);
+        }
 
         private IResult CheckCarImagesCount(int carId)
         {
@@ -38,9 +77,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<CarImage> GetById(int carImageId)
+        public IDataResult<CarImage> GetById(int imageId)
         {
-            CarImage result = _carImageDal.Get(ci => ci.ImageId == carImageId);
+            CarImage result = _carImageDal.Get(ci => ci.ImageId == imageId);
             if (result == null) return new ErrorDataResult<CarImage>(Messages.CarImageNotFound);
             return new SuccessDataResult<CarImage>(result);
         }
@@ -51,7 +90,7 @@ namespace Business.Concrete
             if (result.Any()) return new SuccessDataResult<List<CarImage>>(result);
             return new SuccessDataResult<List<CarImage>>(new List<CarImage>
             {
-                new CarImage{  CarId = carId,  ImagePath = "default.jpg", Created = DateTime.Now }
+                new CarImage{  CarId = carId,  ImagePath = "default.jpg", Created  = DateTime.Now }
             });
         }
 
@@ -68,46 +107,7 @@ namespace Business.Concrete
                 FileHelper.DeleteImageFile(item.ImagePath);
                 _carImageDal.Delete(item);
             }
-            return new SuccessResult(Messages.CarImageDeleted);
-        }
-        [SecuredOperation("carimage.add")]
-        [ValidationAspect(typeof(CarImageValidator))]
-        [CancellationTokenAspect]
-        public IResult Add(CarImageDto carImageDto)
-        {
-            var result = BusinessRules.Run(CheckCarImagesCount(carImageDto.CarId));
-            if (result != null) return result;
-            CarImage carimage = new CarImage
-            {
-                CarId = carImageDto.CarId,
-                ImagePath = FileHelper.SaveImageFile(carImageDto.ImageFile),
-                Created = DateTime.Now
-            };
-            _carImageDal.Add(carimage);
-            return new SuccessResult(Messages.CarImageAdded);
-        }
-
-
-        [SecuredOperation("carimage.update")]
-        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(CarImageDto carImageDto)
-        {
-            var result = _carImageDal.Get(ci => ci.ImageId == carImageDto.ImageId);
-            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
-            FileHelper.DeleteImageFile(result.ImagePath);
-            result.ImagePath = FileHelper.SaveImageFile(carImageDto.ImageFile);
-            result.Created = DateTime.Now;
-            _carImageDal.Update(result);
-            return new SuccessResult(Messages.CarImageUpdated);
-        }
-        [SecuredOperation("carimage.delete")]
-        public IResult Delete(CarImageDto carImageDto)
-        {
-            var result = _carImageDal.Get(ci => ci.ImageId == carImageDto.ImageId);
-            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
-            FileHelper.DeleteImageFile(result.ImagePath);
-            _carImageDal.Delete(result);
-            return new SuccessResult(Messages.CarImageDeleted);
+            return new SuccessResult(Messages.CarImagesDeleted);
         }
     }
 }

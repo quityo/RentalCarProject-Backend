@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using Business.Constants;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
@@ -13,47 +14,47 @@ namespace ConcoleUI
 
         static void Main(string[] args)
         {
-            //Color color = CreateColor("xxx");
-            //Brand brand = CreateBrand("ccc");
-            //Car car = CreateCar(brand, color, 1970, 420, "Car Description...");
-            //User user = CreateUser("Name", "SurName", "mail@mail.com", "12345");
-            //Customer customer = CreateCustomer(user, "Company Name");
+            Color color = CreateColor("Black");
+            Brand brand = CreateBrand("Opel");
+            Car car = CreateCar(brand, color, 2007, 270, "Car Description...");
+            User user = CreateUser("Name", "SurName", "mail@mail.com", "12345");
+            Customer customer = CreateCustomer(user, "Company Name");
 
-            //ListCars();
+            ListCars();
 
-            //RentACar(user, car, customer);
-            //RentACar(user, car, customer); // aynı aracı ikinci kez kiralamaya çalışıyoruz... error dönüyor
+            RentACar(user, car, customer);
+            RentACar(user, car, customer); // aynı aracı ikinci kez kiralamaya çalışıyoruz... error dönüyor
 
-            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            //rentalManager.CarIsReturned(car.CarId); // araç iade ediliyor
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.CarIsReturned(car.CarId); // araç iade ediliyor
 
-            //RentACar(user, car, customer); // tekrar kiralandı.
+            RentACar(user, car, customer); // tekrar kiralandı.
 
         }
 
-        //private static void RentACar(User user, Car car, Customer customer)
-        //{
-        //    RentalManager rentalManager = new RentalManager(new EfRentalDal());
-        //    Rental rental = new Rental();
-        //    rental.CarId = car.CarId;
-        //    rental.CustomerId = customer.CustomerId;
-        //    rental.RentDate = DateTime.Now;
-        //    rental.ReturnDate = null;
-        //    var result = rentalManager.Add(rental);
-        //    Console.WriteLine(result.Message);
-        //}
+        private static void RentACar(User user, Car car, Customer customer)
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            Rental rental = new Rental();
+            rental.CarId = car.CarId;
+            rental.CustomerId = customer.CustomerId;
+            rental.RentDate = DateTime.Now;
+            rental.ReturnDate = DateTime.UtcNow;
+            var result = rentalManager.Add(rental);
+            Console.WriteLine(result.Message);
+        }
 
-        //private static User CreateUser(string firstName, string lastName, string email, string password)
-        //{
-        //    UserManager userManager = new UserManager(new EfUserDal());
-        //    User user = new User();
-        //    user.FirstName = firstName;
-        //    user.LastName = lastName;
-        //    user.Email = email;
-        //    var result = userManager.Add(user);
-        //    Console.WriteLine(result.Message);
-        //    return user;
-        //}
+        private static User CreateUser(string firstName, string lastName, string email, string password)
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            User user = new User();
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Email = email;
+            var result = userManager.Add(user);
+            Console.WriteLine(result.Message);
+            return user;
+        }
 
         private static Customer CreateCustomer(User user, string companyName)
         {
@@ -105,7 +106,7 @@ namespace ConcoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal(), new CarImageManager(new EfCarImageDal()));
             var result = carManager.GetCarDetails();
-            if (result.Success == true)
+            if (result.Success)
             {
                 foreach (var car in result.Data)
                 {
@@ -118,6 +119,5 @@ namespace ConcoleUI
             }
 
         }
-
     }
 }
