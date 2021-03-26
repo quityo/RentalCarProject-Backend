@@ -32,6 +32,6 @@ namespace Core.Utilities.Helpers
         }
     }
 }
-    
+
 
 

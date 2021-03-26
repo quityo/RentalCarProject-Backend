@@ -45,15 +45,16 @@ namespace Business.Constants
         public static string RentalUpdated = "Rental Updated";
         public static string RentalsListed = "Rentals Listed";
         public static string RentalDeliverInvalid = "To Rent a car, it must first be delivered";
-
+        public static string CarIsntAvailable = "CarIsntAvailable";
         public static string NumberOfImagesError = "number of pictures exceeded";
 
         public static string CarImageAdded = "CarImage Added";
         public static string CarImageDeleted = "CarImage Deleted";
         public static string CarImageUpdated = "CarImage Updated";
         public static string CarImageLimitExceeded = "CarImage Limit Exceeded";
-
-
+        public static string CarImageCountExceeded = "CarImageCountExceeded";
+        public static string CarImageNotFound = "CarImageNotFound";
+        
 
 
         public static string UserRegistered = "UserRegistered";

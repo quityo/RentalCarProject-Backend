@@ -18,97 +18,65 @@ namespace WebAPI.Controllers
     public class CarImagesController : ControllerBase
     {
         ICarImageService _carImageService;
-
         public CarImagesController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _carImageService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpGet("getbyid")]
-        public IActionResult GetById([FromForm(Name = ("Id"))] int imageId)
-        {
-            var result = _carImageService.Get(imageId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpGet("getcarimagesbycarid")]
-        public IActionResult GetCarImagesById([FromForm] int carId)
-        {
-            var result = _carImageService.GetCarImagesByCarId(carId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
         [HttpPost("add")]
-        public IActionResult Add([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm] CarImageDto carImagesDto)
         {
-            carImage.Created = DateTime.Now;
-            carImage.ImagePath = FileHelper.Add(file);
-            var result = _carImageService.Add(carImage);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
-
-        [HttpPost("delete")]
-        public IActionResult Delete([FromForm(Name = ("Id"))] int ImageId)
-        {
-            var carImage = _carImageService.Get(ImageId).Data;
-
-            _ = _carImageService.Get(ImageId).Data;
-            
-            var oldPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", _carImageService.Get(ImageId).Data.ImagePath);
-
-            FileHelper.Delete(oldPath);
-
-            var result = _carImageService.Delete(carImage);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            var result = _carImageService.Add(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm(Name = ("Id"))] int ImageId)
+        public IActionResult Update([FromForm] CarImageDto carImagesDto)
         {
-            var carImage = _carImageService.Get(ImageId).Data;
-            var result = _carImageService.Update(carImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Update(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
         }
 
+        [HttpPost("delete")]
+        public IActionResult Delete(CarImageDto carImagesDto)
+        {
+            var result = _carImageService.Delete(carImagesDto);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
+        }
 
+        [HttpPost("deletebycarid")]
+        public IActionResult DeleteByCarId(int carId)
+        {
+            var result = _carImageService.DeleteByCarId(carId);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
+        }
+
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int imageId)
+        {
+            var result = _carImageService.GetById(imageId);
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
+        }
+
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int carId)
+        {
+            var result = _carImageService.GetByCarId(carId);
+            if (!result.Success) return BadRequest();
+            return Ok(result);
+        }
+
+        [HttpGet("getlist")]
+        public IActionResult GetAll()
+        {
+            var result = _carImageService.GetAll();
+            if (!result.Success) return BadRequest(result);
+            return Ok(result);
+        }
     }
-
-
-
 }
