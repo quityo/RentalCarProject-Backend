@@ -115,6 +115,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p => p.CarId == carId).ToList());
         }
 
-
+        public IResult DeleteByCarId(int carId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

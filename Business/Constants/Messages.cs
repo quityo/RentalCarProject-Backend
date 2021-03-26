@@ -13,6 +13,11 @@ namespace Business.Constants
         public static string CarUpdated = "Car Updated";
         public static string CarPriceInvalid = "Price must be greater than 0";
         public static string CarsListed = "Cars Listed";
+        public static string CarNameInvalid = "CarNameInvalid";
+        public static string CarDailyPriceInvalid = "CarDailyPriceInvalid";
+        
+
+
 
         public static string BrandAdded = "Brand Added";
         public static string BrandDeleted = "Brand Deleted";

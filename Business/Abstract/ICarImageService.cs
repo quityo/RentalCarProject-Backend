@@ -10,6 +10,7 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
+        IResult DeleteByCarId(int carId);
         IDataResult<List<CarImage>> GetAll();
         IDataResult<CarImage> Get(int imageId);
         IDataResult<List<CarImage>> GetCarImagesByCarId(int carId);

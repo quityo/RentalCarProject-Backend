@@ -7,75 +7,31 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string Add(IFormFile file)
+        public static string ImagePath { get; set; }
+
+        public static string SaveImageFile(IFormFile imageFile)
         {
-            var result = newPath(file);
-            try
+            string newImageName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+            var fullPath = Path.Combine(ImagePath, newImageName);
+            using (var stream = new FileStream(fullPath, FileMode.Create))
             {
-                var sourcepath = Path.GetTempFileName();
-                if (file.Length > 0)
-                    using (var stream = new FileStream(sourcepath, FileMode.Create))
-                        file.CopyTo(stream);
-
-                File.Move(sourcepath, result.newPath);
+                imageFile.CopyTo(stream);
             }
-            catch (Exception exception)
-            {
-
-                return exception.Message;
-            }
-
-            return result.Path2;
+            return newImageName;
         }
 
-        public static string Update(string sourcePath, IFormFile file)
+        public static bool DeleteImageFile(string fileName)
         {
-            var result = newPath(file);
-
-            try
+            string fullPath = Path.Combine(ImagePath, fileName);
+            if (File.Exists(fullPath))
             {
-                using (var stream = new FileStream(result.newPath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-
-                File.Delete(sourcePath);
+                File.Delete(fullPath);
+                return true;
             }
-            catch (Exception excepiton)
-            {
-                return excepiton.Message;
-            }
-
-            return result.Path2;
-        }
-
-        public static IResult Delete(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
-
-            return new SuccessResult();
-        }
-
-        public static (string newPath, string Path2) newPath(IFormFile file)
-        {
-            FileInfo f = new FileInfo(file.FileName);
-            string fileExtension = f.Extension;
-
-            var creatingUniqueFilename = Guid.NewGuid().ToString("N") + fileExtension;
-            
-
-
-            string result = $@"{Environment.CurrentDirectory + @"\wwwroot\Images"}\{creatingUniqueFilename}";
-
-            return (result, $"\\Images\\{creatingUniqueFilename}");
+            return false;
         }
     }
 }
+    
+
 
