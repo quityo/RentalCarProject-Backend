@@ -23,34 +23,37 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
+        [SecuredOperation("color.add")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
-
         }
-
-        public IResult Delete(Color color)
-        {
-            _colorDal.Add(color);
-            return new SuccessResult(Messages.ColorDeleted);
-        }
-
-        public IDataResult<List<Color>> GetAll()
-        {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorListed);
-        }
-
-        public IDataResult<Color> GetById(int colorId)
-        {
-            return new SuccessDataResult<Color>(_colorDal.GetById(c => c.ColorId == colorId), Messages.ColorListed);
-        }
-
+        [SecuredOperation("color.update")]
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
             _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
         }
+
+        [SecuredOperation("color.delete")]
+        public IResult Delete(Color color)
+        {
+            _colorDal.Delete(color);
+            return new SuccessResult(Messages.ColorDeleted);
+        }
+
+        public IDataResult<List<Color>> GetAll()
+        {
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
+        }
+
+        public IDataResult<Color> GetById(int colorId)
+        {
+            return new SuccessDataResult<Color>(_colorDal.GetById(c => c.ColorId == colorId));
+        }
+
     }
 }

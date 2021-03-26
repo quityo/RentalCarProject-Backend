@@ -10,8 +10,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public BrandValidator()
         {
-            RuleFor(b => b.BrandName).NotEmpty().WithMessage("BrandName alani bos birakilamaz.");
-            RuleFor(b => b.BrandName).Length(2, 10).WithMessage("BrandName en az 2 en cok 10 karakter olmalidir.");
+            RuleFor(b => b.BrandName).NotEmpty().WithMessage("Marka adı boş geçilemez.");
         }
     }
 }

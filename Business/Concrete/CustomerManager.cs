@@ -19,10 +19,13 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
+
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
+
+        [SecuredOperation("customer.add")]
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
@@ -30,6 +33,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerAdded);
         }
 
+        [SecuredOperation("customer.update")]
+        [ValidationAspect(typeof(CustomerValidator))]
+        public IResult Update(Customer customer)
+        {
+            _customerDal.Update(customer);
+            return new SuccessResult(Messages.CustomerUpdated);
+        }
+
+        [SecuredOperation("customer.delete")]
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
@@ -38,18 +50,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
         }
 
-        public IDataResult<List<CustomerDetailDto>> GetCustomerDetail()
+        public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetail(), Messages.CustomerDetailListed);
+            return new SuccessDataResult<Customer>(_customerDal.GetById(c => c.CustomerId == customerId));
         }
 
-        public IResult Update(Customer customer)
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
         {
-            _customerDal.Update(customer);
-            return new SuccessResult(Messages.CustomerUpdated);
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails(), Messages.CustomersListed);
         }
     }
 }

@@ -12,7 +12,9 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, RentACarContext>, IUserDal
     {
-        public IDataResult<List<OperationClaim>> GetClaims(User user)
+
+
+        public List<OperationClaim> GetClaims(User user)
         {
             using (var context = new RentACarContext())
             {
@@ -21,9 +23,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  on operationClaim.Id equals userOperationClaim.Id
                              where userOperationClaim.UserId == user.UserId
                              select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
-                return new SuccessDataResult<List<OperationClaim>>(result.ToList());
-
+                return result.ToList();
             }
         }
     }
 }
+    
+

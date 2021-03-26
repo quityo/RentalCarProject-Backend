@@ -9,7 +9,13 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarImageValidator()
         {
-            RuleFor(c => c.CarId).NotEmpty().WithMessage("CarId alani bos birakilamaz");
+            RuleFor(x => x.ImageFile).NotNull();
+
+            RuleFor(x => x.ImageFile.Length).LessThanOrEqualTo(1024 * 1024)
+                    .WithMessage("Dosya boyutu en fazla 1MB olmalıdır.");
+
+            RuleFor(x => x.ImageFile.ContentType).NotNull().Must(x => x.Equals("image/jpeg") || x.Equals("image/jpg") || x.Equals("image/png"))
+                    .WithMessage("Dosya türü desteklenmiyor!");
         }
     }
 }

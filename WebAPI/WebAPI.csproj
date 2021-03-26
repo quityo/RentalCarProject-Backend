@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Uploads\**" />
+    <Content Remove="wwwroot\Uploads\**" />
+    <EmbeddedResource Remove="wwwroot\Uploads\**" />
+    <None Remove="wwwroot\Uploads\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Images\0452d362-4cfa-4d3c-9ce3-6b080daf0f26.jpg" />
     <Content Remove="wwwroot\Images\2d58fc45-3a97-4368-94d6-d40130249990.jpg" />
     <Content Remove="wwwroot\Images\d08c753a-c3d0-4bd1-bf2f-a401f3b8ef5d.jpg" />
@@ -33,7 +40,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
 

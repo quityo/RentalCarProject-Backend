@@ -11,26 +11,24 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, RentACarContext>, ICustomerDal
     {
-        public List<CustomerDetailDto> GetCustomerDetail()
+        public List<CustomerDetailDto> GetCustomerDetails()
         {
             using (RentACarContext context = new RentACarContext())
             {
-                var result = from customer in context.Customer
-                             join user in context.User
-                             on customer.UserId equals user.UserId
-
-                             select new CustomerDetailDto
+                var result = from c in context.Customer
+                             join u in context.User
+                             on c.UserId equals u.UserId
+                             select new CustomerDetailDto()
                              {
-                                 CustomerId = customer.CustomerId,
-                                 CustomerFirstName = user.FirstName,
-                                 CustomerLastName = user.LastName,
-                                 CompanyName = customer.CompanyName
+                                 CustomerId = c.CustomerId,
+                                 CompanyName = c.CompanyName,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName
                              };
-
                 return result.ToList();
             }
         }
     }
 }
-    
+
 

@@ -7,12 +7,11 @@ namespace Business.Abstract
     public interface IUserService
     {
         IResult Add(User user);
-        IResult Delete(User user);
         IResult Update(User user);
+        IResult Delete(User user);
         IDataResult<List<User>> GetAll();
-
-        IDataResult<List<OperationClaim>> GetClaims(User user);
-
-        IDataResult<User> GetByMail(string email);
+        IDataResult<User> GetById(int userId);
+        User GetByMail(string email);
+        List<OperationClaim> GetClaims(User user);
     }
 }
