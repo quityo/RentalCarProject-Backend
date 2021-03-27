@@ -6,7 +6,8 @@ using System;
 
 namespace DataAccess.Abstract
 {
-    public interface ICarImageDal : IEntityRepository<CarImage>
+    public class EfCarImageDal : EfEntityRepositoryBase<CarImage, MyDataBaseContext>, ICarImageDal
     {
+
     }
 }

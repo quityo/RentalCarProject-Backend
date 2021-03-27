@@ -10,43 +10,37 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
+
     
         public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarContext>, IRentalDal
         {
-            
-
-        public List<RentalDetailDto> GetRentalDetails(Expression<Func<RentalDetailDto, bool>> filter = null)
-        {
-            using (RentACarContext context = new RentACarContext())
+            public List<RentalDetailDto> GetRentalDetails()
             {
-                var result = from r in context.Rental
-                             join cs in context.Customer
-                             on r.CustomerId equals cs.CustomerId
-                             join u in context.User
-                             on cs.UserId equals u.UserId
-                             join c in context.Car
-                             on r.CarId equals c.CarId
-                             join cl in context.Color
-                             on c.ColorId equals cl.ColorId
-                             join b in context.Brand
-                             on c.BrandId equals b.BrandId
-                             select new RentalDetailDto
-                             {
-                                 RentalId = r.RentalId,
-                                 RentDate = r.RentDate,
-                                 ReturnDate = r.ReturnDate,
-                                 BrandName = b.BrandName,
-                                 Description = c.Description,
-                                 ColorName = cl.ColorName,
-                                 CompanyName = cs.CompanyName,
-                                 DailyPrice = c.DailyPrice,
-                                 FirstName = u.FirstName,
-                                 LastName = u.LastName,
-                                 ModelYear = c.ModelYear
-                             };
+                using (RentACarContext contex = new RentACarContext())
+                {
+                    var result = from r in contex.Rental
+                                 join c in contex.Car
+                                 on r.CarId equals c.CarId
+                                 join cus in contex.Customer
+                                 on r.CustomerId equals cus.CustomerId
+                                 join us in contex.User
+                                 on cus.UserId equals us.UserId
+                                 select new RentalDetailDto
+                                 {
+                                     RentalId = r.RentalId,
+                                     CarName = c.CarName,
+                                     FirstName = us.FirstName,
+                                     LastName = us.LastName,
+                                     RentDate = r.RentDate,
+                                     ReturnDate = r.ReturnDate
 
-                return filter == null ? result.ToList() : result.Where(filter).ToList();
+                                 };
+
+                    return result.ToList();
+                }
+
             }
+
+
         }
-    }
- }
+}
