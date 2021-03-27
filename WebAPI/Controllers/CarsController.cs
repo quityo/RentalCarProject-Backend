@@ -59,8 +59,8 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getlist")]
-        public IActionResult GetList()
+        [HttpGet("getall")]
+        public IActionResult GetAll()
         {
             var result = _carService.GetAll();
             if (result.Success)

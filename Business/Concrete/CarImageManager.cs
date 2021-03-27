@@ -1,9 +1,5 @@
 ﻿using Business.Abstract;
-using Business.BusinessAspects.AutoFac;
-using Business.Constants;
 using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Helpers;
@@ -16,98 +12,94 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Entities.DTOs;
-using Core.Aspects.AutoFac.Cancelation;
 
 namespace Business.Concrete
 {
-    public class CarImageManager : ICarImageService
-    {
-        ICarImageDal _carImageDal;
+	public class CarImageManager : ICarImageService
+	{
+		ICarImageDal _carImageDal;
 
-        public CarImageManager(ICarImageDal carImageDal)
-        {
-            _carImageDal = carImageDal;
-        }
+		public CarImageManager(ICarImageDal carImageDal)
+		{
+			_carImageDal = carImageDal;
+		}
 
-        [SecuredOperation("carimage.add")]
-        [ValidationAspect(typeof(CarImageValidator))]
-        [CancellationTokenAspect]
-        public IResult Add(CarImageDto carImagesDto)
-        {
-            var result = BusinessRules.Run(CheckCarImagesCount(carImagesDto.CarId));
-            if (result != null) return result;
-            CarImage carimage = new CarImage
-            {
-                CarId = carImagesDto.CarId,
-                ImagePath = FileHelper.SaveImageFile(carImagesDto.ImageFile),
-                Created = DateTime.Now
-            };
-            _carImageDal.Add(carimage);
-            return new SuccessResult(Messages.CarImageAdded);
-        }
+		//[ValidationAspect(typeof(CarImageValidator))]
+		public IResult Add(IFormFile file, CarImage carImage)
+		{
+			IResult result = BusinessRules.Run(CheckIfImageLimitExceeded(carImage.CarId));
+			if (result != null)
+			{
+				return result;
+			}
+			carImage.ImagePath = FileHelper.Add(file);
+			carImage.Created = DateTime.Now;
+			_carImageDal.Add(carImage);
+			return new SuccessResult();
+		}
 
-        [SecuredOperation("carimage.update")]
-        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(CarImageDto carImagesDto)
-        {
-            var result = _carImageDal.Get(ci => ci.ImageId == carImagesDto.ImageId);
-            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
-            FileHelper.DeleteImageFile(result.ImagePath);
-            result.ImagePath = FileHelper.SaveImageFile(carImagesDto.ImageFile);
-            result.Created = DateTime.Now;
-            _carImageDal.Update(result);
-            return new SuccessResult(Messages.CarImageUpdated);
-        }
+		[ValidationAspect(typeof(CarImageValidator))]
+		public IResult Delete(CarImage carImage)
+		{
+			var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) +
+				_carImageDal.Get(c => c.ImageId == carImage.ImageId).ImagePath;
+			IResult result = BusinessRules.Run(FileHelper.Delete(oldPath));
 
-        [SecuredOperation("carimage.delete")]
-        public IResult Delete(CarImageDto carImagesDto)
-        {
-            var result = _carImageDal.Get(ci => ci.ImageId == carImagesDto.ImageId);
-            if (result == null) return new ErrorResult(Messages.CarImageNotFound);
-            FileHelper.DeleteImageFile(result.ImagePath);
-            _carImageDal.Delete(result);
-            return new SuccessResult(Messages.CarImageDeleted);
-        }
+			if (result != null)
+			{
+				return result;
+			}
 
-        private IResult CheckCarImagesCount(int carId)
-        {
-            var result = _carImageDal.GetAll(ci => ci.CarId == carId).Count < 5;
-            if (!result) return new ErrorResult(Messages.CarImageCountExceeded);
-            return new SuccessResult();
-        }
+			_carImageDal.Delete(carImage);
+			return new SuccessResult();
+		}
 
-        public IDataResult<CarImage> GetById(int imageId)
-        {
-            CarImage result = _carImageDal.Get(ci => ci.ImageId == imageId);
-            if (result == null) return new ErrorDataResult<CarImage>(Messages.CarImageNotFound);
-            return new SuccessDataResult<CarImage>(result);
-        }
+		public IDataResult<CarImage> Get(int imageId)
+		{
+			return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.ImageId == imageId));
+		}
 
-        public IDataResult<List<CarImage>> GetByCarId(int carId)
-        {
-            var result = _carImageDal.GetAll(ci => ci.CarId == carId);
-            if (result.Any()) return new SuccessDataResult<List<CarImage>>(result);
-            return new SuccessDataResult<List<CarImage>>(new List<CarImage>
-            {
-                new CarImage{  CarId = carId,  ImagePath = "default.jpg", Created  = DateTime.Now }
-            });
-        }
+		public IDataResult<List<CarImage>> GetAll()
+		{
+			return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+		}
 
-        public IDataResult<List<CarImage>> GetAll()
-        {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
-        }
+		public IDataResult<List<CarImage>> GetImagesByCarId(int id)
+		{
+			return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id));
+		}
 
-        public IResult DeleteByCarId(int carId)
-        {
-            var result = _carImageDal.GetAll(ci => ci.CarId == carId);
-            foreach (var item in result)
-            {
-                FileHelper.DeleteImageFile(item.ImagePath);
-                _carImageDal.Delete(item);
-            }
-            return new SuccessResult(Messages.CarImagesDeleted);
-        }
-    }
+		[ValidationAspect(typeof(CarImageValidator))]
+		public IResult Update(IFormFile file, CarImage carImage)
+		{
+			//var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\Images")) +
+			//	_carImageDal.Get(c => c.Id == carImage.Id).ImagePath;
+
+			carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.ImageId == carImage.ImageId).ImagePath, file);
+			carImage.Created = DateTime.Now;
+			_carImageDal.Update(carImage);
+			return new SuccessResult();
+		}
+
+		private IResult CheckIfImageLimitExceeded(int id)
+		{
+			var carImagecount = _carImageDal.GetAll(c => c.CarId == id).Count;
+			if (carImagecount > 5)
+			{
+				return new ErrorResult();
+			}
+			return new SuccessResult();
+		}
+
+		private List<CarImage> CheckIfCarImageNull(int id)
+		{
+			string path = @"\Images\Logo.jpg";
+			var result = _carImageDal.GetAll(c => c.CarId == id).Any();
+			if (!result)
+			{
+				return new List<CarImage> { new CarImage { CarId = id, ImagePath = path, Created = DateTime.Now } };
+			}
+			return _carImageDal.GetAll(c => c.CarId == id);
+		}
+	}
 }
