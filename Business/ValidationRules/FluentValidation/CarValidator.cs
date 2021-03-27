@@ -8,10 +8,14 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            RuleFor(c => c.ModelYear).GreaterThan(0).WithMessage("Araç model yılı boş geçilemez.");
-            RuleFor(c => c.DailyPrice).GreaterThan(0).WithMessage("Araç günlük ücreti 0 dan büyük olmalıdır.");
-            RuleFor(c => c.CarName).NotEmpty().WithMessage("Araç isim alanı boş geçilemez.");
-        }
+            RuleFor(p => p.CarName).NotEmpty();
+            RuleFor(p => p.CarName).MinimumLength(2);
+            RuleFor(p => p.DailyPrice).NotEmpty();
+            RuleFor(p => p.DailyPrice).GreaterThan(0);
+            RuleFor(p => p.DailyPrice).GreaterThanOrEqualTo(10).When(p => p.BrandId == 1);
+         }
+
+        
     }
-    
+
 }

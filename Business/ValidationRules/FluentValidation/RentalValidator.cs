@@ -10,7 +10,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public RentalValidator()
         {
-            RuleFor(r => r.RentDate).NotNull().WithMessage("Kiralama tarihi boş geçilemez.");
+
         }
     }
 }
