@@ -1,5 +1,6 @@
 ﻿
 
+using Business.Constants;
 using Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
@@ -11,7 +12,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarImageValidator()
         {
-            RuleFor(I => I.CarId).NotEmpty();
+            RuleFor(c => c.CarId).NotEmpty().WithMessage(Messages.CarImageCarIdInvalid);
         }
     }
 }

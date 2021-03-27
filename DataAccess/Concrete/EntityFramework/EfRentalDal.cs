@@ -11,35 +11,35 @@ using Entities.DTOs;
 namespace DataAccess.Concrete.EntityFramework
 {
 
-    
-        public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarContext>, IRentalDal
+
+    public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarContext>, IRentalDal
+    {
+        public List<RentalDetailDto> GetRentalDetails()
         {
-            public List<RentalDetailDto> GetRentalDetails()
+            using (RentACarContext context = new RentACarContext())
             {
-                using (RentACarContext contex = new RentACarContext())
-                {
-                    var result = from r in contex.Rental
-                                 join c in contex.Car
-                                 on r.CarId equals c.CarId
-                                 join cus in contex.Customer
-                                 on r.CustomerId equals cus.CustomerId
-                                 join us in contex.User
-                                 on cus.UserId equals us.UserId
-                                 select new RentalDetailDto
-                                 {
-                                     RentalId = r.RentalId,
-                                     CarName = c.CarName,
-                                     FirstName = us.FirstName,
-                                     LastName = us.LastName,
-                                     RentDate = r.RentDate,
-                                     ReturnDate = r.ReturnDate
-
-                                 };
-
-                    return result.ToList();
-                }
-
+                var result = from c in context.Car
+                             join r in context.Rental
+                             on c.CarId equals r.CarId
+                             join b in context.Brand
+                             on c.BrandId equals b.BrandId
+                             join cstmr in context.Customer
+                             on r.CustomerId equals cstmr.CustomerId
+                             join u in context.User
+                             on cstmr.UserId equals u.UserId
+                             select new RentalDetailDto
+                             {
+                                 RentalId = r.RentalId,
+                                 BrandName = b.BrandName,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 CompanyName = cstmr.CompanyName,
+                                 RentDate = r.RentDate,
+                                 ReturnDate = r.ReturnDate
+                             };
+                return result.ToList();
             }
+        }
 
 
         }

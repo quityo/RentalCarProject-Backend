@@ -8,46 +8,31 @@ namespace Business.Constants
 {
     public static class Messages
     {
-        public static string CarAdded = "Araba Eklendi";
-        public static string CarDeleted = "Araba Silindi";
-        public static string CarUpdated = "Araba Güncellendi";
-        public static string CarNameInValid = "Araba İsmi Geçersiz";
-        public static string MaintenanceTime = "Sistem Bakımda";
-        public static string CarListed = "Araba Listelendi";
-
-        public static string BrandAdded = "Marka Eklendi";
-        public static string BrandDeleted = "Marka Silindi";
-        public static string BrandUpdated = "Marka Güncellendi";
-        public static string BrandListed = "Marka Listelendi";
-
-        public static string ColorAdded = "Renk Eklendi";
-        public static string ColorDeleted = "Renk Silindi";
-        public static string ColorUpdated = "Renk Güncellendi";
-        public static string ColorListed = "Renk Listelendi";
-
-        public static string CustomerAdded = "Müşteri Eklendi";
-        public static string CustomerDeleted = "Müşteri Silindi";
-        public static string CustomerUpdated = "Müşteri Güncellendi";
-        public static string CustomerListed = "Müşteri Listelendi";
-
-        public static string RentalAdded = "Kiralama Eklendi";
-        public static string RentalDeleted = "Kiralama Silindi";
-        public static string RentalUpdated = "Kiralama Güncellendi";
-        public static string RentalListed = "Kiralama Listelendi";
-
-        public static string UserAdded = "Kullanıcı Eklendi";
-        public static string UserDeleted = "Kullanıcı Silindi";
-        public static string UserUpdated = "Kullanıcı Güncellendi";
-        public static string UserListed = "Kullanıcı Listelendi";
-
-        public static string CarImageAdded = "Araba Resmi Eklendi";
-        public static string CarImageListed = "Araba Resmi Listelendi";
-        public static string CarImageUpdated = "Araba Resmi Güncellendi";
-        public static string CarImageDeleted = "Araba Resmi Güncellendi";
-
-        public static string AddedCarImage = "Araba Resmi Eklendi.";
-        public static string DeletedCarImage = "Arabanın Resmi Silindi.";
-        public static string UpdatedCarImage = "Araba Resmi Güncellendi.";
-        public static string FailedCarImageAdd = "Bir Araba En Fazla 5 Resme sahip olabilir.";
+        public static string CarAdded = "Car Added ";
+        public static string CarNameInvalid = "Car Name Invalid";
+        public static string MaintenanceTime = "Maintenance Time";
+        public static string CarsListed = "Cars Listed";
+        public static string CarUpdated = "Car Updated";
+        public static string BrandAdded = "Brand Added";
+        public static string ColorAdded = "Color Added";
+        public static string CustomerAdded = "Customer Added ";
+        public static string UserAdded = "User Added";
+        public static string InvalidSale = "Araba şuan elimizde değil";
+        public static string RentalAdded = "Araba kiralandı";
+        public static string CarImageAdded = "Car Image Added Successfully!";
+        public static string CarImageCarIdInvalid = "Invalid Car Id, Registration Failed.";
+        public static string CarImageDeleted = "Car Image Deleted Successfully!";
+        public static string CarImageUpdated = "Car Image Updated Successfully!";
+        public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
+        public static string AuthorizationDenied = "Yetkiniz yok.";
+        public static string TokenCreated = "Token Oluşturuld!";
+        public static string Registered = "Kayıt olundu!";
+        public static string UserNotFound = "Kullanıcı bulunamadı!";
+        public static string WrongPassword = "Yanlış Şifre!";
+        public static string SuccessfulLogin = "Başarılı giriş!";
+        public static string UserAvailable = "Kullanıcı mevcut!";
+        public static string CarImagesCountExceded = "Bir aracın en fazla 5 resmi olabilir.";
+        public static string succeed = "başarılı";
+        public static string listed = "listelendi";
     }
 }

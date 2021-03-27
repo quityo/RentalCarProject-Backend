@@ -4,7 +4,7 @@ using Core.Utilities.Interceptors;
 
 namespace Core.Aspects.Autofac.Transaction
 {
-    public class TransactionAspect : MethodInterception
+    public class TransactionScopeAspect : MethodInterception
     {
         public override void Intercept(IInvocation invocation)
         {
