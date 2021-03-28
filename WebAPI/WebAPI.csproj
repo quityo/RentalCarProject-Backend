@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\Uploads\**" />
-    <Content Remove="wwwroot\Uploads\**" />
-    <EmbeddedResource Remove="wwwroot\Uploads\**" />
-    <None Remove="wwwroot\Uploads\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Controllers\BrandsController.cs" />
     <Content Include="Controllers\CarImagesController.cs" />
     <Content Include="Controllers\CarsController.cs" />

@@ -34,5 +34,8 @@ namespace Business.Constants
         public static string CarImagesCountExceded = "Bir aracın en fazla 5 resmi olabilir.";
         public static string succeed = "başarılı";
         public static string listed = "listelendi";
+        internal static string CarImagesListed;
+        internal static string Deleted;
+        internal static string Listed;
     }
 }
