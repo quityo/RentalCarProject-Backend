@@ -67,7 +67,7 @@ namespace Business.Concrete
         //[PerformanceAspect(7)]
         public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
-            string path = "/images/sirketlogo.jpg";
+            string path = "/images/Batman_Batmobile.jpg";
             var result = _carImageDal.GetAll(carImage => carImage.CarId == carId).Any();
             if (!result)
             {
@@ -139,7 +139,7 @@ namespace Business.Concrete
                         ImageId = -1,
                         CarId = carId,
                         Created = DateTime.MinValue,
-                        ImagePath = "images/sirketlogo.jpg"
+                        ImagePath = "images/Batman_Batmobile.jpg"
                     }
                 });
             }

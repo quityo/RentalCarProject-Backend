@@ -27,6 +27,18 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //services.AddSingleton<ICarService, CarManager>();
+            //services.AddSingleton<ICarDal, EfCarDal>();
+            //services.AddSingleton<IBrandService, BrandManager>();
+            //services.AddSingleton<IBrandDal, EfBrandDal>();
+            //services.AddSingleton<IColorService, ColorManger>();
+            //services.AddSingleton<IColorDal, EfColorDal>();
+            //services.AddSingleton<ICustomerService, CustomerManager>();
+            //services.AddSingleton<ICustomerDal,EfCustomerDal>();
+            //services.AddSingleton<IUserService,UserManager>();
+            //services.AddSingleton<IUserDal,EfUserDal>();
+            //services.AddSingleton<IRentalService,RentalManager>();
+            //services.AddSingleton<IRentalDal,EfRentalDal>();
 
             services.AddCors();
 
@@ -46,9 +58,11 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            services.AddDependencyResolvers(new ICoreModule[]{
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
                 new CoreModule()
             });
+
 
         }
 
@@ -62,9 +76,9 @@ namespace WebAPI
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
-            app.UseHttpsRedirection();
-
             app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

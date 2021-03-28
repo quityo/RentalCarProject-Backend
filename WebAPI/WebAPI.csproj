@@ -12,12 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Images\0452d362-4cfa-4d3c-9ce3-6b080daf0f26.jpg" />
-    <Content Remove="wwwroot\Images\2d58fc45-3a97-4368-94d6-d40130249990.jpg" />
-    <Content Remove="wwwroot\Images\d08c753a-c3d0-4bd1-bf2f-a401f3b8ef5d.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Controllers\BrandsController.cs" />
     <Content Include="Controllers\CarImagesController.cs" />
     <Content Include="Controllers\CarsController.cs" />
@@ -39,8 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Images\6d346fdb-2547-4fc0-9b5b-c7348d8d3a77.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
