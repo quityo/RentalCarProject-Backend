@@ -16,7 +16,6 @@ namespace Core.Aspects.Autofac.Caching
             _pattern = pattern;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-
         protected override void OnSuccess(IInvocation invocation)
         {
             _cacheManager.RemoveByPattern(_pattern);

@@ -12,12 +12,12 @@ namespace Core.DependencyResolvers
 {
     public class CoreModule : ICoreModule
     {
-        public void Load(IServiceCollection serviceCollection)
+        public void Load(IServiceCollection services)
         {
-            serviceCollection.AddMemoryCache();
-            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
-            serviceCollection.AddSingleton<Stopwatch>();
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheManager, MemoryCacheManager>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<Stopwatch>();
         }
     }
 }

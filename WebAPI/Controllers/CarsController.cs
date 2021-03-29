@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        
+        //IoC Container  -- Inversion of Control
         ICarService _carService;
 
         public CarsController(ICarService carService)
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
 
         public IActionResult GetAll()
         {
-            
+            //Depemdency chain
             var result = _carService.GetAll();
             if (result.Success)
             {
@@ -32,9 +32,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int carId)
         {
-            var result = _carService.GetById(id);
+            var result = _carService.GetById(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -135,7 +135,10 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
 
         }
-       
+        
+
+
+
 
     }
 }

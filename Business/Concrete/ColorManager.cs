@@ -15,20 +15,17 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class ColorManger : IColorService
+    public class ColorManager : IColorService
     {
         IColorDal _colorDal;
 
-        public ColorManger(IColorDal colorDal)
+        public ColorManager(IColorDal colorDal)
         {
             _colorDal = colorDal;
         }
 
-
-        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
-
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
@@ -36,12 +33,12 @@ namespace Business.Concrete
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
-            return new SuccessResult();
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorListed);
         }
 
         public IDataResult<Color> GetById(int colorId)
@@ -52,7 +49,7 @@ namespace Business.Concrete
         public IResult Update(Color color)
         {
             _colorDal.Update(color);
-            return new SuccessResult();
+            return new SuccessResult(Messages.ColorUpdated);
         }
     }
 }

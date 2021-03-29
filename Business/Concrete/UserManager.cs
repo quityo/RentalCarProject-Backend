@@ -24,40 +24,20 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        [CacheRemoveAspect("IUserService.Get")]
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Add(User user)
+
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
+
+        public void Add(User user)
         {
             _userDal.Add(user);
-            return new SuccessResult(Messages.UserAdded);
-        }
-        [CacheRemoveAspect("IUserService.Get")]
-        public IResult Delete(User user)
-        {
-            _userDal.Delete(user);
-            return new SuccessResult();
-        }
-        [CacheAspect]
-        public IDataResult<List<User>> GetAll()
-        {
-
-            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public IDataResult<User> GetByMail(string email)
+        public User GetByMail(string email)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
-        }
-
-        public IDataResult<List<OperationClaim>> GetClaims(User user)
-        {
-            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
-        }
-        [CacheRemoveAspect("IUserService.Get")]
-        public IResult Update(User user)
-        {
-            _userDal.Update(user);
-            return new SuccessResult();
+            return _userDal.Get(u => u.Email == email);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
         //Claim
-        //[SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -41,18 +41,18 @@ namespace Business.Concrete
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         public IDataResult<List<Car>> GetAll()
         {
 
-            
-            if (DateTime.Now.Hour == 5)
+            //İş Kodları
+            if (DateTime.Now.Hour == 20)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
         public IDataResult<List<Car>> GetByDailyPrice(decimal min)
@@ -101,7 +101,7 @@ namespace Business.Concrete
 
         }
 
-        
+        //deneme
         public IDataResult<List<Car>> GetCarsByBrand(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
