@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getcardetails")]
+        [HttpGet("getcardetailbyid")]
         public IActionResult GetCarDetails()
         {
 

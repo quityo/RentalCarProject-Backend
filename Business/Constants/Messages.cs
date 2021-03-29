@@ -49,5 +49,9 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Başarılı Giriş";
         public static string UserAlreadyExists = "Kullanıcı Mecvut";
         public static string AccessTokenCreated = "Erişim oluşturuldu.";
+
+        public static string PaymentAdded = "Ödeme Yapıldı";
+        public static string PaymentGetAll = "Ödemeler Listelendi";
+        public static string GetPaymentByPaymentId = "Id Bilgisi Listelendi";
     }
 }
