@@ -13,6 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
         }
 
         public DbSet<Car> Car { get; set; }
+        public DbSet<Payment> Payment { get; set; }
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Color> Color { get; set; }
         public DbSet<Customer> Customer { get; set; }
@@ -22,6 +23,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<OperationClaim> OperationClaim { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaim { get; set; }
-        public object Payment { get; internal set; }
+        
     }
 }

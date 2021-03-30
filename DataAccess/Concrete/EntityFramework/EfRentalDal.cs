@@ -5,7 +5,7 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -48,7 +48,6 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.BrandId
                              join p in context.Payment
                              on ra.PaymentId equals p.PaymentId
-                             
                              select new RentalDetailDto
                              {
                                  RentalId = ra.RentalId,

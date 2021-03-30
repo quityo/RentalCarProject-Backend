@@ -14,10 +14,12 @@ namespace WebAPI.Controllers
     public class RentalsController : ControllerBase
     {
         IRentalService _rentalService;
+
         public RentalsController(IRentalService rentalService)
         {
             _rentalService = rentalService;
         }
+
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -28,6 +30,29 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int rentalId)
+        {
+            var result = _rentalService.GetById(rentalId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getrentaldetails")]
+        public IActionResult GetRentalDetails()
+        {
+            var result = _rentalService.GetRentalDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {
@@ -38,7 +63,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut("update")]
+
+        [HttpPost("update")]
         public IActionResult Update(Rental rental)
         {
             var result = _rentalService.Update(rental);
@@ -48,10 +74,22 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getrentaldetail")]
-        public IActionResult GetCarDetail()
+
+        [HttpPost("delete")]
+        public IActionResult Delete(Rental rental)
         {
-            var result = _rentalService.GetRentalDetail();
+            var result = _rentalService.Delete(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("checkcarstatus")]
+        public IActionResult CheckCarStatus(Rental rental)
+        {
+            var result = _rentalService.CheckCarStatus(rental);
             if (result.Success)
             {
                 return Ok(result);

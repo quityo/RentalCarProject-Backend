@@ -4,33 +4,34 @@ using System.Text;
 
 namespace Core.Utilities.Security.Hashing
 {
-    public class HashingHelper
-    {
-        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+   
+        public class HashingHelper
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
             {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-
-        public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
+                using (var hmac = new System.Security.Cryptography.HMACSHA512())
                 {
-                    if (computedHash[i] != passwordHash[i])
-                    {
-                        return false;
-                    }
+                    passwordSalt = hmac.Key;
+                    passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 }
-                return true;
             }
 
+            public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+            {
+                using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+                {
+                    var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                    for (int i = 0; i < computedHash.Length; i++)
+                    {
+                        if (computedHash[i] != passwordHash[i])
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }   
+
         }
-    }   
+       
 }
