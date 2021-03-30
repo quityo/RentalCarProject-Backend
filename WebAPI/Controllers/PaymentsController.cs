@@ -9,21 +9,19 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CustomersController : ControllerBase
+    public class PaymentsController : ControllerBase
     {
-        ICustomerService _customerService;
+        IPaymentService _paymentService;
 
-        public CustomersController(ICustomerService customerService)
+        public PaymentsController(IPaymentService paymentService)
         {
-            _customerService = customerService;
+            _paymentService = paymentService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _customerService.GetAll();
+            var result = _paymentService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -32,20 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int customerId)
+        public IActionResult GetById(int paymentId)
         {
-            var result = _customerService.GetById(customerId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpGet("getcustomerdetails")]
-        public IActionResult GetCustomerDetails()
-        {
-            var result = _customerService.GetCustomerDetails();
+            var result = _paymentService.GetById(paymentId);
             if (result.Success)
             {
                 return Ok(result);
@@ -54,31 +41,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Customer customer)
+        public IActionResult Add(Payment payment)
         {
-            var result = _customerService.Add(customer);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpPost("update")]
-        public IActionResult Update(Customer customer)
-        {
-            var result = _customerService.Update(customer);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-        [HttpPost("delete")]
-        public IActionResult Delete(Customer customer)
-        {
-            var result = _customerService.Delete(customer);
+            var result = _paymentService.Add(payment);
             if (result.Success)
             {
                 return Ok(result);
