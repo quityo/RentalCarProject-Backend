@@ -12,8 +12,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarImageValidator()
         {
-            RuleFor(c => c.CarId).NotNull();
-            RuleFor(c => c.ImageId).NotNull();
+            RuleFor(c => c.CarId).NotEmpty().WithMessage("CarId Değeri Boş Olamaz.");
         }
     }
 }

@@ -8,47 +8,55 @@ namespace Business.Constants
 {
     public static class Messages
     {
-        public static string CarAdded = "Ürün eklendi";
-        public static string CarUpdated = "Ürün güncellendi";
-        public static string CarDeleted = "Ürün silindi";
-        public static string CarNameInvalid = "Ürin ismi geçersiz";
-        public static string MaintenanceTime = "Bakım zamanında";
-        public static string CarListed = "Listelendi";
+        public static string CarAdded = "Car Added";
+        public static string CarUpdated = "Car Updated";
+        public static string CarDeleted = "Car Deleted";
+        public static string CarNotValid = "The car could not be added. Registration conditions;\n" +
+                    "-The car description must contain at least two characters\n" +
+                    "-The daily price of the car must be greater than zero";
 
-        public static string BrandAdded = "Marka eklendi";
-        public static string BrandUpdated = "Marka güncellendi";
-        public static string BrandDeleted = "Marka silindi";
+        public static string ColorAdded = "Color Added";
+        public static string ColorUpdated = "Color Updated";
+        public static string ColorDeleted = "Color Deleted";
 
-        public static string ColorAdded = "Renk eklendi";
-        public static string ColorUpdated = "Renk güncellendi";
-        public static string ColorDeleted = "Renk silindi";
+        public static string BrandAdded = "Brand Added";
+        public static string BrandUpdated = "Brand Updated";
+        public static string BrandDeleted = "Brand Deleted";
 
-        public static string BrandListed = "Marka listelendi";
-        public static string ColorListed = "Renk listelendi";
+        public static string UserAdded = "User Added";
+        public static string UserUpdated = "User Updated";
+        public static string UserDeleted = "User Deleted";
+        public static string UsersGetAll = "UsersGetAll";
+        public static string GetUserByUserId = "GetUserByUserId";
 
-        public static string CustomerAdded = "Müşteri eklendi";
-        public static string CustomerUpdated = "Müşteri Güncellendi";
-        public static string CustomerDeleted = "Müşteri Silindi";
-        public static string CustomerListed = "Müşteri Listelendi";
+        public static string CustomerAdded = "Customer Added";
+        public static string CustomerUpdated = "Customer Updated";
+        public static string CustomerDeleted = "Customer Deleted";
+        public static string CustomerNotValid = "Company Name Not Valid";
+        public static string CustomersGetAll = "CustomersGetAll";
 
 
-        public static string RentalAdded = "Araba kiralandı";
-        public static string RentalUpdated = "Araba kira işlemi güncellendi";
-        public static string RentalListed = "Kira Listelendi";
-        public static string RentalInvalid = "Kiralama geçersiz";
+        public static string RentalAdded = "Rental Added";
+        public static string RentalUpdated = "Rental Updated";
+        public static string RentalDeleted = "Rental Deleted";
+        public static string RentalReturnDateError = "The car cannot be rented on the requested dates.";
+        public static string RentalDateOk = "The car can be delivered on the requested dates.";
+        public static string RentalGetAll = "RentalGetAll";
+        public static string GetRentalByRentalId = "GetRentalByRentalId";
 
-        public static string CarImageAdded = "Resim eklendi.";
-        public static string CarImageDeleted = "Resim silindi ";
-        public static string CarImageListed = "Resim listelendi";
-        public static string CarImageUpdated = "Resim güncellendi";
-        public static string CarImageLimitExceeded;
+        public static string CarImageLimitExceeded = "Bir arabanın 5'dan fazla resmi olamaz.";
+        public static string CarImageAdded = "Araba resmi eklendi";
+        public static string CarImageDeleted = "Araba resmi silindi";
+        public static string CarImageUpdated = "Araba resmi güncellendi";
+
         public static string AuthorizationDenied = "Yetkiniz yok";
-        public static string UserRegistered = "Kayıt oldu.";
-        public static string UserNotFound = "Kullanıcı bulunamadı.";
-        public static string PasswordError = "Parola Hatası";
-        public static string SuccessfulLogin = "Başarılı Giriş";
-        public static string UserAlreadyExists = "Kullanıcı Mecvut";
-        public static string AccessTokenCreated = "Erişim oluşturuldu.";
+
+        public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
+        public static string UserNotFound = "Kullanıcı Bulunamadı";
+        public static string PasswordError = "Şifre hatalı";
+        public static string SuccessfulLogin = "Sisteme giriş başarılı";
+        public static string UserAlreadyExists = "Bu kullanıcı zaten mevcut";
+        public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
 
         public static string PaymentAdded = "Ödeme Yapıldı";
         public static string PaymentGetAll = "Ödemeler Listelendi";

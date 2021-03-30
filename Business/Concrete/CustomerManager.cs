@@ -21,10 +21,16 @@ namespace Business.Concrete
         ICustomerDal _customerDal;
         public CustomerManager(ICustomerDal customerDal)
         {
-            _customerDal = customerDal;
+            this._customerDal = customerDal;
         }
+
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
+            if (customer.CompanyName.Length < 2)
+            {
+                return new ErrorResult(Messages.CustomerNotValid);
+            }
             _customerDal.Add(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }
@@ -35,25 +41,32 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
+        public IResult Update(Customer customer)
+        {
+            if (customer.CompanyName.Length < 2)
+            {
+                return new ErrorResult(Messages.CustomerNotValid);
+            }
+            _customerDal.Update(customer);
+            return new SuccessResult(Messages.CustomerUpdated);
+        }
+
+        [CacheAspect]
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersGetAll);
         }
 
         public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId), Messages.GetUserByUserId);
         }
 
-        public IDataResult<List<CustomerDetailDto>> GetCustomerDetail()
+        [CacheAspect]
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
         {
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetail());
-        }
-
-        public IResult Update(Customer customer)
-        {
-            _customerDal.Update(customer);
-            return new SuccessResult(Messages.CustomerUpdated);
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
         }
     }
 }
