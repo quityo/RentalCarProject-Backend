@@ -9,7 +9,6 @@
     <Content Include="Controllers\CarImagesController.cs" />
     <Content Include="Controllers\CarsController.cs" />
     <Content Include="Controllers\ColorsController.cs" />
-    <Content Include="Controllers\CustomersController.cs" />
     <Content Include="Controllers\RentalsController.cs" />
   </ItemGroup>
 
