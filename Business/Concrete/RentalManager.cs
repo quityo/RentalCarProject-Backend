@@ -56,7 +56,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalGetAll);
@@ -67,7 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId), Messages.GetRentalByRentalId);
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        public IDataResult<List<RentalDetailDto>> GetRentalDetail()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }

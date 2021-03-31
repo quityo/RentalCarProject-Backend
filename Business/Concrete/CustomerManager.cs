@@ -52,7 +52,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerUpdated);
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersGetAll);
@@ -63,8 +63,8 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId), Messages.GetUserByUserId);
         }
 
-        [CacheAspect]
-        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        //[CacheAspect]
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetail()
         {
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
         }

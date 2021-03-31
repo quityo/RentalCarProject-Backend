@@ -24,14 +24,16 @@ namespace DataAccess.Concrete.EntityFramework
                              on p.BrandId equals d.BrandId
                              select new CarDetailDto
                              {
-                                 CarName =p.CarName,
+                                 CarName = p.CarName,
                                  BrandName = d.BrandName,
                                  ColorName = c.ColorName,
                                  DailyPrice = p.DailyPrice,
                                  Description = p.Description,
                                  ModelYear = p.ModelYear,
                                  CarId = p.CarId,
-                                 
+                                 ImagePath = context.CarImage.Where(x => x.CarId == p.CarId).FirstOrDefault().ImagePath
+
+
                              };
                 return result.ToList();
             }

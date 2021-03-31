@@ -14,6 +14,8 @@ namespace Business.Constants
         public static string CarNotValid = "The car could not be added. Registration conditions;\n" +
                     "-The car description must contain at least two characters\n" +
                     "-The daily price of the car must be greater than zero";
+        public static string MaintenanceTime = "MaintenanceTime";
+        public static string CarListed = "CarListed";
 
         public static string ColorAdded = "Color Added";
         public static string ColorUpdated = "Color Updated";
