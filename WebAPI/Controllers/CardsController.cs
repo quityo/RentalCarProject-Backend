@@ -11,57 +11,37 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RentalsController : ControllerBase
+    public class CardsController : ControllerBase
     {
-        IRentalService _rentalService;
-        public RentalsController(IRentalService rentalService)
+        private ICardService _cardService;
+        public CardsController(ICardService cardService)
         {
-            _rentalService = rentalService;
+            _cardService = cardService;
+        }
+        [HttpPost("add")]
+        public IActionResult Add(Card card)
+        {
+            var result = _cardService.Add(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpDelete("delete")]
+        public IActionResult Delete(Card card)
+        {
+            var result = _cardService.Delete(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _rentalService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpPost("add")]
-        public IActionResult Add(Rental rental)
-        {
-            var result = _rentalService.Add(rental);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpPut("update")]
-        public IActionResult Update(Rental rental)
-        {
-            var result = _rentalService.Update(rental);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("getrentaldetail")]
-        public IActionResult GetCarDetail()
-        {
-            var result = _rentalService.GetRentalDetail();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("getrentaldetailbycarid")]
-        public IActionResult GetRentalDetailsByCarId(int carId)
-        {
-            var result = _rentalService.GetRentalDetailsByCarId(carId);
+            var result = _cardService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -69,15 +49,35 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbyid")]
-        public IActionResult GetByCustomerId(int customerId)
+        public IActionResult GetById(int id)
         {
-            var result = _rentalService.GetByCustomerId(customerId);
+            var result = _cardService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        [HttpGet("getbycardnumber")]
+        public IActionResult GetByCardNumber(string cardNumber)
+        {
+            var result = _cardService.GetByCardNumber(cardNumber);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("iscardexist")]
+        public IActionResult IsCardExist(Card card)
+        {
+            var result = _cardService.IsCardExist(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
 
+        }
     }
 }

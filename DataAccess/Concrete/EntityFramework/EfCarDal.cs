@@ -24,7 +24,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on p.BrandId equals d.BrandId
                              select new CarDetailDto
                              {
-                                 CarName = p.CarName,
+
                                  BrandName = d.BrandName,
                                  ColorName = c.ColorName,
                                  DailyPrice = p.DailyPrice,
@@ -33,11 +33,29 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarId = p.CarId,
                                  ImagePath = context.CarImage.Where(x => x.CarId == p.CarId).FirstOrDefault().ImagePath
 
-
                              };
                 return result.ToList();
             }
         }
+        public CarDetailDto GetCarDetail(Expression<Func<CarDetailDto, bool>> filter)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from c in context.Car
+                             join b in context.Brand on c.BrandId equals b.BrandId
+                             join r in context.Color on c.ColorId equals r.ColorId
+                             let i = context.CarImage.Where(x => x.CarId == c.CarId).FirstOrDefault()
+                             select new CarDetailDto()
+                             {
+                                 CarId = c.CarId,
+                                 BrandName = b.BrandName,
+                                 DailyPrice = c.DailyPrice,
+                                 ColorName = r.ColorName,
+                                 Description = c.Description,
 
+                             };
+                return result.SingleOrDefault(filter);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
+using Business.Concrete.Business.Concreate;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
@@ -42,6 +43,9 @@ namespace Business.DependencyResolvers.AutoFac
 
             builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
             builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+
+            builder.RegisterType<CardManager>().As<ICardService>().SingleInstance();
+            builder.RegisterType<EfCardDal>().As<ICardDal>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

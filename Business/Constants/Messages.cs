@@ -36,7 +36,7 @@ namespace Business.Constants
         public static string CustomerDeleted = "Customer Deleted";
         public static string CustomerNotValid = "Company Name Not Valid";
         public static string CustomersGetAll = "CustomersGetAll";
-
+        public static string CustomerListed = "CustomerListed";
 
         public static string RentalAdded = "Rental Added";
         public static string RentalUpdated = "Rental Updated";
@@ -45,6 +45,7 @@ namespace Business.Constants
         public static string RentalDateOk = "The car can be delivered on the requested dates.";
         public static string RentalGetAll = "RentalGetAll";
         public static string GetRentalByRentalId = "GetRentalByRentalId";
+        public static string RentalListed = "RentalListed";
 
         public static string CarImageLimitExceeded = "Bir arabanın 5'dan fazla resmi olamaz.";
         public static string CarImageAdded = "Araba resmi eklendi";

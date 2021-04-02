@@ -1,70 +1,42 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
-using Entities.Concrete;
+
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
-
+using System.Linq.Expressions;
+using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, RentACarContext>, IRentalDal
     {
-        public bool CheckCarStatus(int carId, DateTime rentDate, DateTime? returnDate)
+        public List<RentalDetailDto> GetRentalDetail(Expression<Func<Rental, bool>> filter = null)
         {
             using (RentACarContext context = new RentACarContext())
             {
-                bool checkReturnDateIsNull = context.Set<Rental>().Any(p => p.CarId == carId && p.ReturnDate == null);
-                bool isValidRentDate = context.Set<Rental>()
-                    .Any(r => r.CarId == carId && (
-                            (rentDate >= r.RentDate && rentDate <= r.ReturnDate) ||
-                            (returnDate >= r.RentDate && returnDate <= r.ReturnDate) ||
-                            (r.RentDate >= rentDate && r.RentDate <= returnDate)
-                            )
-                    );
-
-                if ((!checkReturnDateIsNull) && (!isValidRentDate))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        public List<RentalDetailDto> GetRentalDetails()
-        {
-            using (RentACarContext context = new RentACarContext())
-            {
-                var result = from ra in context.Rental
-                             join c in context.Car
-                             on ra.CarId equals c.CarId
-                             join co in context.Customer
-                             on ra.CustomerId equals co.CustomerId
-                             join u in context.User
-                             on co.UserId equals u.UserId
-                             join b in context.Brand
-                             on c.BrandId equals b.BrandId
-                             join p in context.Payment
-                             on ra.PaymentId equals p.PaymentId
+                var result = from rental in filter == null ? context.Rental : context.Rental.Where(filter)
+                             join car in context.Car on rental.CarId equals car.CarId
+                             join customer in context.Customer on rental.CustomerId equals customer.CustomerId
+                             join user in context.User on customer.UserId equals user.UserId
+                             join brand in context.Brand on car.BrandId equals brand.BrandId
+                             join color in context.Color on car.ColorId equals color.ColorId
                              select new RentalDetailDto
                              {
-                                 RentalId = ra.RentalId,
-                                 BrandName = b.BrandName,
-                                 CarName = c.CarName,
-                                 ModelYear = c.ModelYear,
-                                 DailyPrice = c.DailyPrice,
-                                 UserName = u.FirstName + " " + u.LastName,
-                                 CustomerName = co.CompanyName,
-                                 RentDate = ra.RentDate,
-                                 ReturnDate = ra.ReturnDate,
-                                 CardNameSurname = p.CardNameSurname,
-                                 CardNumber = p.CardNumber,
-                                 CardExpiryDate = p.CardExpiryDate,
-                                 CardCvv = p.CardCvv,
-                                 AmountPaye = p.AmountPaye
 
+                                 RentalId = rental.RentalId,
+                                 CompanyName = customer.CompanyName,
+                                 CarDailyPrice = car.DailyPrice,
+                                 CarDescription = car.Description,
+                                 CarId = rental.CarId,
+                                 FirstName = user.FirstName,
+                                 LastName = user.LastName,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 RentDate = rental.RentDate,
+                                 ReturnDate = rental.ReturnDate
                              };
                 return result.ToList();
             }
