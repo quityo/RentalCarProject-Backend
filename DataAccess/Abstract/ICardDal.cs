@@ -6,7 +6,10 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface ICardDal : IEntityRepository<Card>
+    namespace DataAccess.Abstract
     {
+        public interface ICardDal : IEntityRepository<Card>
+        {
+        }
     }
 }

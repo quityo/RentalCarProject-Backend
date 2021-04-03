@@ -28,8 +28,8 @@ namespace DataAccess.Concrete.EntityFramework
 
                                  RentalId = rental.RentalId,
                                  CompanyName = customer.CompanyName,
-                                 CarDailyPrice = car.DailyPrice,
-                                 CarDescription = car.Description,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
                                  CarId = rental.CarId,
                                  FirstName = user.FirstName,
                                  LastName = user.LastName,

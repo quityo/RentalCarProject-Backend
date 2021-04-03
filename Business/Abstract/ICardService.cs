@@ -17,3 +17,4 @@ namespace Business.Abstract
         IResult Delete(Card card);
     }
 }
+
