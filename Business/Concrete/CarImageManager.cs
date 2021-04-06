@@ -98,5 +98,25 @@ namespace Business.Concrete
             }
             return _carImageDal.GetAll(c => c.CarId == imageId);
         }
+
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
+        {
+            var getAllbyCarIdResult = _carImageDal.GetAll(p => p.CarId == carId);
+            if (getAllbyCarIdResult.Count == 0)
+            {
+                return new SuccessDataResult<List<CarImage>>(new List<CarImage>
+                {
+                    new CarImage
+                    {
+                        ImageId = -1,
+                        CarId = carId,
+                        Date = DateTime.MinValue,
+                        ImagePath = "images/default.jpg"
+                    }
+                });
+            }
+
+            return new SuccessDataResult<List<CarImage>>(getAllbyCarIdResult);
+        }
     }
 }

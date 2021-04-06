@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -30,6 +31,7 @@ namespace Business.Constants
             public static string CustomerUpdated = "Müşteri Güncellendi";
             public static string CustomerDeleted = "Müşteri Silindi";
             public static string CustomerListed = "Müşteri Listelendi";
+            public static string UserAdded = "Müşteri eklendi";
 
 
             public static string RentalAdded = "Araba kiralandı";
@@ -37,18 +39,24 @@ namespace Business.Constants
             public static string RentalListed = "Kira Listelendi";
             public static string RentalInvalid = "Kiralama geçersiz";
 
+            public static string CardAdded = "Ürün eklendi";
             public static string CarImageAdded = "Resim eklendi.";
             public static string CarImageDeleted = "Resim silindi ";
             public static string CarImageListed = "Resim listelendi";
             public static string CarImageUpdated = "Resim güncellendi";
             public static string CarImageLimitExceeded;
             public static string AuthorizationDenied = "Yetkiniz yok";
-            public static string UserRegistered = "Kayıt oldu.";
+            public static string Registered = "Kayıt oldu.";
             public static string UserNotFound = "Kullanıcı bulunamadı.";
-            public static string PasswordError = "Parola Hatası";
+            public static string WrongPassword = "Parola Hatası";
             public static string SuccessfulLogin = "Başarılı Giriş";
             public static string UserAlreadyExists = "Kullanıcı Mecvut";
             public static string AccessTokenCreated = "Erişim oluşturuldu.";
-            
+            public static string SuccessfullyPaid = "SuccessfullyPaid";
+            public static string InvalidSale = "InvalidSale";
+            public static string RentalFailedAdded = "RentalFailedAdded";
+
+
+            public static string UserAvailable = "UserAvailable";
     }
 }

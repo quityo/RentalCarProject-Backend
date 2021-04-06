@@ -11,5 +11,6 @@ namespace DataAccess.Abstract
 {
     public interface ICarImageDal : IEntityRepository<CarImage>
     {
+        List<CarImageDto> GetCarImageDetails(Expression<Func<CarImage, bool>> filter = null);
     }
 }

@@ -6,10 +6,8 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface ICardService
+    public interface IPaymentService
     {
-        IResult Add(Card card);
-        IDataResult<List<Card>> GetByCustomerId(int customerId);
+        IResult Add(Payment payment);
     }
 }
-
