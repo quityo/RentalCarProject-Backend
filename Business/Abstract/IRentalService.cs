@@ -7,16 +7,13 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IRentalService 
+    public interface IRentalService
     {
         IDataResult<List<Rental>> GetAll();
-        IDataResult<Rental> GetById(int rentalId);
-        IDataResult<List<RentalDetailDto>> GetRentalDetails();
-        IDataResult<List<RentalDetailDto>> GetRentalDetailsByCarId(int carId);
-        bool IsCarAvailable(int carId);
         IResult Add(Rental rental);
-        IResult CheckDate(Rental rental);
         IResult Update(Rental rental);
-        IResult Delete(Rental rental);
+        IDataResult<List<RentalDetailDto>> GetRentalDetail();
+        IDataResult<List<RentalDetailDto>> GetRentalDetailsByCarId(int carId);
+        IDataResult<List<Rental>> GetByCustomerId(int customerId);
     }
 }

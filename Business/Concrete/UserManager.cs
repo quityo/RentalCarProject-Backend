@@ -24,20 +24,20 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        [CacheRemoveAspect("IUserService.Get")]
+        //[CacheRemoveAspect("IUserService.Get")]
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
             _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
-        [CacheRemoveAspect("IUserService.Get")]
+        //[CacheRemoveAspect("IUserService.Get")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult();
         }
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
 
@@ -53,7 +53,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
-        [CacheRemoveAspect("IUserService.Get")]
+        //[CacheRemoveAspect("IUserService.Get")]
         public IResult Update(User user)
         {
             _userDal.Update(user);
