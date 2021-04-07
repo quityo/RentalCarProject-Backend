@@ -47,9 +47,9 @@ namespace Business.Concrete
         }
         [ValidationAspect(typeof(CarImageValidator))]
 
-        public IDataResult<CarImage> Get(int imageId)
+        public IDataResult<CarImage> Get(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.ImageId == imageId));
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarImageId == id));
 
         }
 
@@ -58,15 +58,15 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
+        public IDataResult<List<CarImage>> GetImagesByCarId(int id)
         {
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(carId), "listelendi");
+            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id), "listelendi");
         }
         [ValidationAspect(typeof(CarImageValidator))]
         //[CacheRemoveAspect("ICarImageService.Get")]
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.ImageId == carImage.ImageId).ImagePath, file);
+            carImage.ImagePath = FileHelper.Update(_carImageDal.Get(c => c.CarImageId == carImage.CarImageId).ImagePath, file);
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
@@ -80,43 +80,23 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        private List<CarImage> CheckIfCarImageNull(int imageId)
+        private List<CarImage> CheckIfCarImageNull(int id)
         {
             string path = @"\images\default.jpg";
-            var result = _carImageDal.GetAll(c => c.CarId == imageId).Any();
+            var result = _carImageDal.GetAll(c => c.CarId == id).Any();
             if (!result)
             {
                 return new List<CarImage>
                 {
                     new CarImage
                     {
-                        CarId = imageId,
+                        CarId = id,
                         ImagePath = path,
                         Date = DateTime.Now
                     }
                 };
             }
-            return _carImageDal.GetAll(c => c.CarId == imageId);
-        }
-
-        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
-        {
-            var getAllbyCarIdResult = _carImageDal.GetAll(p => p.CarId == carId);
-            if (getAllbyCarIdResult.Count == 0)
-            {
-                return new SuccessDataResult<List<CarImage>>(new List<CarImage>
-                {
-                    new CarImage
-                    {
-                        ImageId = -1,
-                        CarId = carId,
-                        Date = DateTime.MinValue,
-                        ImagePath = "images/default.jpg"
-                    }
-                });
-            }
-
-            return new SuccessDataResult<List<CarImage>>(getAllbyCarIdResult);
+            return _carImageDal.GetAll(c => c.CarId == id);
         }
     }
 }
