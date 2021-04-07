@@ -10,7 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface IRentalDal : IEntityRepository<Rental>
     {
-        bool CheckCarStatus(int carId, DateTime rentDate, DateTime? returnDate);
-        List<RentalDetailDto> GetRentalDetails(Expression<Func<RentalDetailDto, bool>> filter = null);
+        List<RentalDetailDto> GetRentalDetail(Expression<Func<Rental, bool>> filter = null);
     }
 }

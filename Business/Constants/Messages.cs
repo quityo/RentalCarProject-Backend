@@ -9,54 +9,46 @@ namespace Business.Constants
 {
     public static class Messages
     {
-            public static string CarAdded = "Ürün eklendi";
-            public static string CarUpdated = "Ürün güncellendi";
-            public static string CarDeleted = "Ürün silindi";
-            public static string CarNameInvalid = "Ürin ismi geçersiz";
-            public static string MaintenanceTime = "Bakım zamanında";
-            public static string CarListed = "Listelendi";
+        public static string CarAdded = "Ürün eklendi";
+        public static string CarUpdated = "Ürün güncellendi";
+        public static string CarDeleted = "Ürün silindi";
+        public static string CarNameInvalid = "Ürin ismi geçersiz";
+        public static string MaintenanceTime = "Bakım zamanında";
+        public static string CarListed = "Listelendi";
 
-            public static string BrandAdded = "Marka eklendi";
-            public static string BrandUpdated = "Marka güncellendi";
-            public static string BrandDeleted = "Marka silindi";
+        public static string BrandAdded = "Marka eklendi";
+        public static string BrandUpdated = "Marka güncellendi";
+        public static string BrandDeleted = "Marka silindi";
 
-            public static string ColorAdded = "Renk eklendi";
-            public static string ColorUpdated = "Renk güncellendi";
-            public static string ColorDeleted = "Renk silindi";
+        public static string ColorAdded = "Renk eklendi";
+        public static string ColorUpdated = "Renk güncellendi";
+        public static string ColorDeleted = "Renk silindi";
 
-            public static string BrandListed = "Marka listelendi";
-            public static string ColorListed = "Renk listelendi";
+        public static string BrandListed = "Marka listelendi";
+        public static string ColorListed = "Renk listelendi";
 
-            public static string CustomerAdded = "Müşteri eklendi";
-            public static string CustomerUpdated = "Müşteri Güncellendi";
-            public static string CustomerDeleted = "Müşteri Silindi";
-            public static string CustomerListed = "Müşteri Listelendi";
-            public static string UserAdded = "Müşteri eklendi";
-
-
-            public static string RentalAdded = "Araba kiralandı";
-            public static string RentalUpdated = "Araba kira işlemi güncellendi";
-            public static string RentalListed = "Kira Listelendi";
-            public static string RentalInvalid = "Kiralama geçersiz";
-
-            public static string CardAdded = "Ürün eklendi";
-            public static string CarImageAdded = "Resim eklendi.";
-            public static string CarImageDeleted = "Resim silindi ";
-            public static string CarImageListed = "Resim listelendi";
-            public static string CarImageUpdated = "Resim güncellendi";
-            public static string CarImageLimitExceeded;
-            public static string AuthorizationDenied = "Yetkiniz yok";
-            public static string Registered = "Kayıt oldu.";
-            public static string UserNotFound = "Kullanıcı bulunamadı.";
-            public static string WrongPassword = "Parola Hatası";
-            public static string SuccessfulLogin = "Başarılı Giriş";
-            public static string UserAlreadyExists = "Kullanıcı Mecvut";
-            public static string AccessTokenCreated = "Erişim oluşturuldu.";
-            public static string SuccessfullyPaid = "SuccessfullyPaid";
-            public static string InvalidSale = "InvalidSale";
-            public static string RentalFailedAdded = "RentalFailedAdded";
+        public static string CustomerAdded = "Müşteri eklendi";
+        public static string CustomerUpdated = "Müşteri Güncellendi";
+        public static string CustomerDeleted = "Müşteri Silindi";
+        public static string CustomerListed = "Müşteri Listelendi";
 
 
-            public static string UserAvailable = "UserAvailable";
+        public static string RentalAdded = "Araba kiralandı";
+        public static string RentalUpdated = "Araba kira işlemi güncellendi";
+        public static string RentalListed = "Kira Listelendi";
+        public static string RentalInvalid = "Kiralama geçersiz";
+
+        public static string CarImageAdded = "Resim eklendi.";
+        public static string CarImageDeleted = "Resim silindi ";
+        public static string CarImageListed = "Resim listelendi";
+        public static string CarImageUpdated = "Resim güncellendi";
+        public static string CarImageLimitExceeded;
+        public static string AuthorizationDenied = "Yetkiniz yok";
+        public static string UserRegistered = "Kayıt oldu.";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string PasswordError = "Parola Hatası";
+        public static string SuccessfulLogin = "Başarılı Giriş";
+        public static string UserAlreadyExists = "Kullanıcı Mecvut";
+        public static string AccessTokenCreated = "Erişim oluşturuldu.";
     }
 }
