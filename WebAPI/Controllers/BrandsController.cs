@@ -19,33 +19,26 @@ namespace WebAPI.Controllers
         {
             _brandService = brandService;
         }
-
-
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var result = _brandService.GetAll();
-
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-
-
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int brandId)
         {
-            var result = _brandService.GetById(id);
+            var result = _brandService.GetById(brandId);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-
-
         [HttpPost("add")]
         public IActionResult Add(Brand brand)
         {
@@ -56,9 +49,17 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-
-
-        [HttpPost("delete")]
+        [HttpPut]
+        public IActionResult Update(Brand brand)
+        {
+            var result = _brandService.Update(brand);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpDelete]
         public IActionResult Delete(Brand brand)
         {
             var result = _brandService.Delete(brand);
@@ -69,16 +70,5 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
-        [HttpPost("update")]
-        public IActionResult Update(Brand brand)
-        {
-            var result = _brandService.Update(brand);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
     }
 }

@@ -52,9 +52,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetail(r => r.CarId == carId), Messages.RentalListed);
         }
 
-        public IDataResult<List<Rental>> GetByCustomerId(int id)
+        public IDataResult<List<Rental>> GetByCustomerId(int customerId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CustomerId == id));
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CustomerId == customerId));
         }
     }
 }
