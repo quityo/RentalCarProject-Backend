@@ -27,12 +27,12 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        //Claim
+        
         //[SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            //business codes 
+           
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
@@ -48,7 +48,7 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetAll()
         {
 
-            //İş Kodları
+           
             if (DateTime.Now.Hour == 20)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);

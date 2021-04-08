@@ -58,9 +58,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        public IDataResult<List<CarImage>> GetImagesByCarId(int id)
+        public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id), "listelendi");
+            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(carId), "listelendi");
         }
         [ValidationAspect(typeof(CarImageValidator))]
         //[CacheRemoveAspect("ICarImageService.Get")]
