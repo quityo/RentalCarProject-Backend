@@ -7,6 +7,7 @@ using Core.Utilities.Interceptors;
 using FluentValidation;
 using System;
 using System.Linq;
+using static Core.CrossCuttingConcerns.Validation.ValitadionTool;
 
 namespace Core.Aspects.Autofac.Validation
 {
