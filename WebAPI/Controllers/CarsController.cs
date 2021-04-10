@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        
+        //IoC Container  -- Inversion of Control
         ICarService _carService;
 
         public CarsController(ICarService carService)
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
 
         public IActionResult GetAll()
         {
-            
+            //Depemdency chain
             var result = _carService.GetAll();
             if (result.Success)
             {
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut("update")]
+        [HttpPost("update")]
         public IActionResult Update(Car car)
         {
             var result = _carService.Update(car);
@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpDelete("delete")]
+        [HttpPost("delete")]
         public IActionResult Delete(Car car)
         {
             var result = _carService.Delete(car);
@@ -135,5 +135,6 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
 
         }
+        
     }
 }
