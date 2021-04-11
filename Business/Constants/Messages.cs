@@ -38,6 +38,10 @@ namespace Business.Constants
         public static string RentalListed = "Kira Listelendi";
         public static string RentalInvalid = "Kiralama geçersiz";
 
+        public static string UserAdded = "Kullanıcı eklendi";
+        public static string UserUpdated = "Kullanıcı güncellendi";
+        public static string UserDeleted = "Kullanıcı silindi";
+
         public static string CarImageAdded = "Resim eklendi.";
         public static string CarImageDeleted = "Resim silindi ";
         public static string CarImageListed = "Resim listelendi";
@@ -50,5 +54,6 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Başarılı Giriş";
         public static string UserAlreadyExists = "Kullanıcı Mecvut";
         public static string AccessTokenCreated = "Erişim oluşturuldu.";
+        public static string CardDeleted = "Kredi kartı silindi";
     }
 }

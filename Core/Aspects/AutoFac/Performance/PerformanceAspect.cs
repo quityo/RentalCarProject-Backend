@@ -11,7 +11,6 @@ namespace Core.Aspects.Autofac.Performance
         private int _interval;
         private Stopwatch _stopwatch;
 
-
         public PerformanceAspect(int interval)
         {
             _interval = interval;

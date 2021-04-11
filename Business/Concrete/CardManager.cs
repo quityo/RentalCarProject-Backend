@@ -5,6 +5,7 @@ using DataAccess.Abstract.DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -58,6 +59,16 @@ namespace Business.Concrete
         {
             _cardDal.Update(card);
             return new SuccessResult();
+        }
+        public IDataResult<List<Card>> GetAllCreditCardByCustomerId(int customerId)
+        {
+            return new SuccessDataResult<List<Card>>(_cardDal.GetAll().Where(x => x.CustomerId == customerId).ToList());
+        }
+        public IResult DeleteById(int cardId)
+        {
+            var card = _cardDal.Get(x => x.CardId == cardId);
+            _cardDal.Delete(card);
+            return new SuccessResult(Messages.CardDeleted);
         }
     }
 }

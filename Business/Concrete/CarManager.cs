@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Aspects.AutoFac.Logging;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,13 +28,15 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        
-        //[SecuredOperation("car.add,admin")]
-        [ValidationAspect(typeof(CarValidator))]
+        //Claim
+        [SecuredOperation("car.add,admin")]
+        //[ValidationAspect(typeof(CarValidator))]
+        //[CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
-           
+            //business codes 
 
+            IResult result = BusinessRules.Run(CheckIfCarNameExists(car.Description));
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
 
@@ -48,7 +51,7 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetAll()
         {
 
-           
+            //İş Kodları
             if (DateTime.Now.Hour == 20)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
@@ -101,6 +104,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p => p.BrandId == brandId && p.ColorId == colorId));
 
         }
+        private IResult CheckIfCarNameExists(string carName)
+        {
+            var result = _carDal.GetAll(p => p.Description == carName).Any();
+            if (result)//==true
+            {
+                return new ErrorResult("Enter new name");
+            }
+
+            return new SuccessResult();
+        }
+
+
+        //deneme
         public IDataResult<List<Car>> GetCarsByBrand(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));

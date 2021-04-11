@@ -13,8 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 
     public class EfCarDal : EfEntityRepositoryBase<Car, RentACarContext>, ICarDal
     {
-        
-
+    
         public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (RentACarContext context = new RentACarContext())
@@ -27,16 +26,16 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
 
-                                 CarName = p.CarName,
                                  BrandName = d.BrandName,
                                  ColorName = c.ColorName,
                                  DailyPrice = p.DailyPrice,
                                  Description = p.Description,
                                  ModelYear = p.ModelYear,
-
                                  CarId = p.CarId,
                                  ImagePath = context.CarImage.Where(x => x.CarId == p.CarId).FirstOrDefault().ImagePath,
-                                 Status = !context.Rental.Any(r => r.CarId == p.CarId && (r.ReturnDate == null || r.RentDate > DateTime.Now))
+                                 Status = !context.Rental.Any(r => r.CarId == p.CarId && (r.ReturnDate == null || r.RentDate > DateTime.Now)),
+                                 //CarFindex = p.CarFindex
+
 
                              };
                 return result.ToList();
@@ -52,14 +51,12 @@ namespace DataAccess.Concrete.EntityFramework
                              let i = context.CarImage.Where(x => x.CarId == c.CarId).FirstOrDefault()
                              select new CarDetailDto()
                              {
-                                 CarName = c.CarName,
                                  CarId = c.CarId,
-                                 BrandId = b.BrandId,
                                  BrandName = b.BrandName,
                                  DailyPrice = c.DailyPrice,
                                  ColorName = r.ColorName,
-                                 ColorId = r.ColorId,
                                  Description = c.Description,
+                                 CarFindex = c.CarFindex
 
                              };
                 return result.SingleOrDefault(filter);

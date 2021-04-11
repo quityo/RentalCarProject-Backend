@@ -18,6 +18,7 @@ namespace Business.DependencyResolvers.AutoFac
     {
         protected override void Load(ContainerBuilder builder)
         {
+
             builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();
             builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();
 
@@ -36,6 +37,7 @@ namespace Business.DependencyResolvers.AutoFac
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
+
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
@@ -53,6 +55,7 @@ namespace Business.DependencyResolvers.AutoFac
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {
                     Selector = new AspectInterceptorSelector()
+
                 }).SingleInstance();
         }
     }
