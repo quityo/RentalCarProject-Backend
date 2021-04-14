@@ -21,54 +21,12 @@ namespace Business.Concrete
         public IResult Add(Card card)
         {
             _cardDal.Add(card);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CardAdded);
         }
 
-        public IResult Delete(Card card)
+        public IDataResult<List<Card>> GetByCustomerId(int customerId)
         {
-            _cardDal.Delete(card);
-            return new SuccessResult();
-        }
-
-        public IDataResult<List<Card>> GetAll()
-        {
-            return new SuccessDataResult<List<Card>>(_cardDal.GetAll());
-        }
-
-        public IDataResult<List<Card>> GetByCardNumber(string cardNumber)
-        {
-            return new SuccessDataResult<List<Card>>(_cardDal.GetAll(c => c.CardNumber == cardNumber));
-        }
-
-        public IDataResult<Card> GetById(int carId)
-        {
-            return new SuccessDataResult<Card>(_cardDal.Get(c => c.CardId == carId));
-        }
-
-        public IResult IsCardExist(Card card)
-        {
-            var result = _cardDal.Get(c => c.NameOnTheCard == card.NameOnTheCard && c.CardNumber == card.CardNumber && c.CardCvv == card.CardCvv);
-            if (result == null)
-            {
-                return new ErrorResult();
-            }
-            return new SuccessResult();
-        }
-
-        public IResult Update(Card card)
-        {
-            _cardDal.Update(card);
-            return new SuccessResult();
-        }
-        public IDataResult<List<Card>> GetAllCreditCardByCustomerId(int customerId)
-        {
-            return new SuccessDataResult<List<Card>>(_cardDal.GetAll().Where(x => x.CustomerId == customerId).ToList());
-        }
-        public IResult DeleteById(int cardId)
-        {
-            var card = _cardDal.Get(x => x.CardId == cardId);
-            _cardDal.Delete(card);
-            return new SuccessResult(Messages.CardDeleted);
+            return new SuccessDataResult<List<Card>>(_cardDal.GetAll(c => c.CustomerId == customerId));
         }
     }
 }

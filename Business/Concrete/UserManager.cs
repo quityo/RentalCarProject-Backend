@@ -63,7 +63,5 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<User>(_userDal.GetAll().Where(u => u.Email == email).FirstOrDefault());
         }
-
-
-    }
-}
+     }
+   }

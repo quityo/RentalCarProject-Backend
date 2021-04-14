@@ -1,24 +1,27 @@
 ﻿using Core.Utilities.Results;
-using Microsoft.AspNetCore.Http;
 using System;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
+        public static string ImagePath { get; set; }
 
-        public static string Add(IFormFile file)
+        public static string SaveImageFile(IFormFile imageFile)
         {
             var sourcepath = Path.GetTempFileName();
-            if (file.Length > 0)
+            if (imageFile.Length > 0)
             {
                 using (var stream = new FileStream(sourcepath, FileMode.Create))
                 {
-                    file.CopyTo(stream);
+                    imageFile.CopyTo(stream);
                 }
             }
-            var result = newPath(file);
+            var result = newPath(imageFile);
             File.Move(sourcepath, result.newPath);
             return result.Path2.Replace("\\", "/");
         }
@@ -56,7 +59,7 @@ namespace Core.Utilities.Helpers
 
             string path = Environment.CurrentDirectory + @"\wwwroot\images";
             var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + fileExtension;
-           
+            //string webPath = string.Format("/Images/{0}",newPath);
 
             string result = $@"{path}\{newPath}";
             return (result, $"{newPath}");
@@ -64,3 +67,5 @@ namespace Core.Utilities.Helpers
 
     }
 }
+
+

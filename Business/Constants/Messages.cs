@@ -33,10 +33,10 @@ namespace Business.Constants
         public static string CustomerListed = "Müşteri Listelendi";
 
 
-        public static string RentalAdded = "Araba kiralandı";
-        public static string RentalUpdated = "Araba kira işlemi güncellendi";
-        public static string RentalListed = "Kira Listelendi";
-        public static string RentalInvalid = "Kiralama geçersiz";
+        public static string RentalAdded = "Kiralama eklendi!";
+        public static string RentalUpdated = "Kiralama güncellendi!";
+        public static string RentalDeleted = "Kiralama silindi!";
+        public static string RentalsListed = "Kiradaki Araçlar listelendi!";
 
         public static string UserAdded = "Kullanıcı eklendi";
         public static string UserUpdated = "Kullanıcı güncellendi";
@@ -55,5 +55,11 @@ namespace Business.Constants
         public static string UserAlreadyExists = "Kullanıcı Mecvut";
         public static string AccessTokenCreated = "Erişim oluşturuldu.";
         public static string CardDeleted = "Kredi kartı silindi";
+        public static string CardAdded = "Kart bilgileri Eklenmiştir.";
+        public static string PaymentSuccessful = " Ödeme gerçekleşti.";
+        public static string CarIsntAvailable = "Araç müsait değil!";
+        public static string CarImageCountExceeded = "CarImageCountExceeded ";
+        public static string CarImageNotFound = "CarImageNotFound ";
+        public static string CarImagesDeleted = "CarImagesDeleted ";
     }
 }

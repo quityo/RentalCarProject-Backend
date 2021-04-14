@@ -14,6 +14,5 @@ namespace Business.Abstract
         List<OperationClaim> GetClaims(User user);
         IDataResult<User> GetByMail(string email);
         IDataResult<User> GetById(int userId);
-
     }
 }

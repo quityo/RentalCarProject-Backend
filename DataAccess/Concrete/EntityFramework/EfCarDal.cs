@@ -25,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on p.BrandId equals d.BrandId
                              select new CarDetailDto
                              {
-
+                                 CarName = p.CarName,
                                  BrandName = d.BrandName,
                                  ColorName = c.ColorName,
                                  DailyPrice = p.DailyPrice,
@@ -56,8 +56,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  DailyPrice = c.DailyPrice,
                                  ColorName = r.ColorName,
                                  Description = c.Description,
-                                 CarFindex = c.CarFindex
-
+                                 CarFindex = c.CarFindex,
+                                 CarName = c.CarName,
                              };
                 return result.SingleOrDefault(filter);
             }

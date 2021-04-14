@@ -27,6 +27,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
+        public IDataResult<List<Customer>> GetAll()
+        {
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
+        }
 
         public IDataResult<Customer> GetById(int customerId)
         {
@@ -47,14 +51,6 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetail(c => c.CustomerId == customerId), Messages.CustomerListed);
         }
-        public IDataResult<CustomerDetailDto> getCustomerByEmail(string email)
-        {
-            return new SuccessDataResult<CustomerDetailDto>(_customerDal.getCustomerByEmail(p => p.Email == email));
-        }
-
-        DataResult<List<Customer>> ICustomerService.GetAll()
-        {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerListed);
-        }
+       
     }
 }
