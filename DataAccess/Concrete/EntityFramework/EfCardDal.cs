@@ -1,5 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
-using DataAccess.Abstract.DataAccess.Abstract;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,10 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCardDal : EfEntityRepositoryBase<Card, RentACarContext>, ICardDal
+    namespace DataAccess.Concreate.EntityFramework
     {
+        public class EfCardDal : EfEntityRepositoryBase<Card, RentACarContext>, ICardDal
+        {
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
         //Claim
-        [SecuredOperation("car.add,admin")]
+        //[SecuredOperation("car.add,admin")]
         //[ValidationAspect(typeof(CarValidator))]
         //[CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
@@ -109,7 +109,7 @@ namespace Business.Concrete
             var result = _carDal.GetAll(p => p.Description == carName).Any();
             if (result)//==true
             {
-                return new ErrorResult("Enter new name");
+                return new ErrorResult("Başka isim girin");
             }
 
             return new SuccessResult();

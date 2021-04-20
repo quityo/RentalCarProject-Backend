@@ -9,6 +9,7 @@ using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Abstract.DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.EntityFramework.DataAccess.Concreate.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 

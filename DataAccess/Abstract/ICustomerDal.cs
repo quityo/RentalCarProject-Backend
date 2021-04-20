@@ -7,9 +7,13 @@ using System.Linq.Expressions;
 
 namespace DataAccess.Abstract
 {
-    public interface ICustomerDal : IEntityRepository<Customer>
+    namespace DataAccess.Abstract
     {
-        List<CustomerDetailDto> GetCustomerDetail(Expression<Func<Customer, bool>> filter = null);
-       
+        public interface ICustomerDal : IEntityRepository<Customer>
+        {
+            List<CustomerDetailDto> GetCustomerDetail(Expression<Func<Customer, bool>> filter = null);
+            CustomerDetailDto getCustomerByEmail(Expression<Func<CustomerDetailDto, bool>> filter);
+
+        }
     }
 }
