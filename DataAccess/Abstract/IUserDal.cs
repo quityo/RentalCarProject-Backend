@@ -15,3 +15,4 @@ namespace DataAccess.Abstract
         List<OperationClaim> GetClaims(User user);
     }
 }
+

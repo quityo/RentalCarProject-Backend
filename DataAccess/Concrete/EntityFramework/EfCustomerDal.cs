@@ -40,7 +40,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from customer in context.Customer
                              join u in context.User
-                             on customer.CustomerId equals u.UserId
+                             on customer.UserId equals u.UserId
                              select new CustomerDetailDto
                              {
                                  CustomerId = customer.CustomerId,
@@ -49,7 +49,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  CompanyName = customer.CompanyName,
                                  Email = u.Email,
                                  CustomerFindex = (int)customer.CustomerFindex
-
                              };
                 return result.ToList();
             }

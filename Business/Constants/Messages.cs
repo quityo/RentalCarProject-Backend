@@ -41,6 +41,9 @@ namespace Business.Constants
         public static string UserAdded = "Kullanıcı eklendi";
         public static string UserUpdated = "Kullanıcı güncellendi";
         public static string UserDeleted = "Kullanıcı silindi";
+        public static string UsersListed = "UserListed";
+        public static string UserRegistered = "Kayıt oldu.";
+        public static string UserAlreadyExists = "Kullanıcı Mecvut";
 
         public static string CarImageAdded = "Resim eklendi.";
         public static string CarImageDeleted = "Resim silindi ";
@@ -48,11 +51,11 @@ namespace Business.Constants
         public static string CarImageUpdated = "Resim güncellendi";
         public static string CarImageLimitExceeded;
         public static string AuthorizationDenied = "Yetkiniz yok";
-        public static string UserRegistered = "Kayıt oldu.";
+        
         public static string UserNotFound = "Kullanıcı bulunamadı.";
         public static string PasswordError = "Parola Hatası";
         public static string SuccessfulLogin = "Başarılı Giriş";
-        public static string UserAlreadyExists = "Kullanıcı Mecvut";
+        
         public static string AccessTokenCreated = "Erişim oluşturuldu.";
         public static string CardDeleted = "Kredi kartı silindi";
         public static string CardAdded = "Kart bilgileri Eklenmiştir.";

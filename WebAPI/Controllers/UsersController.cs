@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,30 +14,35 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        IUserService _userService;
 
         public UsersController(IUserService userService)
         {
             _userService = userService;
         }
 
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _userService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(User user)
         {
             var result = _userService.Add(user);
-            return result.Success ? (IActionResult)Ok(result) : BadRequest(result);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
-        [HttpPost("update")]
-        public IActionResult Update(User user)
-        {
-            var result = _userService.Update(user);
-            return result.Success ? (IActionResult)Ok(result) : BadRequest(result);
-        }
-        public IActionResult Delete(User user)
-        {
-            var result = _userService.Delete(user);
-            return result.Success ? (IActionResult)Ok(result) : BadRequest(result);
-        }
+
         [HttpGet("getbyid")]
         public IActionResult GetById(int userId)
         {
@@ -48,10 +54,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getuserbymail")]
-        public IActionResult GetUserByMail(string mail)
+        [HttpPost("update")]
+        public IActionResult Update(User user)
         {
-            var result = _userService.GetByMail(mail);
+            var result = _userService.Update(user);
             if (result.Success)
             {
                 return Ok(result);
@@ -59,7 +65,55 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("delete")]
+        public IActionResult Delete(User user)
+        {
+            var result = _userService.Delete(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("email")]
+        public IActionResult GetByMail(string email)
+        {
+            var result = _userService.GetByMail(email);
+            if (result.Success)
+            {
+                return Ok(new
+                {
+                    result.Data.UserId,
+                    result.Data.FirstName,
+                    result.Data.LastName,
+                    result.Data.Email,
+                    result.Data.Status
+                });
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("claims")]
+        public IActionResult GetClaims(int userId)
+        {
+            var result = _userService.GetClaims(new User { UserId = userId });
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("updateprofile")]
+        public IActionResult ProfileUpdate(UserForUpdateDto userForUpdateDto)
+        {
+            var result = _userService.ProfileUpdate(userForUpdateDto.User, userForUpdateDto.Password);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
-
-
 }
