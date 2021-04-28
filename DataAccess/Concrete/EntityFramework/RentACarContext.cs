@@ -1,12 +1,14 @@
 ﻿using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class RentACarContext:DbContext
     {
+        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentACarDb;Trusted_Connection=true");
@@ -23,5 +25,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserOperationClaim> UserOperationClaim { get; set; }
         public DbSet<Card> Card { get; set; }
         public DbSet<Payment> Peyment { get; set; }
+        public DbSet<ProfilImage> ProfilImage { get; set; }
     }
 }

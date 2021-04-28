@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Uploads\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\Images\6d346fdb-2547-4fc0-9b5b-c7348d8d3a77.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
