@@ -14,7 +14,7 @@ namespace DataAccess.Abstract
     public interface IUserDal : IEntityRepository<User>
     {
         List<OperationClaim> GetClaims(User user);
-      
+        List<UserDetailDto> GetUserDetails(Expression<Func<User, bool>> filter = null);
     }
 }
 

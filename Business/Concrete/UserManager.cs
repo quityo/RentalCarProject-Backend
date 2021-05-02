@@ -106,6 +106,24 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-      
+
+        public IDataResult<List<UserDetailDto>> GetUserDetail(int userId)
+        {
+           
+                return new SuccessDataResult<List<UserDetailDto>>(_userDal.GetUserDetails(c => c.UserId == userId));
+            
+        }
+        public IDataResult<List<UserDetailDto>> GetUserDetails()
+        {
+            List<UserDetailDto> userDetails = _userDal.GetUserDetails();
+            if (userDetails == null)
+            {
+                return new ErrorDataResult<List<UserDetailDto>>();
+            }
+            else
+            {
+                return new SuccessDataResult<List<UserDetailDto>>(userDetails);
+            }
+        }
     }
 }

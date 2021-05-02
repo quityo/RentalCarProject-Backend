@@ -17,5 +17,7 @@ namespace Business.Abstract
         IResult Update(User user);
         IResult Delete(User user);
         IResult ProfileUpdate(User user, string password);
+        IDataResult<List<UserDetailDto>> GetUserDetail(int userId);
+        IDataResult<List<UserDetailDto>> GetUserDetails();
     }
 }
