@@ -10,6 +10,7 @@ namespace Core.Utilities.Helpers
     public class FileHelper
     {
         public static string ImagePath { get; set; }
+        public static string ProfilImagePath { get; set; }
         public static string SaveImageFile(IFormFile imageFile)
         {
             var sourcepath = Path.GetTempFileName();

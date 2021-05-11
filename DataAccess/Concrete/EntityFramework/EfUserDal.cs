@@ -59,7 +59,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentACarContext context = new RentACarContext())
             {
-                var result = from u in filter == null ? context.User : context.User.Where(filter)
+                var result = from u in context.User
                              join c in context.Customer
                              on u.UserId equals c.UserId
                              join r in context.Rental
@@ -82,7 +82,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  UserId = u.UserId,
                                  ProfilImagePath = context.ProfilImage.Where(x => x.UserId == u.UserId).FirstOrDefault().ProfilImagePath,
 
-
+                               
 
                              };
                 return result.ToList();
