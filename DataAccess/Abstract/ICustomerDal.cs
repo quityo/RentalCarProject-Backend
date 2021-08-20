@@ -13,7 +13,6 @@ namespace DataAccess.Abstract
         {
             List<CustomerDetailDto> GetCustomerDetail(Expression<Func<Customer, bool>> filter = null);
             CustomerDetailDto getCustomerByEmail(Expression<Func<CustomerDetailDto, bool>> filter);
-
         }
     }
     

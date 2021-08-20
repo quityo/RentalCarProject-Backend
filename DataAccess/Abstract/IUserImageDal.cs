@@ -6,8 +6,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IProfilImageDal : IEntityRepository<ProfilImage>
+    public interface IUserImageDal : IEntityRepository<UserImage>
     {
-        
     }
 }

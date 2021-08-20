@@ -38,12 +38,13 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentACarContext context = new RentACarContext())
             {
-                var result = from customer in context.Customer
+                var result = from customer in filter == null ? context.Customer : context.Customer.Where(filter)
                              join u in context.User
                              on customer.UserId equals u.UserId
                              select new CustomerDetailDto
                              {
                                  CustomerId = customer.CustomerId,
+                                 UserId = u.UserId,
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  CompanyName = customer.CompanyName,

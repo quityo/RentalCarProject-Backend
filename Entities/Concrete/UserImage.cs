@@ -6,15 +6,15 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class ProfilImage : IEntity
+    public class UserImage : IEntity
     {
         [Key]
-        public int ProfilImageId { get; set; }
+        public int ImageId { get; set; }
 
 
         public int UserId { get; set; }
 
-        public string ProfilImagePath { get; set; }
+        public string ImagePath { get; set; }
         public DateTime Date { get; set; }
 
     }

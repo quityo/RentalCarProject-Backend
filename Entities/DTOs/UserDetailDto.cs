@@ -15,11 +15,10 @@ namespace Entities.DTOs
         public string LastName { get; set; }
         public string BrandName { get; set; }
         public string CompanyName { get; set; }
-        public string ProfilImagePath { get; set; }
+        public string ImagePath { get; set; }
 
         public DateTime Date { get; set; }
         public DateTime RentDate { get; set; }
         public DateTime ReturnDate { get; set; }
-
     }
 }

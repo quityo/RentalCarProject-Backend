@@ -9,30 +9,31 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfilImagesController : ControllerBase
+    public class UserImagesController : ControllerBase
     {
-        IProfilImageService _profilImageService;
+        IUserImageService _userImageService;
 
-        public ProfilImagesController(IProfilImageService profilImageService)
+        public UserImagesController(IUserImageService userImageService)
         {
-            _profilImageService = profilImageService;
+            _userImageService = userImageService;
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _profilImageService.GetAll();
+            var result = _userImageService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result.Message);
         }
-        [HttpGet("getbyprofilimageid")]
-        public IActionResult GetById([FromForm(Name = ("Id"))] int ProfilImageId)
+        [HttpGet("getbyid")]
+        public IActionResult GetById([FromForm(Name = ("Id"))] int ImageId)
         {
-            var result = _profilImageService.Get(ProfilImageId);
+            var result = _userImageService.Get(ImageId);
             if (result.Success)
             {
                 return Ok(result);
@@ -40,25 +41,25 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpPost("add")]
-        public IActionResult Add([FromForm] ProfilImagesDto profilImagesDto)
+        public IActionResult Add([FromForm] UserImageDto userImagesDto)
         {
-            var result = _profilImageService.Add(profilImagesDto);
+            var result = _userImageService.Add(userImagesDto);
             if (!result.Success) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm] ProfilImagesDto profilImagesDto)
+        public IActionResult Update([FromForm] UserImageDto userImagesDto)
         {
-            var result = _profilImageService.Update(profilImagesDto);
+            var result = _userImageService.Update(userImagesDto);
             if (!result.Success) return BadRequest(result);
             return Ok(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(ProfilImagesDto profilImagesDto)
+        public IActionResult Delete(UserImageDto userImagesDto)
         {
-            var result = _profilImageService.Delete(profilImagesDto);
+            var result = _userImageService.Delete(userImagesDto);
             if (!result.Success) return BadRequest(result);
             return Ok(result);
         }
@@ -66,7 +67,7 @@ namespace WebAPI.Controllers
         [HttpGet("getimagesbyuserid")]
         public IActionResult GetImagesByUserId(int userId)
         {
-            var result = _profilImageService.GetImagesByUserId(userId);
+            var result = _userImageService.GetImagesByUserId(userId);
             if (result.Success)
             {
                 return Ok(result);

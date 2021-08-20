@@ -80,6 +80,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
 
+        public IDataResult<List<string>> GetUserClaims(int userId)
+        {
+            var user = _userDal.GetAll().Where(x => x.UserId == userId).FirstOrDefault();
+            return new SuccessDataResult<List<string>>(_userDal.GetClaims(user).Select(x => x.Name).ToList());
+        }
+
+
         public IResult ProfileUpdate(User user, string password)
         {
             byte[] passwordHash, passwordSalt;

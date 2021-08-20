@@ -16,6 +16,7 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 
 namespace Business.Concrete
@@ -28,19 +29,15 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        //Claim
-        //[SecuredOperation("car.add,admin")]
+        [SecuredOperation("admin")]
         //[ValidationAspect(typeof(CarValidator))]
         //[CacheRemoveAspect("ICarService.Get")]
-        public IResult Add(Car car)
+        public IResult Add(Car entity)
         {
-            //business codes 
-
-            IResult result = BusinessRules.Run(CheckIfCarNameExists(car.Description));
-            _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
-
+            _carDal.Add(entity);
+            return new SuccessResult("Car" + Messages.CarAdded);
         }
+            
 
         public IResult Delete(Car car)
         {
@@ -69,7 +66,10 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(p => p.CarId == carId));
 
         }
-
+        public IDataResult<List<CarDetailDto>> GetCarDetail(int carId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.CarId == carId));
+        }
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             List<CarDetailDto> carDetails = _carDal.GetCarDetails();
@@ -127,9 +127,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetail(int carId)
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.CarId == carId));
-        }
+       
     }
 }

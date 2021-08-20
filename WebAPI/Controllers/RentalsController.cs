@@ -18,16 +18,7 @@ namespace WebAPI.Controllers
         {
             _rentalService = rentalService;
         }
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _rentalService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+       
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {
@@ -42,6 +33,26 @@ namespace WebAPI.Controllers
         public IActionResult Update(Rental rental)
         {
             var result = _rentalService.Update(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("delete")]
+        public IActionResult Delete(Rental rental)
+        {
+            var result = _rentalService.Delete(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _rentalService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -78,6 +89,28 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("iscaravailable")]
+        public IActionResult IsCarAvailable(int carId)
+        {
+            var result = _rentalService.IsCarAvailable(carId);
+            if (result)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("carisreturned")]
+        public IActionResult CarIsReturned(int carId)
+        {
+            var result = _rentalService.CarIsReturned(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
     }
 }

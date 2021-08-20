@@ -116,16 +116,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("claims")]
-        public IActionResult GetClaims(int userId)
-        {
-            var result = _userService.GetClaims(new User { UserId = userId });
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+    
 
         [HttpPost("updateprofile")]
         public IActionResult ProfileUpdate(UserForUpdateDto userForUpdateDto)

@@ -7,9 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProfilImageDal : EfEntityRepositoryBase<ProfilImage, RentACarContext>, IProfilImageDal
+    public class EfUserImageDal : EfEntityRepositoryBase<UserImage, RentACarContext>, IUserImageDal
     {
-    
     }
 }
- 

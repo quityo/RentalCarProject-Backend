@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public class ProfilImagesDto : IDto
+    public class UserImageDto : IDto
     {
-        public int ProfilImageId { get; set; }
+        public int ImageId { get; set; }
         public int UserId { get; set; }
         public IFormFile ImageFile { get; set; }
     }

@@ -1,7 +1,5 @@
 ﻿using Business.Concrete;
-using Business.Constants;
 using Core.Entities.Concrete;
-using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -10,8 +8,18 @@ namespace ConcoleUI
 {
     class Program
     {
-        static void Main(string[] args)
+      
+
+        private static void RentACar(User user, Car car, Customer customer)
         {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            Rental rental = new Rental();
+            rental.CarId = car.CarId;
+            rental.CustomerId = customer.CustomerId;
+            rental.RentDate = DateTime.Now;
+            rental.ReturnDate = null;
+            var result = rentalManager.Add(rental);
+            Console.WriteLine(result.Message);
         }
 
     }
