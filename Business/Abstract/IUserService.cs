@@ -16,7 +16,8 @@ namespace Business.Abstract
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);
-        IResult ProfileUpdate(User user, string password);
+        IResult ProfileUpdate(User user);
+        IResult UpdateUserDto(UserForRegisterDto user, int userId);
         IDataResult<List<UserDetailDto>> GetUserDetail(int userId);
         IDataResult<List<UserDetailDto>> GetUserDetails();
     }

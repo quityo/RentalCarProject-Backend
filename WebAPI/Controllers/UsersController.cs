@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using DataAccess.Abstract;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace WebAPI.Controllers
     public class UsersController : ControllerBase
     {
         IUserService _userService;
+        IUserDal _userDal;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IUserDal userDal)
         {
             _userService = userService;
+            _userDal = userDal;
         }
 
         [HttpGet("getall")]
@@ -41,6 +44,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        
         [HttpGet("getuserdetails")]
         public IActionResult GetUserDetails()
         {
@@ -116,12 +120,21 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-    
 
-        [HttpPost("updateprofile")]
-        public IActionResult ProfileUpdate(UserForUpdateDto userForUpdateDto)
+        [HttpPost("userdtoupdate")]
+        public IActionResult UpdateUserDto(UserForRegisterDto user, int userId)
         {
-            var result = _userService.ProfileUpdate(userForUpdateDto.User, userForUpdateDto.Password);
+            var result = _userService.UpdateUserDto(user, userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("updateprofile")]
+        public IActionResult ProfileUpdate(User user)
+        {
+            var result = _userService.ProfileUpdate(user);
             if (result.Success)
             {
                 return Ok(result);

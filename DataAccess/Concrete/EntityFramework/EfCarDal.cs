@@ -28,13 +28,15 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = p.CarName,
                                  BrandName = d.BrandName,
                                  ColorName = c.ColorName,
+                                 BrandId = d.BrandId,
+                                 ColorId = c.ColorId,
                                  DailyPrice = p.DailyPrice,
                                  Description = p.Description,
                                  ModelYear = p.ModelYear,
                                  CarId = p.CarId,
                                  ImagePath = context.CarImage.Where(x => x.CarId == p.CarId).FirstOrDefault().ImagePath,
                                  Status = !context.Rental.Any(r => r.CarId == p.CarId && (r.ReturnDate == null || r.RentDate > DateTime.Now)),
-                                 //CarFindex = p.CarFindex
+                                 CarFindex = p.CarFindex
 
 
                              };

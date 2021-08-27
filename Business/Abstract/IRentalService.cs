@@ -14,12 +14,17 @@ namespace Business.Abstract
         IResult Update(Rental rental);
         IResult Delete(Rental rental);
         IDataResult<List<Rental>> GetAll();
-
+        IDataResult<Rental> Get(Rental entity);
+        IResult GetList(List<Rental> list);
         IDataResult<Rental> GetById(int rentalId);
+        IDataResult<List<RentalDetailDto>> GetRentalDetails();
         IDataResult<List<RentalDetailDto>> GetRentalDetail();
         IDataResult<List<RentalDetailDto>> GetRentalDetailsByCarId(int carId);
         IDataResult<List<Rental>> GetByCustomerId(int customerId);
         bool IsCarAvailable(int carId);
         IResult CarIsReturned(int carId);
+
+        IResult CheckIfFindeks(int carId, int customerId);
+
     }
 }

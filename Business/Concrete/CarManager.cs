@@ -37,8 +37,8 @@ namespace Business.Concrete
             _carDal.Add(entity);
             return new SuccessResult("Car" + Messages.CarAdded);
         }
-            
 
+        [SecuredOperation("admin")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -93,7 +93,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorId == colorId));
         }
-
+        [SecuredOperation("admin")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
@@ -107,7 +107,7 @@ namespace Business.Concrete
         private IResult CheckIfCarNameExists(string carName)
         {
             var result = _carDal.GetAll(p => p.Description == carName).Any();
-            if (result)//==true
+            if (result)
             {
                 return new ErrorResult("Başka isim girin");
             }
@@ -115,8 +115,6 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-
-        //deneme
         public IDataResult<List<Car>> GetCarsByBrand(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));

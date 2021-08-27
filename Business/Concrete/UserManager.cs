@@ -22,6 +22,7 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         IUserDal _userDal;
+        
 
         public UserManager(IUserDal userDal)
         {
@@ -57,15 +58,9 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
         }
 
-        [ValidationAspect(typeof(UserValidator))]
+        //[ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
-            IResult result = BusinessRules.Run(
-                CheckIfUserExists(user.Email));
-            if (result != null)
-            {
-                return result;
-            }
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
@@ -87,22 +82,40 @@ namespace Business.Concrete
         }
 
 
-        public IResult ProfileUpdate(User user, string password)
+        public IResult ProfileUpdate(User user)
         {
-            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            var updatedUser = new User
+            var userToUpdate = GetById(user.UserId).Data;
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            userToUpdate.Email = user.Email;
+            Update(userToUpdate);
+            return new SuccessResult();
+        }
+
+        public IResult UpdateUserDto(UserForRegisterDto user, int userId)
+        {
+            var u = _userDal.GetAll().Where(x => x.UserId == userId).FirstOrDefault();
+            if (user.FirstName != null && user.FirstName != "" && user.FirstName != " ")
             {
-                UserId = user.UserId,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = user.Status
-            };
-            _userDal.Update(updatedUser);
-            return new SuccessDataResult<User>(Messages.UserUpdated);
+                u.FirstName = user.FirstName;
+            }
+            if (user.LastName != null && user.LastName != "" && user.LastName != " ")
+            {
+                u.LastName = user.LastName;
+            }
+            if (user.Email != null && user.Email != "" && user.Email != " ")
+            {
+                u.Email = user.Email;
+            }
+            if (user.Password != null && user.Password != "" && user.Password != " ")
+            {
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+                u.PasswordHash = passwordHash;
+                u.PasswordSalt = passwordSalt;
+            }
+            _userDal.Update(u);
+            return new SuccessResult("User Info Updated");
         }
         private IResult CheckIfUserExists(string email)
         {
@@ -116,9 +129,9 @@ namespace Business.Concrete
 
         public IDataResult<List<UserDetailDto>> GetUserDetail(int userId)
         {
-           
-                return new SuccessDataResult<List<UserDetailDto>>(_userDal.GetUserDetails(c => c.UserId == userId));
-            
+
+            return new SuccessDataResult<List<UserDetailDto>>(_userDal.GetUserDetails(c => c.UserId == userId));
+
         }
         public IDataResult<List<UserDetailDto>> GetUserDetails()
         {
@@ -132,5 +145,7 @@ namespace Business.Concrete
                 return new SuccessDataResult<List<UserDetailDto>>(userDetails);
             }
         }
+
+     
     }
 }

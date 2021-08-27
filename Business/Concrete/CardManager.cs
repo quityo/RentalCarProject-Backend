@@ -40,11 +40,20 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Card>>(_cardDal.GetAll(c => c.CardNumber == cardNumber));
         }
 
-        public IDataResult<Card> GetById(int carId)
+        public IDataResult<Card> GetById(int cardId)
         {
-            return new SuccessDataResult<Card>(_cardDal.Get(c => c.CardId == carId));
+           Card p = new Card();
+            if (!_cardDal.GetAll().Any(x => x.CardId == cardId))
+            {
+                return new ErrorDataResult<Card>("NotExist" + "credit card");
+            }
+            p = _cardDal.GetAll().FirstOrDefault(x => x.CardId == cardId);
+            return new SuccessDataResult<Card>(p);
         }
-
+        public IDataResult<Card> Get(Card entity)
+        {
+            return new SuccessDataResult<Card>(_cardDal.Get(x => x.CardId == entity.CardId));
+        }
         public IResult IsCardExist(Card card)
         {
             var result = _cardDal.Get(c => c.NameOnTheCard == card.NameOnTheCard && c.CardNumber == card.CardNumber && c.CardCvv == card.CardCvv);
@@ -54,13 +63,20 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
+        private IResult CheckIfCardIsExists(string cardNumber)
+        {
+            if (_cardDal.GetAll().Any(x => x.CardNumber == cardNumber))
+            {
+                return new ErrorResult("Card Already Exist");
+            }
+            return new SuccessResult();
+        }
         public IResult Update(Card card)
         {
             _cardDal.Update(card);
             return new SuccessResult();
         }
-        public IDataResult<List<Card>> GetAllCreditCardByCustomerId(int customerId)
+        public IDataResult<List<Card>> GetAllCardByCustomerId(int customerId)
         {
             return new SuccessDataResult<List<Card>>(_cardDal.GetAll().Where(x => x.CustomerId == customerId).ToList());
         }

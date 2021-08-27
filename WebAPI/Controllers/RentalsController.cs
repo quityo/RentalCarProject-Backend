@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         {
             _rentalService = rentalService;
         }
-       
+
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {
@@ -69,6 +69,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("get")]
+        public IActionResult Get([FromBody] Rental rental)
+        {
+            var result = _rentalService.Get(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("getrentaldetailbycarid")]
         public IActionResult GetRentalDetailsByCarId(int carId)
         {
@@ -80,9 +90,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbyid")]
-        public IActionResult GetByCustomerId(int customerId)
+
+        public IActionResult GetById(int rentalId)
         {
-            var result = _rentalService.GetByCustomerId(customerId);
+            var result = _rentalService.GetById(rentalId);
             if (result.Success)
             {
                 return Ok(result);
@@ -111,6 +122,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("checkfindeks")]
 
+        public IActionResult CheckFindeks(int carId, int customerId)
+        {
+            var result = _rentalService.CheckIfFindeks(carId, customerId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

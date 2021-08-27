@@ -22,12 +22,17 @@ namespace Business.Concrete
 
     {
         IRentalDal _rentalDal;
-        public RentalManager(IRentalDal rentalDal)
+        ICarService _carService;
+        ICustomerService _customerService;
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
         public IResult Add(Rental rental)
         {
+            if (!IsCarAvailable(rental.CarId)) return new ErrorResult(Messages.CarIsntAvailable);
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -46,8 +51,24 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
         }
+        public IDataResult<Rental> Get(Rental entity)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.Get(x => x.RentalId == entity.RentalId));
+        }
 
-       
+        public IResult GetList(List<Rental> list)
+        {
+            Console.WriteLine("\n------- Rental List -------");
+            foreach (var rental in list)
+            {
+                Console.WriteLine("{0}- Car Id: {1}\n   Customer Id: {2}\n   Rent Date: {3}\n   Return Date: {4}\n", rental.RentalId, rental.CarId, rental.CustomerId, rental.RentDate, rental.ReturnDate);
+            }
+            return new SuccessResult();
+        }
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
+        }
         public IDataResult<List<RentalDetailDto>> GetRentalDetail()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetail());
@@ -78,7 +99,24 @@ namespace Business.Concrete
 
         public IDataResult<Rental> GetById(int rentalId)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == rentalId));
+            Rental r = new Rental();
+            if (_rentalDal.GetAll().Any(x => x.RentalId == rentalId))
+            {
+                r = _rentalDal.GetAll().FirstOrDefault(x => x.RentalId == rentalId);
+            }
+            else Console.WriteLine("NotExist" + "rental");
+            return new SuccessDataResult<Rental>(r);
+        }
+
+        public IResult CheckIfFindeks(int carId, int customerId)
+        {
+            var customer = _customerService.GetById(customerId).Data;
+            var car = _carService.GetById(carId).Data;
+            if (customer.CustomerFindex < car.CarFindex)
+            {
+                return new ErrorResult("NotEngouhFindeks");
+            }
+            return new SuccessResult("EngouhFindeks");
         }
     }
 }

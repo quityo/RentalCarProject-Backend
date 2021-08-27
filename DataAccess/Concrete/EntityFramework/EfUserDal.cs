@@ -35,47 +35,48 @@ namespace DataAccess.Concrete.EntityFramework
                              join c in context.Customer
                              on u.UserId equals c.UserId
                              join r in context.Rental
-                             on c.CustomerId equals r.CustomerId
+                                 on c.CustomerId equals r.CustomerId
                              join car in context.Car on r.CarId equals car.CarId
                              join b in context.Brand on car.BrandId equals b.BrandId
-                             let pi = context.UserImage.Where(x => x.UserId == c.UserId).FirstOrDefault()
-                            
+                             join pi in context.UserImage on u.UserId equals pi.UserId
+                             let x = context.UserImage.Where(x => x.UserId == u.UserId).FirstOrDefault()
                              select new UserDetailDto()
                              {
                                  CarName = car.CarName,
-                                 FirstName = u.FirstName,
-                                 LastName = u.LastName,
-                                 CompanyName = c.CompanyName,
-                                 Email = u.Email,
                                  RentDate = r.RentDate,
                                  ReturnDate = (DateTime)r.ReturnDate,
                                  BrandName = b.BrandName,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 Email = u.Email,
+                                 CompanyName = c.CompanyName,
                                  UserId = u.UserId,
+                                 ImagePath = x.ImagePath,
                              };
                 return result.SingleOrDefault(filter);
             }
         }
-      
+
         public List<UserDetailDto> GetUserDetails(Expression<Func<User, bool>> filter = null)
         {
             using (RentACarContext context = new RentACarContext())
             {
                 var result = from u in filter == null ? context.User : context.User.Where(filter)
-                             join c in context.Customer
-                             on u.UserId equals c.UserId
-                             let pi = context.UserImage.Where(x => x.UserId == c.UserId).FirstOrDefault()
 
+                             
+                             join pi in context.UserImage on u.UserId equals pi.UserId
+                             let x = context.UserImage.Where(x => x.UserId == u.UserId).FirstOrDefault()
                              select new UserDetailDto
                              {
 
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
-                                 CompanyName = c.CompanyName,
+                                
                                  Email = u.Email,
                                  UserId = u.UserId,
-                                 ImagePath = context.UserImage.Where(x => x.UserId == u.UserId).FirstOrDefault().ImagePath,
+                                 ImagePath = x.ImagePath,
 
-                               
+
 
                              };
                 return result.ToList();
@@ -83,5 +84,6 @@ namespace DataAccess.Concrete.EntityFramework
             
         }
 
+       
     }
 }
