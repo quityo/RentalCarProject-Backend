@@ -1,6 +1,4 @@
-﻿
-
-namespace Core.Utilities.Results
+﻿namespace Core.Utilities.Results
 {
     public class SuccessDataResult<T> : DataResult<T>
     {

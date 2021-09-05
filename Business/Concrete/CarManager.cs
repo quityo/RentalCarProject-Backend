@@ -35,7 +35,7 @@ namespace Business.Concrete
         public IResult Add(Car entity)
         {
             _carDal.Add(entity);
-            return new SuccessResult("Car" + Messages.CarAdded);
+            return new SuccessResult("Car Added");
         }
 
         [SecuredOperation("admin")]

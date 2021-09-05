@@ -16,7 +16,7 @@ namespace Entities.DTOs
         public string BrandName { get; set; }
         public string CompanyName { get; set; }
         public string ImagePath { get; set; }
-
+        public string Name { get; set; }
         public DateTime Date { get; set; }
         public DateTime RentDate { get; set; }
         public DateTime ReturnDate { get; set; }

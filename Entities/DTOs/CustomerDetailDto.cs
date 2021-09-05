@@ -14,7 +14,7 @@ namespace Entities.DTOs
         public string CompanyName { get; set; }
         public string Email { get; set; }
         public int CustomerFindex { get; set; }
-
+        public string Name { get; set; }
 
     }
 }

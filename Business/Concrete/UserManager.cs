@@ -22,11 +22,14 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         IUserDal _userDal;
-        
+        IUserOperationClaimService _userOperationClaimService;
 
-        public UserManager(IUserDal userDal)
+
+
+        public UserManager(IUserDal userDal, IUserOperationClaimService userOperationClaimService)
         {
             _userDal = userDal;
+            _userOperationClaimService = userOperationClaimService;
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -39,6 +42,7 @@ namespace Business.Concrete
                 return result;
             }
             _userDal.Add(user);
+            _userOperationClaimService.Add(new UserOperationClaim { UserId = user.UserId, OperationClaimId = 2 });
             return new SuccessResult(Messages.UserAdded);
         }
 
@@ -64,7 +68,7 @@ namespace Business.Concrete
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
-
+       
         public IDataResult<User> GetByMail(string email)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
@@ -146,6 +150,6 @@ namespace Business.Concrete
             }
         }
 
-     
+
     }
 }
