@@ -6,15 +6,18 @@ using DataAccess.Abstract.DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
-        public CustomerManager(ICustomerDal customerDal)
+        IUserDal _userDal;
+        public CustomerManager(IUserDal userDal, ICustomerDal customerDal)
         {
             _customerDal = customerDal;
+            _userDal = userDal;
         }
         public IResult Add(Customer customer)
         {
@@ -55,6 +58,20 @@ namespace Business.Concrete
         public IDataResult<CustomerDetailDto> getCustomerByEmail(string email)
         {
             return new SuccessDataResult<CustomerDetailDto>(_customerDal.getCustomerByEmail(p => p.Email == email));
+        }
+
+        public IResult UpdateCustomerDto(CustomerDetailDto customer, int customerId)
+        {
+            var c = _customerDal.GetAll().Where(x => x.CustomerId == customerId).FirstOrDefault();
+            
+            if (customer.CompanyName != null && customer.CompanyName != "" && customer.CompanyName != " ")
+            {
+                c.CompanyName = customer.CompanyName;
+            }
+            
+            
+            _customerDal.Update(c);
+            return new SuccessResult("User Info Updated");
         }
     }
 }

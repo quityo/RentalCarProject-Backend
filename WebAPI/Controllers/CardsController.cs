@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-    public class CardsController : ControllerBase
+    public class CardsController : Controller
     {
-        private ICardService _cardService;
+        ICardService _cardService;
+
         public CardsController(ICardService cardService)
         {
             _cardService = cardService;
         }
+
         [HttpPost("add")]
         public IActionResult Add(Card card)
         {
@@ -29,19 +30,9 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpDelete("delete")]
-        public IActionResult Delete(Card card)
-        {
-            var result = _cardService.Delete(card);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
 
         [HttpPost("update")]
-        public IActionResult Update(Card card)
+        public IActionResult Update([FromBody] Card card)
         {
             var result = _cardService.Update(card);
             if (result.Success)
@@ -51,6 +42,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("delete")]
+        public IActionResult Delete(Card card)
+        {
+            var result = _cardService.Delete(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost("deletebycardid")]
         public IActionResult DeleteByCardId([FromBody] int cardId)
@@ -73,6 +74,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -83,7 +85,9 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet("getbyid")]
+
         public IActionResult GetById(int cardId)
         {
             var result = _cardService.GetById(cardId);
@@ -93,28 +97,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getbycardnumber")]
-        public IActionResult GetByCardNumber(string cardNumber)
-        {
-            var result = _cardService.GetByCardNumber(cardNumber);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpPost("iscardexist")]
-        public IActionResult IsCardExist(Card card)
-        {
-            var result = _cardService.IsCardExist(card);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return Ok(result);
-
-        }
-        
 
         [HttpGet("getallcardbycustomerid")]
 
@@ -127,7 +109,5 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-
     }
 }
-

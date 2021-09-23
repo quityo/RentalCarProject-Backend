@@ -1,11 +1,11 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace WebAPI.Controllers
 {
@@ -69,6 +69,38 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("getoperationdetail")]
+        public IActionResult GetUserOperationClaimDetail(int id)
+        {
+            var result = _userOperationClaimService.GetUserOperationClaimDetail(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getoperationdetails")]
+        public IActionResult GetUserOperationClaimDetails()
+        {
 
+            var result = _userOperationClaimService.GetUserOperationClaimDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        [HttpGet("getnamebyid")]
+        public IActionResult GetNameById(int id)
+        {
+            var result = _userOperationClaimService.GetNameById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
+
 }

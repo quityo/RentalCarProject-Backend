@@ -30,11 +30,13 @@ namespace Business.Concrete
             _carService = carService;
             _customerService = customerService;
         }
-        public IResult Add(Rental rental)
+        public IResult Add(Rental entity)
         {
-            if (!IsCarAvailable(rental.CarId)) return new ErrorResult(Messages.CarIsntAvailable);
-            _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalAdded);
+            _rentalDal.Add(entity);
+            var car = _carService.GetById(entity.CarId).Data;
+            car.Status = true;
+            _carService.Update(car);
+            return new SuccessResult("Rental Add");
         }
         public IResult Delete(Rental rental)
         {
@@ -69,14 +71,11 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
-        public IDataResult<List<RentalDetailDto>> GetRentalDetail()
-        {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetail());
-        }
+       
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetailsByCarId(int carId)
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetail(r => r.CarId == carId), Messages.RentalListed);
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.CarId == carId), Messages.RentalListed);
         }
 
         public IDataResult<List<Rental>> GetByCustomerId(int customerId)

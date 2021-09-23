@@ -35,7 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ModelYear = p.ModelYear,
                                  CarId = p.CarId,
                                  ImagePath = context.CarImage.Where(x => x.CarId == p.CarId).FirstOrDefault().ImagePath,
-                                 Status = !context.Rental.Any(r => r.CarId == p.CarId && (r.ReturnDate == null || r.RentDate > DateTime.Now)),
+                                 Status = p.Status,
                                  CarFindex = p.CarFindex
 
 

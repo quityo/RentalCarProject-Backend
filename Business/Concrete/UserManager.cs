@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
+using Core.Utilities.Helpers;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
@@ -26,7 +27,8 @@ namespace Business.Concrete
 
 
 
-        public UserManager(IUserDal userDal, IUserOperationClaimService userOperationClaimService)
+        public UserManager(IUserDal userDal, 
+            IUserOperationClaimService userOperationClaimService)
         {
             _userDal = userDal;
             _userOperationClaimService = userOperationClaimService;
@@ -43,9 +45,16 @@ namespace Business.Concrete
             }
             _userDal.Add(user);
             _userOperationClaimService.Add(new UserOperationClaim { UserId = user.UserId, OperationClaimId = 2 });
+            
             return new SuccessResult(Messages.UserAdded);
         }
-
+        //[ValidationAspect(typeof(UserValidator))]
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+           
+            return new SuccessResult(Messages.UserUpdated);
+        }
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
@@ -62,12 +71,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
         }
 
-        //[ValidationAspect(typeof(UserValidator))]
-        public IResult Update(User user)
-        {
-            _userDal.Update(user);
-            return new SuccessResult(Messages.UserUpdated);
-        }
+      
        
         public IDataResult<User> GetByMail(string email)
         {
@@ -111,6 +115,7 @@ namespace Business.Concrete
             {
                 u.Email = user.Email;
             }
+            
             if (user.Password != null && user.Password != "" && user.Password != " ")
             {
                 byte[] passwordHash, passwordSalt;
