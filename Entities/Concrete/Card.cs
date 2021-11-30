@@ -8,9 +8,7 @@ namespace Entities.Concrete
 {
     public class Card : IEntity
     {
-        
         public int CardId { get; set; }
-        [Key]
         public int CustomerId { get; set; }
         public string NameOnTheCard { get; set; }
         public string CardNumber { get; set; }

@@ -60,7 +60,7 @@ namespace Business.Concrete
             return new SuccessDataResult<CustomerDetailDto>(_customerDal.getCustomerByEmail(p => p.Email == email));
         }
 
-        public IResult UpdateCustomerDto(CustomerDetailDto customer, int customerId)
+        public IResult UpdateCustomerDto(CustomerForUptadeDto customer, int customerId)
         {
             var c = _customerDal.GetAll().Where(x => x.CustomerId == customerId).FirstOrDefault();
             
@@ -68,8 +68,8 @@ namespace Business.Concrete
             {
                 c.CompanyName = customer.CompanyName;
             }
-            
-            
+           
+
             _customerDal.Update(c);
             return new SuccessResult("User Info Updated");
         }

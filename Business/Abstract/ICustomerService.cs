@@ -16,7 +16,7 @@ namespace Business.Abstract
             IDataResult<List<CustomerDetailDto>> GetCustomerDetail();
             IDataResult<List<CustomerDetailDto>> GetCustomerDetailById(int customerId);
             IDataResult<CustomerDetailDto> getCustomerByEmail(string email);
-            IResult UpdateCustomerDto(CustomerDetailDto customer, int customerId);
+            IResult UpdateCustomerDto(CustomerForUptadeDto customer, int customerId);
     }
     
 }

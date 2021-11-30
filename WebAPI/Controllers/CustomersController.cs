@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPut("update")]
+        [HttpPost("update")]
         public IActionResult Update(Customer customer)
         {
             var result = _customerService.Update(customer);
@@ -96,7 +96,7 @@ namespace WebAPI.Controllers
             return result.Success ? (IActionResult)Ok(result) : BadRequest(result);
         }
         [HttpPost("customerdtoupdate")]
-        public IActionResult UpdateCustomerDto(CustomerDetailDto customer, int customerId)
+        public IActionResult UpdateCustomerDto(CustomerForUptadeDto customer, int customerId)
         {
             var result = _customerService.UpdateCustomerDto(customer, customerId);
             if (result.Success)

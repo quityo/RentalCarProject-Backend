@@ -97,7 +97,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpPost("iscardexist")]
+        public IActionResult IsCardExist(Card card)
+        {
+            var result = _cardService.IsCardExist(card);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
 
+        }
+        [HttpGet("getbycardnumber")]
+        public IActionResult GetByCardNumber(string cardNumber)
+        {
+            var result = _cardService.GetByCardNumber(cardNumber);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("getallcardbycustomerid")]
 
         public IActionResult GetAllCardByCustomerId(int customerId)

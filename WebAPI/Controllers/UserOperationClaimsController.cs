@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int userOperationClaimId)
         {
-            var result = _userOperationClaimService.GetById(id);
+            var result = _userOperationClaimService.GetById(userOperationClaimId);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,9 +70,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getoperationdetail")]
-        public IActionResult GetUserOperationClaimDetail(int id)
+        public IActionResult GetUserOperationClaimDetail(int userOperationClaimId)
         {
-            var result = _userOperationClaimService.GetUserOperationClaimDetail(id);
+            var result = _userOperationClaimService.GetUserOperationClaimDetail(userOperationClaimId);
             if (result.Success)
             {
                 return Ok(result);
@@ -91,16 +91,15 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-        [HttpGet("getnamebyid")]
-        public IActionResult GetNameById(int id)
+        [HttpGet("getclaimsbyuserid")]
+        public IActionResult GetUserOperationClaimsByUserId(int userId)
         {
-            var result = _userOperationClaimService.GetNameById(id);
+            var result = _userOperationClaimService.GetUserOperationClaimsByUserId(userId);
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
     }
-
 }

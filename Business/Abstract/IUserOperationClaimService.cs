@@ -11,12 +11,12 @@ namespace Business.Abstract
     {
 
         IDataResult<List<UserOperationClaim>> GetAll();
-        IDataResult<UserOperationClaim> GetById(int id);
+        IDataResult<UserOperationClaim> GetById(int userOperationClaimId);
         IResult Add(UserOperationClaim userOperationClaim);
         IResult Delete(UserOperationClaim userOperationClaim);
         IResult Update(UserOperationClaim userOperationClaim);
+        IDataResult<List<UserOperationClaim>> GetUserOperationClaimsByUserId(int userId);
         IDataResult<List<UserOperationClaimDto>> GetUserOperationClaimDetails();
-        IDataResult<List<UserOperationClaimDto>> GetUserOperationClaimDetail(int id);
-        IDataResult<List<UserOperationClaimDto>> GetNameById(int id);
+        IDataResult<List<UserOperationClaimDto>> GetUserOperationClaimDetail(int userOperationClaimId);
     }
 }

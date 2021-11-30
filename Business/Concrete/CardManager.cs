@@ -43,7 +43,10 @@ namespace Business.Concrete
             return new SuccessResult("Credit Card Deleted");
         }
 
-      
+        public IDataResult<List<Card>> GetByCardNumber(string cardNumber)
+        {
+            return new SuccessDataResult<List<Card>>(_cardDal.GetAll(c => c.CardNumber == cardNumber));
+        }
 
         public IDataResult<Card> Get(Card entity)
         {
@@ -81,7 +84,15 @@ namespace Business.Concrete
             _cardDal.Update(entity);
             return new SuccessResult("Credit Card Updated");
         }
-
+        public IResult IsCardExist(Card card)
+        {
+            var result = _cardDal.Get(c => c.NameOnTheCard == card.NameOnTheCard && c.CardNumber == card.CardNumber && c.CardCvv == card.CardCvv);
+            if (result == null)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
         private IResult CheckIfCardIsExists(string cardNumber)
         {
             if (_cardDal.GetAll().Any(x => x.CardNumber == cardNumber))

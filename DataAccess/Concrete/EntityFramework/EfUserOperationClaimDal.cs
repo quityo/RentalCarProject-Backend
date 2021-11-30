@@ -27,7 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  LastName = u.LastName,
                                  OperationClaimId = oc.OperationClaimId,
                                  UserId = uoc.UserId,
-                                 Id = uoc.Id,
+                                 UserOperationClaimId = uoc.UserOperationClaimId,
                                  Name = oc.Name,
                              };
                 return result.ToList();
@@ -47,7 +47,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  LastName = u.LastName,
                                  OperationClaimId = oc.OperationClaimId,
                                  UserId = uoc.UserId,
-                                 Id = uoc.Id,
+                                 UserOperationClaimId = uoc.UserOperationClaimId,
                                  Name = oc.Name,
                              };
                 return result.SingleOrDefault(filter);

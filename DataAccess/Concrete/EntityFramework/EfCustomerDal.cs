@@ -30,8 +30,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  CompanyName = customer.CompanyName,
                                  CustomerFindex = (int)customer.CustomerFindex
                              };
-                return result.SingleOrDefault(filter);
+                return result.SingleOrDefault(filter);  
             }
+
         }
 
         public List<CustomerDetailDto> GetCustomerDetail(Expression<Func<Customer, bool>> filter = null)

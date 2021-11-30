@@ -11,5 +11,6 @@ namespace DataAccess.Abstract
     public interface IUserOperationClaimDal : IEntityRepository<UserOperationClaim>
     {
         List<UserOperationClaimDto> GetUserOperationClaimDetails(Expression<Func<UserOperationClaim, bool>> filter = null);
+
     }
 }

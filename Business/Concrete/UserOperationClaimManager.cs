@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -40,9 +42,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll(), "UserOperationClaim Listed");
         }
 
-        public IDataResult<UserOperationClaim> GetById(int id)
+        public IDataResult<UserOperationClaim> GetById(int userOperationClaimId)
         {
-            return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(b => b.Id == id));
+            return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(b => b.UserOperationClaimId == userOperationClaimId));
         }
 
 
@@ -59,18 +61,27 @@ namespace Business.Concrete
             }
         }
 
-        public IDataResult<List<UserOperationClaimDto>> GetUserOperationClaimDetail(int id)
+        public IDataResult<List<UserOperationClaimDto>> GetUserOperationClaimDetail(int userOperationClaimId)
         {
-            return new SuccessDataResult<List<UserOperationClaimDto>>(_userOperationClaimDal.GetUserOperationClaimDetails(c => c.Id == id));
+            return new SuccessDataResult<List<UserOperationClaimDto>>(_userOperationClaimDal.GetUserOperationClaimDetails(c => c.UserOperationClaimId == userOperationClaimId));
         }
 
-        
-
-        public IDataResult<List<UserOperationClaimDto>> GetNameById(int id)
+        public IDataResult<List<UserOperationClaim>> GetUserOperationClaimsByUserId(int userId)
         {
-
-            return new SuccessDataResult<List<UserOperationClaimDto>>(_userOperationClaimDal.GetUserOperationClaimDetails(c => c.Id == id));
-
+            IResult result = BusinessRules.Run(CheckIfUserOperationClaimNull(userId));
+            if (result != null)
+            {
+                return new ErrorDataResult<List<UserOperationClaim>>(result.Message);
+            }
+            return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll(i => i.UserId == userId));
+        }
+        private IResult CheckIfUserOperationClaimNull(int userOperationClaimId)
+        {
+            if (_userOperationClaimDal.GetAll().Any(x => x.UserOperationClaimId == userOperationClaimId))
+            {
+                return new ErrorResult("User Operation Claim Exist");
+            }
+            return new SuccessResult();
         }
     }
 }
